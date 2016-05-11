@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="https://github.com/wine-team/ucenter.git" uploadOnCheckin="0e5ffbb3-ebfb-4f81-b58f-0e4d02482edc">
+    <serverData>
+      <paths name="https://github.com/wine-team/ucenter.git">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="https://github.com/wine-team/ucenter.git" />
+  </component>
+</project>

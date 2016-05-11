@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="0e5ffbb3-ebfb-4f81-b58f-0e4d02482edc" name="https://github.com/wine-team/ucenter.git" url="https://github.com/wine-team/ucenter.git">
+        <fileTransfer host="https://github.com/wine-team/ucenter.git" port="21" username="604942578@qq.com">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
