@@ -3,11 +3,6 @@ class Mall_goods_base_model extends CI_Model
 {
     private $table = 'mall_goods_base';
     
-    public function findById($where=array())
-    {
-    	return $this->db->get_where($this->table, $where);
-    }
-    
     public function getWhereIn($arr=array())
     {
         if (empty($arr)) return array();

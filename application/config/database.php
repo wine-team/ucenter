@@ -76,10 +76,16 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
     
-	'hostname' => 'mysql.sql71.cdncenter.net',
-	'username' => 'sq_zhangkunch',
-	'password' => '123456',
-	'database' => 'sq_zhangkunch',
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'meijiu',
+    
+    
+// 	'hostname' => 'mysql.sql71.cdncenter.net',
+// 	'username' => 'sq_zhangkunch',
+// 	'password' => '123456',
+// 	'database' => 'sq_zhangkunch',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

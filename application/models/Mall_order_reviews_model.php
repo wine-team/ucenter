@@ -1,7 +1,7 @@
 <?php
-class Mall_coupon_model extends CI_Model
+class Mall_order_reviews_model extends CI_Model
 {
-    private $table = 'mall_coupon';
+    private $table = 'mall_order_reviews';
     
     public function total($where=array())
     {
@@ -9,7 +9,7 @@ class Mall_coupon_model extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
-    public function findById($where=array())
+    public function getWhere($where=array())
     {
     	return $this->db->get_where($this->table, $where);
     }

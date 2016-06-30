@@ -3,9 +3,15 @@ class Mall_address_model extends CI_Model
 {
     private $table = 'mall_address';
     
-    public function findById($where=array())
+    public function total($where)
     {
-    	return $this->db->get_where($this->table, $where);
+        $this->db->where($where);
+        return $this->db->count_all_results($this->table);
+    }
+    
+    public function findById($uid)
+    {
+    	return $this->db->get_where($this->table, array('uid'=>$uid));
     }
     
     public function insert($data)

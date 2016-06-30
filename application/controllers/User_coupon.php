@@ -1,28 +1,25 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Enshrine extends MJ_Controller {
+class User_coupon extends MJ_Controller {
 
     public function _init()
     {
         $this->load->library('pagination');
-        $this->load->model('mall_enshrine_model', 'mall_enshrine');
-        $this->load->model('mall_goods_base_model', 'mall_goods_base');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('help_category_model','help_category');
+        $this->load->model('user_coupon_get_model', 'user_coupon_get');
     }
 
     public function index()
     {
+        $where['uid'] = $this->uid;
+        if ($this->input->get('status')) $where['status'] = $this->input->get('status');
+        $data['user_coupon'] = $this->user_coupon_get->getWhere($where)->result();
+        $data['coupon_status'] = array('1'=>'未使用', '2'=>'已使用');
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $enshrine = $this->mall_enshrine->findById($this->uid)->result();
-        $goods_ids = array();
-        foreach ($enshrine as $e) {
-            $goods_ids[] = $e->goods_id;
-        }
-        $data['goods'] = $this->mall_goods_base->getWhereIn($goods_ids);
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
-        $this->load->view('enshrine/enshrine', $data);
+        $this->load->view('user_coupon/user_coupon', $data);
     }
     
 }

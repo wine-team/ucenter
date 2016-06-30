@@ -14,7 +14,7 @@ class Address extends MJ_Controller {
     public function index()
     {
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $data['address'] = $this->mall_address->findById(array('uid'=>$data['user_info']->uid))->result();
+        $data['address'] = $this->mall_address->findById($this->uid)->result();
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
         $this->load->view('address/address', $data);
@@ -24,7 +24,7 @@ class Address extends MJ_Controller {
     {
         $postData = $this->input->post();
         $data['uid'] = $this->uid;
-        $address_num = $this->mall_address->findById($data)->num_rows();
+        $address_num = $this->mall_address->total($data);
         if ($address_num < 5) {
             $data['receiver_name'] = $postData['receiver_name'];
             $data['detailed'] = $postData['detailed'];

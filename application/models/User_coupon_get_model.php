@@ -1,7 +1,7 @@
 <?php
-class Account_log_model extends CI_Model
+class User_coupon_get_model extends CI_Model
 {
-    private $table = 'account_log';
+    private $table = 'user_coupon_get';
     
     public function total($where=array())
     {

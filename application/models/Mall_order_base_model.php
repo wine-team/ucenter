@@ -3,7 +3,7 @@ class Mall_order_base_model extends CI_Model
 {
     private $table = 'mall_order_base';
     
-    public function findById($where=array())
+    public function getWhere($where=array())
     {
     	return $this->db->get_where($this->table, $where);
     }

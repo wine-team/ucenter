@@ -3,9 +3,9 @@ class Mall_order_product_model extends CI_Model
 {
     private $table = 'mall_order_product';
     
-    public function findById($where=array())
+    public function findById($order_id)
     {
-    	return $this->db->get_where($this->table, $where);
+    	return $this->db->get_where($this->table, array('order_id'=>$order_id));
     }
     
     public function getWhereIn($arr=array())
