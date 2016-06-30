@@ -281,7 +281,7 @@ switch (ENVIRONMENT)
 	}
 
 	define('VIEWPATH', $view_folder);
-
+	
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
