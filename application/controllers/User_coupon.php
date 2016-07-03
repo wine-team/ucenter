@@ -15,7 +15,7 @@ class User_coupon extends MJ_Controller {
         $where['uid'] = $this->uid;
         if ($this->input->get('status')) $where['status'] = $this->input->get('status');
         $data['user_coupon'] = $this->user_coupon_get->getWhere($where)->result();
-        $data['coupon_status'] = array('1'=>'未使用', '2'=>'已使用');
+        $data['coupon_status'] = array('1'=>'未使用', '2'=>'已使用', '3'=>'过期');
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示

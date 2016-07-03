@@ -9,8 +9,15 @@ class Mall_enshrine_model extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
-    public function findById($uid)
+    public function getWhere($where=array())
     {
-    	return $this->db->get_where($this->table, array('uid'=>$uid));
+    	return $this->db->get_where($this->table, $where);
     }
+    
+    public function delete($where)
+    {
+        $this->db->where($where);
+        return $this->db->delete($this->table);
+    }
+    
 }

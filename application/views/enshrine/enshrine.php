@@ -37,7 +37,7 @@
 							<del class="ml10"><?php echo $g->market_price;?></del>
 						</p>
     				</a>
-    				<a href="javascript:;" class="del_fava" onClick="delfav(<?php $g->goods_id;?>)">删除</a>
+    				<a href="<?php echo base_url('Enshrine/delete?goods_id='.$g->goods_id);?>" class="del_fava" onClick="return confirm('您确定要从收藏夹中删除选定的商品吗？')">删除</a>
 				</li>
                 <?php endforeach;?>
 			</ul>

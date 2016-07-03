@@ -14,7 +14,7 @@ class Enshrine extends MJ_Controller {
     public function index()
     {
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $enshrine = $this->mall_enshrine->findById($this->uid)->result();
+        $enshrine = $this->mall_enshrine->getWhere(array('uid'=>$this->uid))->result();
         $goods_ids = array();
         foreach ($enshrine as $e) {
             $goods_ids[] = $e->goods_id;
@@ -24,5 +24,17 @@ class Enshrine extends MJ_Controller {
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
         $this->load->view('enshrine/enshrine', $data);
     }
+    
+    public function delete()
+    {
+        $goods_id = $this->input->get('goods_id');
+        $res = $this->mall_enshrine->delete(array('uid'=>$this->uid, 'goods_id'=>$goods_id));
+        if ($res) {
+            $this->success('Enshrine/index', '', '删除成功！');
+        } else {
+            $this->error('Enshrine/index', '', '删除失败！');
+        }
+    }
+    
     
 }

@@ -34,7 +34,8 @@
 						<tr>
 							<td align="right" width="100"><b class="red pr5">*</b>收货人姓名：</td>
 							<td>
-							    <input type="text" value="" id="consignee" class="ipt" name="receiver_name" required="required" maxlength=20 />
+							    <input type="hidden" name="address_id" value="<?php echo isset($res->address_id) ? $res->address_id : '';?>">
+							    <input type="text" value="<?php echo isset($res->receiver_name) ? $res->receiver_name : '';?>" id="consignee" class="ipt" name="receiver_name" required="required" maxlength=20 />
 							</td>
 						</tr>
 						<tr>
@@ -44,25 +45,25 @@
 						<tr>
 							<td align="right"><b class="red pr5">*</b>详细地址：</td>
 							<td>
-							    <input type="text" value="" id="address" class="ipt" size="80" name="detailed" placeholder="镇、街道、小区名、门牌号" required="required" maxlength=50/>
+							    <input type="text" value="<?php echo isset($res->detailed) ? $res->detailed : '';?>" id="address" class="ipt" size="80" name="detailed" placeholder="镇、街道、小区名、门牌号" required="required" maxlength=50/>
 							</td>
 						</tr>
 						<tr>
 							<td align="right"><b class="red pr5">*</b>手机：</td>
 							<td>
-							    <input type="text" value="" id="mobile" class="ipt" name="tel" required="required" maxlength=11/>
+							    <input type="text" value="<?php echo isset($res->tel) ? $res->tel : '';?>" id="mobile" class="ipt" name="tel" required="required" maxlength=11/>
 							</td>
 						</tr>
 						<tr>
 							<td align="right" class="c9">邮政编码：</td>
 							<td>
-							    <input type="text" value="" id="zipcode" class="ipt" name="code" />
+							    <input type="text" value="<?php echo isset($res->code) ? $res->code : '';?>" id="zipcode" class="ipt" name="code" />
 							</td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
 							<td>
-							    <label><input name="is_default" type="checkbox" value="2" /> 设置为默认收货地址</label>
+							    <label><input name="is_default" type="checkbox" value="2" <?php if(isset($res->is_default) && $res->is_default==2)echo 'checked="checked"';?>/> 设置为默认收货地址</label>
 							</td>
 						</tr>
 						<tr>
@@ -95,7 +96,7 @@
 					<td>中国  <?php echo $a->province_name.' '.$a->city_name.' '.$a->district_name;?></td>
 					<td><?php echo $a->tel;?></td>
 					<td>
-					    <a href="<?php echo base_url('Address/edit?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
+					    <a href="<?php echo base_url('Address/index?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
 						<span class="vline">|</span>
 						<a href="javascript:;" class="blue" onclick="del_address(<?php echo $a->address_id?>)">删除</a>
 						<?php if($a->is_default==1) :?><a class="rw_btn ml5" onclick="set_default(<?php echo $a->address_id?>)" href="javascript:;">设为默认</a><?php endif;?>

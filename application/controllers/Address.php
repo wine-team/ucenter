@@ -13,8 +13,16 @@ class Address extends MJ_Controller {
 
     public function index()
     {
+        $address = $this->mall_address->findById($this->input->get('address_id'));
+        $data['res'] = (object)null;
+        if ($address->num_rows() > 0) {
+            $data['res'] = $address->row();
+            $data['province_id'] = $address->row()->province_id;
+            $data['city_id'] = $address->row()->city_id;
+            $data['district_id'] = $address->row()->district_id;
+        } 
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $data['address'] = $this->mall_address->findById($this->uid)->result();
+        $data['address'] = $this->mall_address->getWhere(array('uid'=>$this->uid))->result();
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
         $this->load->view('address/address', $data);
@@ -44,28 +52,20 @@ class Address extends MJ_Controller {
                     $this->mall_address->update(array('uid'=>$this->uid, 'is_default'=>2), array('is_default'=>1));
                 }
             }
-            $res = $this->mall_address->insert($data);
+            if ($postData['address_id']) {
+                $res = $this->mall_address->update(array('address_id'=>$postData['address_id']), $data);
+            } else {
+                $res = $this->mall_address->insert($data);
+            }
             $this->db->trans_complete();
             if ($res>0 && $this->db->trans_status()) {
                 echo json_encode(array('status'=>true, 'messages'=>base_url('Address/index')));
             } else {
-                echo json_encode(array('status'=>false ,'messages'=>'新增失败'));
+                echo json_encode(array('status'=>false ,'messages'=>'操作失败'));
             }
         } else {
             echo json_encode(array('status'=>false ,'messages'=>'最多可以添加5个收货地址'));
         }
-    }
-    
-    public function edit()
-    {
-        $address_id = $this->input->get('address_id');
-        
-        var_dump($address_id);
-    }
-    
-    public function editPost()
-    {
-        
     }
     
     public function setDefault()

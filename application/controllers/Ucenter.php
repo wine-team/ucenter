@@ -107,10 +107,15 @@ class Ucenter extends MJ_Controller {
             $frontUserInfo->email = $postData['email'];
             $frontUserInfo->phone = $postData['phone'];
             set_cookie('frontUserInfo', base64_encode(serialize($frontUserInfo)), 7200);
-            echo json_encode(array('status'=>true, 'messages'=>base_url('Ucenter/user_info')));
+            echo json_encode(array('status'=>true, 'messages'=>base_url('Ucenter/edit_ok')));
         } else {
             echo json_encode(array('status'=>false, 'messages'=>'修改失败！'));
         }
+    }
+    
+    public function edit_ok()
+    {
+        $this->load->view('order/edit_ok');
     }
     
     public function reset_password()

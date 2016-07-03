@@ -9,9 +9,14 @@ class Mall_address_model extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
-    public function findById($uid)
+    public function findById($address_id)
     {
-    	return $this->db->get_where($this->table, array('uid'=>$uid));
+    	return $this->db->get_where($this->table, array('address_id'=>$address_id));
+    }
+    
+    public function getWhere($where=array())
+    {
+        return $this->db->get_where($this->table, $where);
     }
     
     public function insert($data)
