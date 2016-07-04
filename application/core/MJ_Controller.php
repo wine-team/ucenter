@@ -10,7 +10,7 @@ class MJ_Controller extends CI_Controller
     public function __construct()
     {
     	parent::__construct();
-    	$frontUser = get_cookie('frontUser') ? get_cookie('frontUser') : $this->memcache->getData('frontUser');
+    	$frontUser = get_cookie('frontUser') ? get_cookie('frontUser') : $this->cache->memcached->get('frontUser');
     	if($frontUser){
     		$this->frontUser = unserialize(preg_replace_callback( '!s:(\d+):"(.*?)";!s', function($m){return 's:'.strlen($m[2]).':"'.$m[2].'";';}, $frontUser));
     		$this->uid = $this->frontUser['uid'];
