@@ -2,26 +2,26 @@
 require_once 'CS_Controller.php';
 class MJ_Controller extends CI_Controller
 {
-    public $uid=1;
+    protected $frontUser = false;
+    public $uid;
+    public $userType;
     public $userName;
 
     public function __construct()
     {
-        parent::__construct();
-        $frontUser = unserialize(base64_decode(get_cookie('frontUser')));
-//         if ($frontUser) {
-//             $this->uid = $frontUser->uid;
-//             $this->userName = $frontUser->userName;
-//         } else {
-//             header("Location:$this->config->passport_url");exit;
-//         }
-
-        $this->_init(); //用着重载
-        
-        // 开发模式下开启性能分析
-        if (ENVIRONMENT === 'development') {
-//              $this->output->enable_profiler(TRUE);
-        }
+    	parent::__construct();
+    	$frontUser = get_cookie('frontUser') ? get_cookie('frontUser') : $this->memcache->getData('frontUser');
+    	if($frontUser){
+    		$this->frontUser = unserialize(preg_replace_callback( '!s:(\d+):"(.*?)";!s', function($m){return 's:'.strlen($m[2]).':"'.$m[2].'";';}, $frontUser));
+    		$this->uid = $this->frontUser['uid'];
+    		$this->userName = $this->frontUser['userName'];
+    	}
+    	$this->_init(); //用着重载
+    	
+    	// 开发模式下开启性能分析
+    	if (ENVIRONMENT === 'development') {
+    		$this->output->enable_profiler(TRUE);
+    	}
     }
     
     public function _init() {}
