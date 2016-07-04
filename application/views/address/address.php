@@ -123,9 +123,6 @@
     			address.checkCon(this); 
         	});
 
-    		
-			
-			
 		</script>
 
 	</div>

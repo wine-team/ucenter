@@ -13,7 +13,18 @@ class User_coupon extends MJ_Controller {
     public function index()
     {
         $where['uid'] = $this->uid;
-        if ($this->input->get('status')) $where['status'] = $this->input->get('status');
+        if ($this->input->get('status')) {
+            if ($this->input->get('status') == 1) {
+                $where['status'] = 1;
+                $where['end_time >'] = date('Y-m-d H:i:s');
+            }
+            if ($this->input->get('status') == 2) {
+                $where['status'] = 2;
+            }
+            if ($this->input->get('status') == 3) {
+                $where['end_time <'] = date('Y-m-d H:i:s');
+            }
+        }
         $data['user_coupon'] = $this->user_coupon_get->getWhere($where)->result();
         $data['coupon_status'] = array('1'=>'未使用', '2'=>'已使用', '3'=>'过期');
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
