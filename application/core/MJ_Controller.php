@@ -10,7 +10,7 @@ class MJ_Controller extends CI_Controller
     public function __construct()
     {
     	parent::__construct();
-    	$frontUser = get_cookie('frontUser') ? get_cookie('frontUser') : $this->cache->memcached->get('frontUser');
+    	$frontUser = get_cookie('frontUser') ? get_cookie('frontUser') : $this->cache->memcached->get('frontUser'); 
     	if($frontUser){
     		$this->frontUser = unserialize( base64_decode($frontUser) );
     		$this->uid = $this->frontUser['uid'];
@@ -20,7 +20,7 @@ class MJ_Controller extends CI_Controller
     	
     	// 开发模式下开启性能分析
     	if (ENVIRONMENT === 'development') {
-    		$this->output->enable_profiler(TRUE);
+//     		$this->output->enable_profiler(TRUE);
     	}
     }
     

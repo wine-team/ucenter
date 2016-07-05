@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Address extends MJ_Controller {
+class Address extends CS_Controller {
 
     public function _init()
     {

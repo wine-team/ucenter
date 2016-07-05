@@ -108,7 +108,7 @@
 						</tr>
 						<tr>
 							<td>新密码：</td>
-							<td><input type="password" id="pas2" class="ipt" size="25" name="new_password" /></td>
+							<td><input type="password" id="pas2" class="ipt" size="25" name="new_password" maxlenght=20 /></td>
 						</tr>
 						<tr>
 							<td>确认密码：</td>
@@ -143,19 +143,6 @@
 				$("#avatarImg").val(v);
 			});
 			
-			function epd() {
-				var n1 = $("#pas1").val();
-				var n2 = $("#pas2").val();
-				var n3 = $("#pas3").val();
-				if (n1.length < 5 || n2.length < 5 || n3.length < 5) {
-					alert("原始密码、新密码及确认密码都不得少于5位");
-					return false;
-				}
-				if (n2 != n3) {
-					alert("两次输入的密码不一致，请仔细检查。");
-					return false;
-				}
-			}
 		</script>
 	</div>
 

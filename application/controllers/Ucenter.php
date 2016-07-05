@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Ucenter extends MJ_Controller {
+class Ucenter extends CS_Controller {
 
     public function _init()
     {

@@ -12,14 +12,16 @@
 <base href="<?php echo $this->config->skins_url;?>"/>
 <link type="image/x-icon" rel="shortcut icon" href="passport/images/logo02.png"/>
 <?php css('common', 'common', '20160415');?>
+<?php css('miaow', 'reset', '20160415');?>
 <?php css('ucenter', 'user', '20160415');?>
 
 <?php js('ucenter', 'jquery-1.8.3');?>
 <?php js('help', 'jquery.validate.min');?>
 <?php js('help', 'jquery.validate.messages_zh');?>
-<?php js('ucenter','index', '20160415');?>
+<?php js('miaow','index', '20160415');?>
 <?php js('ucenter','address', '20160415');?>
 <?php js('ucenter','datepick', '20160415');?>
+<?php js('ucenter','user_info', '20160415');?>
 
 <!--[if lt IE 10]>
 <?php //js('passport', 'placeholder');?>
@@ -40,11 +42,18 @@
             	<em class="f mt1 iconfont">&#xe60a;</em>首页
             </a>
             <span class="vline">|</span>
-            <a rel="nofollow" class="c9" href="<?php echo $this->config->passport_url;?>">登录</a>
-            <span class="vline">|</span>
-            <a rel="nofollow" title="注册就送10元优惠券" class="c9" href="<?php echo $this->config->passport_url;?>">
-            	注册<em class="c9 pl10"><i class="org">送10元优惠券</i></em>
-            </a>
+            <?php if($this->uid):?>
+                                         您好：<a class="c3" title="会员等级v1" href="<?php echo $this->config->ucenter_url;?>"><?php echo $this->userName;?></a>
+               <a class="pl5 c8" target="_blank" href="<?php echo $this->config->help_url;?>">（VIP折扣：9.8折）</a>
+			   <span class="vline">|</span>
+			   <a class="c8" href="<?php echo $this->config->passport_url.'login/logout.html';?>">退出</a>
+            <?php else:?>
+               <a rel="nofollow" class="c9" href="<?php echo $this->config->passport_url;?>">登录</a>
+	           <span class="vline">|</span>
+	           <a rel="nofollow" title="注册就送10元优惠券" class="c9" href="<?php echo $this->config->passport_url;?>">
+	            	注册<em class="c9 pl10"><i class="org">送10元优惠券</i></em>
+	           </a>                        
+            <?php endif;?>
         </div>
         <ul id="tul" class="tul right">
             <li>
@@ -66,10 +75,10 @@
                 	会员中心<em class="rdop"></em>
                 </a>
                 <div class="tuln">
-                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url;?>">个人信息</a>
-                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url;?>">我的收藏</a>
-                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url;?>">我的优惠券</a>
-                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url;?>">收货地址</a>
+                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url.'Ucenter/user_info';?>">个人信息</a>
+                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url.'Enshrine/index';?>">我的收藏</a>
+                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url.'User_coupon/index';?>">我的优惠券</a>
+                	<a rel="nofollow" href="<?php echo $this->config->ucenter_url.'Address/index';?>">收货地址</a>
                 </div>
             </li>
             <li class="nbt">

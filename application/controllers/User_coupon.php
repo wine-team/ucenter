@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class User_coupon extends MJ_Controller {
+class User_coupon extends CS_Controller {
 
     public function _init()
     {

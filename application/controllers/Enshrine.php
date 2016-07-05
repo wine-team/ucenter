@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Enshrine extends MJ_Controller {
+class Enshrine extends CS_Controller {
 
     public function _init()
     {
