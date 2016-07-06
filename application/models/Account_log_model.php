@@ -9,8 +9,10 @@ class Account_log_model extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
-    public function getWhere($where=array())
+    public function getByAccountType($uid, $account_type)
     {
-    	return $this->db->get_where($this->table, $where);
+        $this->db->where('uid', $uid); 
+        $this->db->where('account_type', $account_type);
+    	return $this->db->get($this->table);
     }
 }

@@ -9,8 +9,22 @@ class User_coupon_get_model extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
-    public function getWhere($where=array())
+    public function findByStatus($uid, $status='')
     {
-    	return $this->db->get_where($this->table, $where);
+        if ($status) {
+            if ($status == 1) {
+                $where['status'] = 1;
+                $where['end_time >'] = date('Y-m-d H:i:s');
+            }
+            if ($status == 2) {
+                $where['status'] = 2;
+            }
+            if ($status == 3) {
+                $where['end_time <'] = date('Y-m-d H:i:s');
+            }
+            $this->db->where($where);
+        }
+        $this->db->where('uid', $uid);
+    	return $this->db->get($this->table);
     }
 }

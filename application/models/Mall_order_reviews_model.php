@@ -9,8 +9,8 @@ class Mall_order_reviews_model extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
-    public function getWhere($where=array())
+    public function getByUid($uid)
     {
-    	return $this->db->get_where($this->table, $where);
+    	return $this->db->get_where($this->table, array('uid'=>$uid));
     }
 }

@@ -14,7 +14,7 @@ class Enshrine extends CS_Controller {
     public function index()
     {
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $enshrine = $this->mall_enshrine->getWhere(array('uid'=>$this->uid))->result();
+        $enshrine = $this->mall_enshrine->getByUid($this->uid)->result();
         $goods_ids = array();
         foreach ($enshrine as $e) {
             $goods_ids[] = $e->goods_id;
@@ -27,8 +27,7 @@ class Enshrine extends CS_Controller {
     
     public function delete()
     {
-        $goods_id = $this->input->get('goods_id');
-        $res = $this->mall_enshrine->delete(array('uid'=>$this->uid, 'goods_id'=>$goods_id));
+        $res = $this->mall_enshrine->delete(array('uid'=>$this->uid, 'goods_id'=>$this->input->get('goods_id')));
         if ($res) {
             $this->success('Enshrine/index', '', '删除成功！');
         } else {

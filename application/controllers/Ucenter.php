@@ -27,10 +27,8 @@ class Ucenter extends CS_Controller {
             $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num, 'pay_points_num'=>$frontUserInfo->pay_points);
             set_cookie('frontUserInfo', base64_encode(serialize($frontUserInfo)), 435200);
         }
-        $where['payer_uid'] = $this->uid;
-        if ($this->input->get('status')) $where['status'] = $this->input->get('status');
+        $data['order'] = $this->mall_order_base->findByStatus($this->uid, $this->input->get('status'))->result();
         $data['user_info'] = $frontUserInfo;
-        $data['order'] = $this->mall_order_base->getWhere($where)->result();
         $orderid_arr = array();
         foreach ($data['order'] as $order) {
             $orderid_arr[] = $order->order_id;
@@ -45,7 +43,7 @@ class Ucenter extends CS_Controller {
     public function user_reviews()
     {
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $data['user_reviews'] = $this->mall_order_reviews->getWhere(array('uid'=>$this->uid))->result();
+        $data['user_reviews'] = $this->mall_order_reviews->getByUid($this->uid)->result();
         $data['reviews_status'] = array('1'=>'待审核', '2'=>'通过', '3'=>'未通过审核');
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
@@ -55,8 +53,8 @@ class Ucenter extends CS_Controller {
     public function order_detail($order_id)
     {
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
-        $data['order'] = $this->mall_order_base->getWhere(array('order_id'=>$order_id))->row();
-        $data['order_product'] = $this->mall_order_product->findById($order_id)->result();
+        $data['order'] = $this->mall_order_base->findById($order_id)->row();
+        $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
         $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
@@ -65,8 +63,7 @@ class Ucenter extends CS_Controller {
     
     public function user_info()
     {
-        $frontUserInfo = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $data['user_info'] = $frontUserInfo;
+        $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
         $this->load->view('order/user_info', $data);
@@ -81,10 +78,10 @@ class Ucenter extends CS_Controller {
             $old_photo = $frontUserInfo->photo;
         }
         $upload = $this->dealWithImages('photo', $old_photo);
-        $data['photo'] = isset($upload['file_name']) ? $upload['file_name'] : $postData['user_photo'];
-        $res = $this->user->update(array('uid'=>$this->uid), $data);
+        $photo = isset($upload['file_name']) ? $upload['file_name'] : $postData['user_photo'];
+        $res = $this->user->updatePhoto($this->uid, $photo);
         if ($res) {
-            $frontUserInfo->photo = $data['photo'];
+            $frontUserInfo->photo = $photo;
             set_cookie('frontUserInfo', base64_encode(serialize($frontUserInfo)), 435200);
         }
         redirectAction('Ucenter/user_info');
@@ -93,12 +90,7 @@ class Ucenter extends CS_Controller {
     public function edit_user_info()
     {
         $postData = $this->input->post();
-        $data['alias_name'] = $postData['alias_name'];
-        $data['birthday'] = $postData['birthday'];
-        $data['sex'] = $postData['sex'];
-        $data['email'] = $postData['email'];
-        $data['phone'] = $postData['phone'];
-        $res = $this->user->update(array('uid'=>$this->uid), $data);
+        $res = $this->user->update($this->uid, $postData);
         if ($res) {
             $frontUserInfo = unserialize(base64_decode(get_cookie('frontUserInfo')));
             $frontUserInfo->alias_name = $postData['alias_name'];
@@ -106,7 +98,7 @@ class Ucenter extends CS_Controller {
             $frontUserInfo->sex = $postData['sex'];
             $frontUserInfo->email = $postData['email'];
             $frontUserInfo->phone = $postData['phone'];
-            set_cookie('frontUserInfo', base64_encode(serialize($frontUserInfo)), 7200);
+            set_cookie('frontUserInfo', base64_encode(serialize($frontUserInfo)), 435200);
             echo json_encode(array('status'=>true, 'messages'=>base_url('Ucenter/edit_ok')));
         } else {
             echo json_encode(array('status'=>false, 'messages'=>'修改失败！'));
@@ -120,8 +112,7 @@ class Ucenter extends CS_Controller {
     
     public function reset_password()
     {
-        $data['password'] = sha1(base64_encode($this->input->post('new_password')));
-        $res = $this->user->update(array('uid'=>$this->uid), $data);
+        $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
         if ($res) {
             delete_cookie('frontUserInfo');
             echo json_encode(array('status'=>true, 'messages'=>$this->config->passport_url.'Login/logout'));
@@ -133,9 +124,8 @@ class Ucenter extends CS_Controller {
     public function pay_points()
     {
         $data['points_num'] = $this->account_log->total(array('uid'=>$this->uid, 'account_type'=>2));
-        $data['points_list'] = $this->account_log->getWhere(array('uid'=>$this->uid, 'account_type'=>2))->result();
-        $frontUserInfo = unserialize(base64_decode(get_cookie('frontUserInfo')));
-        $data['user_info'] = $frontUserInfo;
+        $data['points_list'] = $this->account_log->getByAccountType($this->uid, 2)->result();
+        $data['user_info'] = unserialize(base64_decode(get_cookie('frontUserInfo')));
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('foot_recommend_img','foot_speed_key'));
         $data['category'] = $this->help_category->getResultByFlag($flag=1);//左边栏显示
         $this->load->view('order/pay_points', $data);
