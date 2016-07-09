@@ -1,5 +1,5 @@
 <?php 
-class Region extends MJ_Controller
+class Region extends MW_Controller
 {
     public function _init()
     {

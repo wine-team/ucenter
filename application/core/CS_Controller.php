@@ -1,5 +1,5 @@
 <?php
-class CS_Controller extends MJ_Controller
+class CS_Controller extends MW_Controller
 {
     public function __construct()
     {
