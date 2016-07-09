@@ -4,7 +4,7 @@
 			<li class="m_li" id="minarg">
 				<a href="javacript:;">
 					<i class="f iconfont">&#xe603;</i>
-					<i id="carr_num">0</i>
+					<i id="carr_num"><?php echo $cart_num;?></i>
 				</a>
 				<p class="rt_line"></p>
 				<div class="r_av m_tr" id="racar">

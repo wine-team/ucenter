@@ -7,6 +7,7 @@ class Address extends CS_Controller {
         $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('advert_model','advert');
+        $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
         $this->load->model('mall_order_base_model', 'mall_order_base');
         $this->load->model('mall_enshrine_model', 'mall_enshrine');
@@ -51,6 +52,7 @@ class Address extends CS_Controller {
         } 
         $data['user_info'] = $this->get_user_info();
         $data['address'] = $this->mall_address->findByUid($this->uid)->result();
+        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $this->load->view('address/address', $data);
     }
     

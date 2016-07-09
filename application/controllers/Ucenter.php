@@ -7,6 +7,7 @@ class Ucenter extends CS_Controller {
         $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('advert_model','advert');
+        $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
         $this->load->model('mall_order_base_model', 'mall_order_base');
         $this->load->model('mall_order_product_model', 'mall_order_product');
@@ -52,6 +53,7 @@ class Ucenter extends CS_Controller {
         }
         $data['order_product'] = $this->mall_order_product->getWhereIn($orderid_arr);
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
+        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 5; 
         $this->load->view('order/all_order', $data);
     }
     
@@ -69,6 +71,7 @@ class Ucenter extends CS_Controller {
         $data['user_info'] = $this->get_user_info();
         $data['user_reviews'] = $this->mall_order_reviews->getByUid($this->uid)->result();
         $data['reviews_status'] = array('1'=>'待审核', '2'=>'通过', '3'=>'未通过审核');
+        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $this->load->view('order/user_reviews', $data);
     }
     
@@ -87,6 +90,7 @@ class Ucenter extends CS_Controller {
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['order'] = $this->mall_order_base->findById($order_id)->row();
         $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
+        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $this->load->view('order/order_detail', $data);
     }
     
@@ -122,6 +126,7 @@ class Ucenter extends CS_Controller {
             $data = $this->cache->memcached->get('hostHomePageCache');
         }
         $data['user_info'] = $this->get_user_info();
+        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $this->load->view('order/user_info', $data);
     }
     
@@ -191,6 +196,7 @@ class Ucenter extends CS_Controller {
         $data['points_num'] = $this->account_log->total(array('uid'=>$this->uid, 'account_type'=>2));
         $data['points_list'] = $this->account_log->getByAccountType($this->uid, 2)->result();
         $data['user_info'] = $this->get_user_info();
+        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $this->load->view('order/pay_points', $data);
     }
     
