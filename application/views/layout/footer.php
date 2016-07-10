@@ -32,13 +32,13 @@
 				</div>
 			</li>
 			<li class="m_li">
-				<a href="javacript:;" target="blank" class="f">
+				<a href="<?php echo base_url('Ucenter/index');?>" target="blank" class="f">
 					<i class="iconfont">&#xe600;</i>
 				</a>
 				<p class="r_av m_tr">订单查询<em class="r_vt">◆</em></p>
 			</li>
 			<li class="m_li">
-				<a href="javascript:alert('请先登录');" class="f">
+				<a href="<?php echo base_url('Enshrine/index');?>" class="f">
 					<i class="iconfont">&#xe606;</i>
 				</a>
 				<p class="r_av m_tr">我的收藏<em class="r_vt">◆</em></p>

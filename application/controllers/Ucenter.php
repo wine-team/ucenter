@@ -21,16 +21,11 @@ class Ucenter extends CS_Controller {
     
     public function get_user_info()
     {
-        if (!$this->cache->memcached->get('frontUserInfo')) {
-            $frontUserInfo = $this->user->findByid($this->uid)->row();
-            $order_num = $this->mall_order_base->total(array('payer_uid'=>$this->uid));
-            $enshrine_num = $this->mall_enshrine->total(array('uid'=>$this->uid));
-            $coupon_num = $this->user_coupon_get->total(array('uid'=>$this->uid));
-            $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num, 'pay_points_num'=>$frontUserInfo->pay_points);
-            $this->cache->memcached->save('frontUserInfo',$frontUserInfo);
-        } else {
-            $frontUserInfo = $this->cache->memcached->get('frontUserInfo');
-        }
+        $frontUserInfo = $this->user->findByid($this->uid)->row();
+        $order_num = $this->mall_order_base->total(array('payer_uid'=>$this->uid));
+        $enshrine_num = $this->mall_enshrine->total(array('uid'=>$this->uid));
+        $coupon_num = $this->user_coupon_get->total(array('uid'=>$this->uid));
+        $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num, 'pay_points_num'=>$frontUserInfo->pay_points);
         return $frontUserInfo;
     }
 
