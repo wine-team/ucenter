@@ -7,6 +7,7 @@ class Ucenter extends CS_Controller {
         $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('advert_model','advert');
+        $this->load->model('mall_brand_model','mall_brand');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
         $this->load->model('mall_order_base_model', 'mall_order_base');
@@ -32,14 +33,15 @@ class Ucenter extends CS_Controller {
     public function index()
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
-            $data = array(
-                'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-                'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-            );
-            $this->cache->memcached->save('hostHomePageCache',$data);
-        } else {
-            $data = $this->cache->memcached->get('hostHomePageCache');
-        }
+			$data = array(
+				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
+			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
+			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
+			);
+			$this->cache->memcached->save('hostHomePageCache',$data);
+		} else {
+			$data = $this->cache->memcached->get('hostHomePageCache');
+		}
         $data['user_info'] = $this->get_user_info();
         $data['order'] = $this->mall_order_base->findByStatus($this->uid, $this->input->get('status'))->result();
         $orderid_arr = array();
@@ -56,9 +58,10 @@ class Ucenter extends CS_Controller {
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
             $data = array(
-                'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-                'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-            );
+				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
+			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
+			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
+			);
             $this->cache->memcached->save('hostHomePageCache',$data);
         } else {
             $data = $this->cache->memcached->get('hostHomePageCache');
@@ -74,9 +77,10 @@ class Ucenter extends CS_Controller {
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
             $data = array(
-                'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-                'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-            );
+				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
+			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
+			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
+			);
             $this->cache->memcached->save('hostHomePageCache',$data);
         } else {
             $data = $this->cache->memcached->get('hostHomePageCache');
@@ -113,9 +117,10 @@ class Ucenter extends CS_Controller {
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
             $data = array(
-                'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-                'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-            );
+				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
+			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
+			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
+			);
             $this->cache->memcached->save('hostHomePageCache',$data);
         } else {
             $data = $this->cache->memcached->get('hostHomePageCache');
@@ -136,10 +141,6 @@ class Ucenter extends CS_Controller {
         $upload = $this->dealWithImages('photo', $old_photo);
         $photo = isset($upload['file_name']) ? $upload['file_name'] : $postData['user_photo'];
         $res = $this->user->updatePhoto($this->uid, $photo);
-        if ($res) {
-            $frontUserInfo->photo = $photo;
-            $this->cache->memcached->save('frontUserInfo',$frontUserInfo);
-        }
         redirectAction('Ucenter/user_info');
     }
     
@@ -148,13 +149,6 @@ class Ucenter extends CS_Controller {
         $postData = $this->input->post();
         $res = $this->user->update($this->uid, $postData);
         if ($res) {
-            $frontUserInfo = $this->get_user_info();
-            $frontUserInfo->alias_name = $postData['alias_name'];
-            $frontUserInfo->birthday = $postData['birthday'];
-            $frontUserInfo->sex = $postData['sex'];
-            $frontUserInfo->email = $postData['email'];
-            $frontUserInfo->phone = $postData['phone'];
-            $this->cache->memcached->save('frontUserInfo',$frontUserInfo);
             echo json_encode(array('status'=>true, 'messages'=>base_url('Ucenter/edit_ok')));
         } else {
             echo json_encode(array('status'=>false, 'messages'=>'修改失败！'));
@@ -170,7 +164,6 @@ class Ucenter extends CS_Controller {
     {
         $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
         if ($res) {
-            $this->cache->memcached->delete('frontUserInfo');
             echo json_encode(array('status'=>true, 'messages'=>$this->config->passport_url.'Login/logout'));
         } else {
             echo json_encode(array('status'=>false, 'messages'=>'修改失败！'));
@@ -181,9 +174,10 @@ class Ucenter extends CS_Controller {
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
             $data = array(
-                'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-                'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-            );
+				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
+			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
+			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
+			);
             $this->cache->memcached->save('hostHomePageCache',$data);
         } else {
             $data = $this->cache->memcached->get('hostHomePageCache');

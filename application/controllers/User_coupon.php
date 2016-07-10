@@ -7,6 +7,7 @@ class User_coupon extends CS_Controller {
         $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('advert_model','advert');
+        $this->load->model('mall_brand_model','mall_brand');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
         $this->load->model('mall_order_base_model', 'mall_order_base');
@@ -28,9 +29,10 @@ class User_coupon extends CS_Controller {
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
             $data = array(
-                'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-                'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-            );
+				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
+			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
+			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
+			);
             $this->cache->memcached->save('hostHomePageCache',$data);
         } else {
             $data = $this->cache->memcached->get('hostHomePageCache');
