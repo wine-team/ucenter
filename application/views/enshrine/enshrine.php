@@ -42,8 +42,8 @@
                 <?php endforeach;?>
 			</ul>
 			<div class="page" id="pager">
-				<span class="yemr">总计<b><?php echo $user_info->num_list['enshrine_num']?></b> 条记录
-				</span>
+				<span class="yemr">总计<b><?php echo $sum;?></b> 条记录</span>
+				<?php echo $link;?>
 			</div>
 		</div>
 

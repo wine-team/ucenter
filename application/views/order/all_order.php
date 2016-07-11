@@ -68,7 +68,10 @@
 				</tr>
 				<?php endforeach;?>
 			</table>
-			<div class="page" id="pager"></div>
+			<div class="page" id="pager">
+			    <span class="yemr">总计<b><?php echo $sum;?></b>条记录</span>
+                <?php echo $link;?>
+			</div>
 		</div>
 
 		<div class="ubgw">

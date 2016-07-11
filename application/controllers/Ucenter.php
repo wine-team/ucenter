@@ -23,14 +23,14 @@ class Ucenter extends CS_Controller {
     public function get_user_info()
     {
         $frontUserInfo = $this->user->findByid($this->uid)->row();
-        $order_num = $this->mall_order_base->total(array('payer_uid'=>$this->uid));
+        $order_num = $this->mall_order_base->total($this->uid);
         $enshrine_num = $this->mall_enshrine->total(array('uid'=>$this->uid));
         $coupon_num = $this->user_coupon_get->total(array('uid'=>$this->uid));
         $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num, 'pay_points_num'=>$frontUserInfo->pay_points);
         return $frontUserInfo;
     }
 
-    public function index()
+    public function index($num = 0)
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
 			$data = array(
@@ -42,13 +42,21 @@ class Ucenter extends CS_Controller {
 		} else {
 			$data = $this->cache->memcached->get('hostHomePageCache');
 		}
-        $data['user_info'] = $this->get_user_info();
-        $data['order'] = $this->mall_order_base->findByStatus($this->uid, $this->input->get('status'))->result();
+        $perpage = 10;
+        $page = $num/$perpage;
+        $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));
+        $config['base_url'] = base_url('Ucenter/index');
+        $config['total_rows'] = $data['sum'];
+        $config['per_page'] = $perpage;
+        $this->pagination->initialize($config);
+        $data['link'] = $this->pagination->create_links();
+        $data['order'] = $this->mall_order_base->mallOrderList($page, $perpage, $this->uid, $this->input->get('status'))->result();
         $orderid_arr = array();
         foreach ($data['order'] as $order) {
             $orderid_arr[] = $order->order_id;
         }
         $data['order_product'] = $this->mall_order_product->getWhereIn($orderid_arr);
+        $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 5; 
         $this->load->view('order/all_order', $data);

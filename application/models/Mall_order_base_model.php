@@ -8,16 +8,18 @@ class Mall_order_base_model extends CI_Model
         return $this->db->get_where($this->table, array('order_id'=>$order_id));
     }
     
-    public function findByStatus($payer_uid, $status='')
+    public function mallOrderList($page, $perpage, $payer_uid, $status='')
     {
         if ($status) $this->db->where('status', $status);
         $this->db->where('payer_uid', $payer_uid);
+        $this->db->limit($perpage, $perpage*$page);
         return $this->db->get($this->table);
     }
     
-    public function total($where=array())
+    public function total($payer_uid, $status='')
     {
-        $this->db->where($where);
+        if ($status) $this->db->where('status', $status);
+        $this->db->where('payer_uid', $payer_uid);
         return $this->db->count_all_results($this->table);
     }
     

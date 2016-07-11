@@ -19,14 +19,14 @@ class Enshrine extends CS_Controller {
     public function get_user_info()
     {
         $frontUserInfo = $this->user->findByid($this->uid)->row();
-        $order_num = $this->mall_order_base->total(array('payer_uid'=>$this->uid));
+        $order_num = $this->mall_order_base->total($this->uid);
         $enshrine_num = $this->mall_enshrine->total(array('uid'=>$this->uid));
         $coupon_num = $this->user_coupon_get->total(array('uid'=>$this->uid));
         $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num, 'pay_points_num'=>$frontUserInfo->pay_points);
         return $frontUserInfo;
     }
 
-    public function index()
+    public function index($num = 0)
     {
         if (!$this->cache->memcached->get('hostHomePageCache')) {
             $data = array(
@@ -39,7 +39,16 @@ class Enshrine extends CS_Controller {
             $data = $this->cache->memcached->get('hostHomePageCache');
         }
         $data['user_info'] = $this->get_user_info();
-        $enshrine = $this->mall_enshrine->getByUid($this->uid)->result();
+        
+        $perpage = 10;
+        $page = $num/$perpage;
+        $data['sum'] = $data['user_info']->num_list['enshrine_num'];
+        $config['base_url'] = base_url('Enshrine/index');
+        $config['total_rows'] = $data['sum'];
+        $config['per_page'] = $perpage;
+        $this->pagination->initialize($config);
+        $data['link'] = $this->pagination->create_links();
+        $enshrine = $this->mall_enshrine->enshrineList($page, $perpage, $this->uid)->result();
         $goods_ids = array();
         foreach ($enshrine as $e) {
             $goods_ids[] = $e->goods_id;
