@@ -6,8 +6,6 @@ class Ucenter extends CS_Controller {
     {
         $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
-        $this->load->model('advert_model','advert');
-        $this->load->model('mall_brand_model','mall_brand');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
         $this->load->model('mall_order_base_model', 'mall_order_base');
@@ -20,28 +18,8 @@ class Ucenter extends CS_Controller {
         $this->load->model('account_log_model', 'account_log');
     }
     
-    public function get_user_info()
-    {
-        $frontUserInfo = $this->user->findByid($this->uid)->row();
-        $order_num = $this->mall_order_base->total($this->uid);
-        $enshrine_num = $this->mall_enshrine->total(array('uid'=>$this->uid));
-        $coupon_num = $this->user_coupon_get->total(array('uid'=>$this->uid));
-        $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num, 'pay_points_num'=>$frontUserInfo->pay_points);
-        return $frontUserInfo;
-    }
-
     public function index($num = 0)
     {
-        if (!$this->cache->memcached->get('hostHomePageCache')) {
-			$data = array(
-				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
-			);
-			$this->cache->memcached->save('hostHomePageCache',$data);
-		} else {
-			$data = $this->cache->memcached->get('hostHomePageCache');
-		}
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));
@@ -59,45 +37,28 @@ class Ucenter extends CS_Controller {
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 5; 
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
         $this->load->view('order/all_order', $data);
     }
     
     public function user_reviews()
     {
-        if (!$this->cache->memcached->get('hostHomePageCache')) {
-            $data = array(
-				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
-			);
-            $this->cache->memcached->save('hostHomePageCache',$data);
-        } else {
-            $data = $this->cache->memcached->get('hostHomePageCache');
-        }
         $data['user_info'] = $this->get_user_info();
         $data['user_reviews'] = $this->mall_order_reviews->getByUid($this->uid)->result();
         $data['reviews_status'] = array('1'=>'待审核', '2'=>'通过', '3'=>'未通过审核');
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
         $this->load->view('order/user_reviews', $data);
     }
     
     public function order_detail($order_id)
     {
-        if (!$this->cache->memcached->get('hostHomePageCache')) {
-            $data = array(
-				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
-			);
-            $this->cache->memcached->save('hostHomePageCache',$data);
-        } else {
-            $data = $this->cache->memcached->get('hostHomePageCache');
-        }
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['order'] = $this->mall_order_base->findById($order_id)->row();
         $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
         $this->load->view('order/order_detail', $data);
     }
     
@@ -123,18 +84,9 @@ class Ucenter extends CS_Controller {
     
     public function user_info()
     {
-        if (!$this->cache->memcached->get('hostHomePageCache')) {
-            $data = array(
-				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
-			);
-            $this->cache->memcached->save('hostHomePageCache',$data);
-        } else {
-            $data = $this->cache->memcached->get('hostHomePageCache');
-        }
         $data['user_info'] = $this->get_user_info();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
         $this->load->view('order/user_info', $data);
     }
     
@@ -157,9 +109,9 @@ class Ucenter extends CS_Controller {
         $postData = $this->input->post();
         $res = $this->user->update($this->uid, $postData);
         if ($res) {
-            echo json_encode(array('status'=>true, 'messages'=>base_url('Ucenter/edit_ok')));
+            $this->jsonMessage('', base_url('Ucenter/edit_ok'));
         } else {
-            echo json_encode(array('status'=>false, 'messages'=>'修改失败！'));
+            $this->jsonMessage('修改失败');
         }
     }
     
@@ -172,28 +124,19 @@ class Ucenter extends CS_Controller {
     {
         $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
         if ($res) {
-            echo json_encode(array('status'=>true, 'messages'=>$this->config->passport_url.'Login/logout'));
+            $this->jsonMessage('', $this->config->passport_url.'Login/logout');
         } else {
-            echo json_encode(array('status'=>false, 'messages'=>'修改失败！'));
+            $this->jsonMessage('修改失败');
         }
     }
     
     public function pay_points()
     {
-        if (!$this->cache->memcached->get('hostHomePageCache')) {
-            $data = array(
-				'advert' => $this->advert->findBySourceState($source_state=1)->result_array(),
-			    'cms_block' => $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword')),
-			    'brand' => $this->mall_brand->findBrand($limit=6)->result_array()
-			);
-            $this->cache->memcached->save('hostHomePageCache',$data);
-        } else {
-            $data = $this->cache->memcached->get('hostHomePageCache');
-        }
         $data['points_num'] = $this->account_log->total(array('uid'=>$this->uid, 'account_type'=>2));
         $data['points_list'] = $this->account_log->getByAccountType($this->uid, 2)->result();
         $data['user_info'] = $this->get_user_info();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
         $this->load->view('order/pay_points', $data);
     }
     

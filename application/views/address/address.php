@@ -3,7 +3,7 @@
 	<div class="w" id="content">
 		<div class="u_top">
 			<div class="u_zone over">
-				<a href="<?php echo base_url('Ucenter/index');?>" class="u_ava">
+				<a href="<?php echo site_url('Ucenter/index');?>" class="u_ava">
 				    <img src="<?php echo $this->config->images_url.$user_info->photo;?>" width="70" height="70" class="left" />
 					<div class="over pt10">
 						<b class="left"><?php echo $user_info->alias_name;?></b><em class="vip v1"></em>
@@ -15,12 +15,12 @@
 			    </a>
 			</div>
 			<ul id="u_nav" class="over yahei">
-				<li><a href="<?php echo base_url('Ucenter/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('Enshrine/index');?>">收藏夹<em class="c9">(<?php echo $user_info->num_list['enshrine_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('User_coupon/index');?>">优惠券<em class="c9">(<?php echo $user_info->num_list['coupon_num']?>)</em></a></li>
-				<li class="on"><a href="<?php echo base_url('Address/index');?>">收货地址</a></li>
-				<li><a href="<?php echo base_url('Ucenter/pay_points');?>">我的积分<em class="c9">(<?php echo $user_info->num_list['pay_points_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('Ucenter/user_info');?>">帐户信息</a></li>
+				<li><a href="<?php echo site_url('Ucenter/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('Enshrine/index');?>">收藏夹<em class="c9">(<?php echo $user_info->num_list['enshrine_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('User_coupon/index');?>">优惠券<em class="c9">(<?php echo $user_info->num_list['coupon_num']?>)</em></a></li>
+				<li class="on"><a href="<?php echo site_url('Address/index');?>">收货地址</a></li>
+				<li><a href="<?php echo site_url('Ucenter/pay_points');?>">我的积分<em class="c9">(<?php echo $user_info->num_list['pay_points_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('Ucenter/user_info');?>">帐户信息</a></li>
 			</ul>
 		</div>
 
@@ -28,7 +28,7 @@
 		<div class="ubgw">
 			<h2 class="lr_bl">新增收货地址</h2>
 			<p class="bb_line"></p>
-			<form name="theForm" method="post" action="<?php echo base_url('Address/addPost');?>" id="con">
+			<form name="theForm" method="post" action="<?php echo site_url('Address/addPost');?>" id="con">
 				<table width="100%" border="0" class="td_p">
 					<tbody>
 						<tr>
@@ -45,13 +45,13 @@
 						<tr>
 							<td align="right"><b class="red pr5">*</b>详细地址：</td>
 							<td>
-							    <input type="text" value="<?php echo isset($res->detailed) ? $res->detailed : '';?>" id="address" class="ipt" size="80" name="detailed" placeholder="镇、街道、小区名、门牌号" required="required" maxlength=50/>
+							    <input type="text" value="<?php echo isset($res->detailed) ? $res->detailed : '';?>" id="address" class="ipt" size="80" name="detailed" placeholder="镇、街道、小区名、门牌号" required="required" maxlength=50 />
 							</td>
 						</tr>
 						<tr>
 							<td align="right"><b class="red pr5">*</b>手机：</td>
 							<td>
-							    <input type="text" value="<?php echo isset($res->tel) ? $res->tel : '';?>" id="mobile" class="ipt" name="tel" required="required" maxlength=11/>
+							    <input type="text" value="<?php echo isset($res->tel) ? $res->tel : '';?>" id="mobile" class="ipt" required="required" name="tel"  maxlength=11 />
 							</td>
 						</tr>
 						<tr>
@@ -96,34 +96,16 @@
 					<td>中国  <?php echo $a->province_name.' '.$a->city_name.' '.$a->district_name;?></td>
 					<td><?php echo $a->tel;?></td>
 					<td>
-					    <a href="<?php echo base_url('Address/index?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
+					    <a href="<?php echo site_url('Address/index?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
 						<span class="vline">|</span>
-						<a href="javascript:;" class="blue" onclick="del_address(<?php echo $a->address_id?>)">删除</a>
-						<?php if($a->is_default==1) :?><a class="rw_btn ml5" onclick="set_default(<?php echo $a->address_id?>)" href="javascript:;">设为默认</a><?php endif;?>
+						<a href="<?php echo site_url('Address/delete?address_id='.$a->address_id);?>" class="blue" onclick="return confirm('你确认要删除该收货地址吗？');">删除</a>
+						<?php if($a->is_default==1) :?><a class="rw_btn ml5" onclick="return confirm('你确认要设置为默认收货地址吗？');" href="<?php echo site_url('Address/setDefault?address_id='.$a->address_id);?>">设为默认</a><?php endif;?>
 						<?php if($a->is_default==2) :?><b class="red pl5">当前默认地址</b><?php endif;?>
 					</td>
 				</tr>
 				<?php endforeach;?>
 			</table>
 		</div>
-
-		<script> 
-    		function del_address(id) {
-    			if (confirm('你确认要删除该收货地址吗？')) {
-    				location.href = url() +"/Address/delete?address_id="+ id;
-    			}
-    		}
-    		function set_default(id) {
-    			if (confirm('你确认要设置为默认收货地址吗？')) {
-    				location.href = url() +"/Address/setDefault?address_id="+ id;
-    			}
-    		}
-    		
-    		$('form#con').submit(function(){
-    			address.checkCon(this); 
-        	});
-
-		</script>
 
 	</div>
 

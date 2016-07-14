@@ -3,7 +3,7 @@
 	<div class="w" id="content">
 		<div class="u_top">
 			<div class="u_zone over">
-				<a href="<?php echo base_url('Ucenter/index');?>" class="u_ava">
+				<a href="<?php echo site_url('Ucenter/index');?>" class="u_ava">
 				    <img src="<?php echo $this->config->images_url.$user_info->photo;?>" width="70" height="70" class="left" />
 					<div class="over pt10">
 						<b class="left"><?php echo $user_info->alias_name;?></b><em class="vip v1"></em>
@@ -15,20 +15,20 @@
 			    </a>
 			</div>
 			<ul id="u_nav" class="over yahei">
-				<li><a href="<?php echo base_url('Ucenter/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('Enshrine/index');?>">收藏夹<em class="c9">(<?php echo $user_info->num_list['enshrine_num']?>)</em></a></li>
-				<li class="on"><a href="<?php echo base_url('User_coupon/index');?>">优惠券<em class="c9">(<?php echo $user_info->num_list['coupon_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('Address/index');?>">收货地址</a></li>
-				<li><a href="<?php echo base_url('Ucenter/pay_points');?>">我的积分<em class="c9">(<?php echo $user_info->num_list['pay_points_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('Ucenter/user_info');?>">帐户信息</a></li>
+				<li><a href="<?php echo site_url('Ucenter/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('Enshrine/index');?>">收藏夹<em class="c9">(<?php echo $user_info->num_list['enshrine_num']?>)</em></a></li>
+				<li class="on"><a href="<?php echo site_url('User_coupon/index');?>">优惠券<em class="c9">(<?php echo $user_info->num_list['coupon_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('Address/index');?>">收货地址</a></li>
+				<li><a href="<?php echo site_url('Ucenter/pay_points');?>">我的积分<em class="c9">(<?php echo $user_info->num_list['pay_points_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('Ucenter/user_info');?>">帐户信息</a></li>
 			</ul>
 		</div>
 		<div class="ubgwn">
 			<ul class="u_q clearfix">
-				<li class="first <?php if(!$this->input->get('status')) echo 'on';?>"><a href="<?php echo base_url('User_coupon/index');?>">全部</a></li>
-				<li class="<?php if($this->input->get('status')==1) echo 'on';?>"><a href="<?php echo base_url('User_coupon/index?status=1');?>">可使用</a></li>
-				<li class="<?php if($this->input->get('status')==2) echo 'on';?>"><a href="<?php echo base_url('User_coupon/index?status=2');?>">已使用</a></li>
-				<li class="<?php if($this->input->get('status')==3) echo 'on';?>"><a href="<?php echo base_url('User_coupon/index?status=3');?>">过期</a></li>
+				<li class="first <?php if(!$this->input->get('status')) echo 'on';?>"><a href="<?php echo site_url('User_coupon/index');?>">全部</a></li>
+				<li class="<?php if($this->input->get('status')==1) echo 'on';?>"><a href="<?php echo site_url('User_coupon/index?status=1');?>">可使用</a></li>
+				<li class="<?php if($this->input->get('status')==2) echo 'on';?>"><a href="<?php echo site_url('User_coupon/index?status=2');?>">已使用</a></li>
+				<li class="<?php if($this->input->get('status')==3) echo 'on';?>"><a href="<?php echo site_url('User_coupon/index?status=3');?>">过期</a></li>
 			</ul>
 		</div>
 

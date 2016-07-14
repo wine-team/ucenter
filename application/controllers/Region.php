@@ -3,7 +3,6 @@ class Region extends MW_Controller
 {
     public function _init()
     {
-        $this->load->helper(array('common'));
         $this->load->model('region_model', 'region');
     }
     

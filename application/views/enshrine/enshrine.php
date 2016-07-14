@@ -3,7 +3,7 @@
 	<div class="w" id="content">
 		<div class="u_top">
 			<div class="u_zone over">
-				<a href="<?php echo base_url('Ucenter/index');?>" class="u_ava">
+				<a href="<?php echo site_url('Ucenter/index');?>" class="u_ava">
 				    <img src="<?php echo $this->config->images_url.$user_info->photo;?>" width="70" height="70" class="left" />
 					<div class="over pt10">
 						<b class="left"><?php echo $user_info->alias_name;?></b><em class="vip v1"></em>
@@ -15,12 +15,12 @@
 			    </a>
 			</div>
 			<ul id="u_nav" class="over yahei">
-				<li><a href="<?php echo base_url('Ucenter/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a></li>
-				<li class="on"><a href="<?php echo base_url('Enshrine/index');?>">收藏夹<em class="c9">(<?php echo $user_info->num_list['enshrine_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('User_coupon/index');?>">优惠券<em class="c9">(<?php echo $user_info->num_list['coupon_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('Address/index');?>">收货地址</a></li>
-				<li><a href="<?php echo base_url('Ucenter/pay_points');?>">我的积分<em class="c9">(<?php echo $user_info->num_list['pay_points_num']?>)</em></a></li>
-				<li><a href="<?php echo base_url('Ucenter/user_info');?>">帐户信息</a></li>
+				<li><a href="<?php echo site_url('Ucenter/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a></li>
+				<li class="on"><a href="<?php echo site_url('Enshrine/index');?>">收藏夹<em class="c9">(<?php echo $user_info->num_list['enshrine_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('User_coupon/index');?>">优惠券<em class="c9">(<?php echo $user_info->num_list['coupon_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('Address/index');?>">收货地址</a></li>
+				<li><a href="<?php echo site_url('Ucenter/pay_points');?>">我的积分<em class="c9">(<?php echo $user_info->num_list['pay_points_num']?>)</em></a></li>
+				<li><a href="<?php echo site_url('Ucenter/user_info');?>">帐户信息</a></li>
 			</ul>
 		</div>
 		<div class="ubgw">
@@ -37,7 +37,7 @@
 							<del class="ml10"><?php echo $g->market_price;?></del>
 						</p>
     				</a>
-    				<a href="<?php echo base_url('Enshrine/delete?goods_id='.$g->goods_id);?>" class="del_fava" onClick="return confirm('您确定要从收藏夹中删除选定的商品吗？')">删除</a>
+    				<a href="<?php echo site_url('Enshrine/delete?goods_id='.$g->goods_id);?>" class="del_fava" onClick="return confirm('您确定要从收藏夹中删除选定的商品吗？')">删除</a>
 				</li>
                 <?php endforeach;?>
 			</ul>

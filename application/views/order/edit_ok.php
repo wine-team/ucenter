@@ -89,7 +89,7 @@
 					<div class="t_wo">您的个人资料已经成功修改！</div>
 					<div class="t_link over">
 						<a href="<?php echo $this->config->main_base_url;?>" class="bblue">回首页</a> <a
-							href="<?php echo base_url('Ucenter/user_info');?>">返回上一页</a>
+							href="<?php echo site_url('Ucenter/user_info');?>">返回上一页</a>
 					</div>
 				</div>
 			</div>

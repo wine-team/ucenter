@@ -63,17 +63,17 @@ $(document).ready(function() {
 });
 </script>
 <style>td#district .error{display: inline;padding-left:0;}</style>
-<select id="province_id" class="required select" name="province_id" style="width:100px;">
+<select id="province_id" class="required select" required="required" name="province_id" style="width:100px;">
     <option value="" >省份</option>
     <?php foreach($provinces as $key => $province): ?>
     <option value="<?php echo $province['region_id'];?>" <?php if ($province['region_id'] == $province_selected):?>selected="selected"<?php endif;?> ><?php echo $province['region_name']; ?></option>
     <?php endforeach; ?>
 </select>
 
-<select id="city_id" class="required select" name="city_id" style="width:100px;">
+<select id="city_id" class="required select" required="required" name="city_id" style="width:100px;">
     <option value="">城市</option>
 </select>
 
-<select id="district_id" class="required select" name="district_id" style="width:100px;">
+<select id="district_id" class="required select" required="required" name="district_id" style="width:100px;">
     <option value="">县/区</option>
 </select>
