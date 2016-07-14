@@ -4,7 +4,6 @@ class User_coupon extends CS_Controller {
 
     public function _init()
     {
-        $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');

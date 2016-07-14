@@ -26,12 +26,7 @@ class Enshrine extends CS_Controller {
         $config['per_page'] = $perpage;
         $this->pagination->initialize($config);
         $data['link'] = $this->pagination->create_links();
-        $enshrine = $this->mall_enshrine->enshrineList($page, $perpage, $this->uid)->result();
-        $goods_ids = array();
-        foreach ($enshrine as $e) {
-            $goods_ids[] = $e->goods_id;
-        }
-        $data['goods'] = $this->mall_goods_base->getWhereIn($goods_ids);
+        $data['goods'] = $this->mall_enshrine->enshrineList($page, $perpage, $this->uid)->result();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
         $this->load->view('enshrine/enshrine', $data);

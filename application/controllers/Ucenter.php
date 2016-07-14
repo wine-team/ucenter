@@ -55,7 +55,7 @@ class Ucenter extends CS_Controller {
     {
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
-        $data['order'] = $this->mall_order_base->findById($order_id)->row();
+        $data['order'] = $this->mall_order_base->findById((int)$order_id)->row();
         $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));

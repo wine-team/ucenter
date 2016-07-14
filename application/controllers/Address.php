@@ -4,7 +4,6 @@ class Address extends CS_Controller {
 
     public function _init()
     {
-        $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
@@ -17,7 +16,7 @@ class Address extends CS_Controller {
     
     public function index()
     {
-        $address = $this->mall_address->findById($this->input->get('address_id'));
+        $address = $this->mall_address->findById((int)$this->input->get('address_id'));
         $data['res'] = (object)null;
         if ($address->num_rows() > 0) {
             $data['res'] = $address->row();
