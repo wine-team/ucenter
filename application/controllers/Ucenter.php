@@ -122,11 +122,20 @@ class Ucenter extends CS_Controller {
     
     public function reset_password()
     {
-        $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
-        if ($res) {
-            $this->jsonMessage('', $this->config->passport_url.'Login/logout');
+        if ($this->input->post('old_password') == $this->input->post('new_password')) {
+            $this->jsonMessage('新密码与原密码相同');
         } else {
-            $this->jsonMessage('修改失败');
+            $pass = $this->user->findById($this->uid)->row()->password;
+            if ($pass == sha1(base64_encode($this->input->post('old_password')))) {
+                $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
+                if ($res) {
+                    $this->jsonMessage('', $this->config->passport_url.'Login/logout');
+                } else {
+                    $this->jsonMessage('修改失败');
+                }
+            } else { 
+                $this->jsonMessage('原密码错误');
+            }
         }
     }
     

@@ -43,7 +43,7 @@
 						<?php endforeach;?>
 					</ul>
 					<input type="hidden" name="user_photo" value="" id="avatarImg">
-					<input type="button" class="mt10 redb" value="取消" style="background-color: #999; padding: 0 30px;" onClick="togava()" /> 
+					<input type="button" class="mt10 redb togava" value="取消" style="background-color: #999; padding: 0 30px;" /> 
 					<input type="submit" name="upload" class="mt10 redb" value="保存" style="padding: 0 30px;" />
 				</form>
 			</div>
@@ -55,11 +55,11 @@
 							<td width="80">头像</td>
 							<td class="lh20" valign="top">
 							    <img width="70" height="70" src="<?php echo $this->config->images_url.$user_info->photo;?>" />
-							    <a href="javascript:;" class="c3 pl10" onClick="togava()">修改头像</a>
+							    <a href="javascript:;" class="c3 pl10 togava">修改头像</a>
 						    </td>
 						</tr>
 						<tr>
-							<td>用户名：</td>
+							<td><b class="red pr5">*</b>用户名：</td>
 							<td><input type="text" name="alias_name" required="required" maxlength=20 id="user_name" value="<?php echo $user_info->alias_name;?>" class="ipt" size="25" /></td>
 						</tr>
 						<tr>
@@ -67,7 +67,7 @@
 							<td><input type="text" name="birthday" id="birthday" value="<?php echo $user_info->birthday;?>" class="ipt" size="25" /></td>
 						</tr>
 						<tr>
-							<td>性别：</td>
+							<td><b class="red pr5">*</b>性别：</td>
 							<td>
 							    <input type="radio" name="sex" value="0" required="required" <?php if($user_info->sex==0) echo 'checked="checked"';?> />保密&nbsp;&nbsp;
 								<input type="radio" name="sex" value="1" required="required" <?php if($user_info->sex==1) echo 'checked="checked"';?>/>男&nbsp;&nbsp; 
@@ -75,11 +75,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td>邮箱:</td>
+							<td><b class="red pr5">*</b>邮箱:</td>
 							<td><input type="text" name="email" required="required" maxlength=50 id="email" value="<?php echo $user_info->email;?>" class="ipt" size="25" /></td>
 						</tr>
 						<tr>
-							<td>手机：</td>
+							<td><b class="red pr5">*</b>手机：</td>
 							<td><input type="text" name="phone" required="required" maxlength=11 id="mobile"value="<?php echo $user_info->phone;?>" class="ipt" size="25" /></td>
 						</tr>
 						<tr>
@@ -103,15 +103,15 @@
 				<table width="100%" class="td_p" border="0">
 					<tbody>
 						<tr>
-							<td width="80">原密码：</td>
+							<td width="80"><b class="red pr5">*</b>原密码：</td>
 							<td><input type="password" id="pas1" class="ipt" size="25" name="old_password" /></td>
 						</tr>
 						<tr>
-							<td>新密码：</td>
+							<td><b class="red pr5">*</b>新密码：</td>
 							<td><input type="password" id="pas2" class="ipt" size="25" name="new_password" maxlenght=20 /></td>
 						</tr>
 						<tr>
-							<td>确认密码：</td>
+							<td><b class="red pr5">*</b>确认密码：</td>
 							<td><input type="password" id="pas3" class="ipt" size="25" name="comfirm_password" /></td>
 						</tr>
 						<tr>
@@ -124,26 +124,6 @@
 				</table>
 			</form>
 		</div>
-
-		
-		<script>
-			
-			$("#birthday").date_input();
-			function togava() {
-				$("#avatar").stop().slideToggle(300);
-			}
-			$("#mgul").delegate("li", "click", function() {
-				if ($(this).hasClass("on")) {
-					$(this).removeClass("on");
-					$("#avatarImg").val("mobile");
-					return;
-				}
-				$(this).addClass("on").siblings("li").removeClass("on");
-				var v = $(this).find("img").attr("path");
-				$("#avatarImg").val(v);
-			});
-			
-		</script>
 	</div>
 
 

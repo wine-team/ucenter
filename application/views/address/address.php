@@ -51,7 +51,7 @@
 						<tr>
 							<td align="right"><b class="red pr5">*</b>手机：</td>
 							<td>
-							    <input type="text" value="<?php echo isset($res->tel) ? $res->tel : '';?>" id="mobile" class="ipt" required="required" name="tel"  maxlength=11 />
+							    <input type="text" value="<?php echo isset($res->tel) ? $res->tel : '';?>" id="mobile" class="ipt" name="tel" required="required" maxlength=11 />
 							</td>
 						</tr>
 						<tr>

@@ -16,13 +16,9 @@
 <?php css('ucenter', 'user', '20160415');?>
 
 <?php js('ucenter', 'jquery-1.8.3');?>
-<?php js('help', 'jquery.validate.min');?>
-<?php js('help', 'jquery.validate.messages_zh');?>
 <?php js('ucenter','index', '20160415');?>
 <?php js('ucenter','ucenter', '20160415');?>
-<?php js('ucenter','address', '20160415');?>
 <?php js('ucenter','datepick', '20160415');?>
-<?php js('ucenter','user_info', '20160415');?>
 
 <!--[if lt IE 10]>
 <?php //js('passport', 'placeholder');?>
