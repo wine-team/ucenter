@@ -126,7 +126,7 @@
         </div>
             
         <div class="tr_c right" id="tcar">
-            <a class="t_c" href="<?php echo site_url('cart/grid');?>" rel="nofollow">
+            <a class="t_c" href="<?php echo $this->config->main_base_url.'cart/grid.html';?>" rel="nofollow">
                                                我的购物车
                  <p id="qcar"><?php echo isset($cart_num) ? $cart_num : '0';?></p><i class="ci_r">&gt;</i>
             </a>
