@@ -38,65 +38,37 @@
 				</p>
 				<p>下单时间: <?php echo $order->created_at;?></p>
 			</div>
-
-
-			<div id="weixinzhifu"
-				style="background: #fff url(http://s.qw.cc/themes/v4/css/ft/weipay.png) 320px 52px no-repeat; padding: 80px 0; height: 300px;">
+            <?php if($order->pay_method !== '微信') :?>
+			<div id="weixinzhifu" data-order_id="<?php echo $order->order_id;?>" data-total="<?php echo $order->actual_price;?>" style="background: #fff url(http://s.qw.cc/themes/v4/css/ft/weipay.png) 320px 52px no-repeat; padding: 80px 0; height: 300px;">
 				<h3 class="c3 lh30 f16">请使用微信扫一扫，扫描二维码支付</h3>
 				<div id="codeimg">二维码生成中请稍等</div>
 			</div>
-			<script type="text/javascript" src="themes/v4/js/pay.js"></script>
-			<script type="text/javascript">
-				$(function() {
-					var order_sn = "2016050514383693803";
-					var ip = "127.0.0.1";
-					var total = "5231.24";
-					total = total * 100;
-					$.ajax({
-								url : "wxpay/request.php",
-								data : {
-									'out_trade_no' : order_sn,
-									'body' : "趣网商城",
-									'total_fee' : total,
-									'mch_create_ip' : ip
-								},
-								dataType : "json",
-								type : "POST",
-								success : function(res) {
-									//                        doWftPay(data);
-									if (typeof (res) === 'string') {
-										res = JSON.parse(res);
-									}
-									if (res.status === 500) {
-										_content = res.msg;
-										$('#codeimg').popUpWin({
-											content : res.msg
-										});
-									} else {
-										$('#codeimg').html('');
-										$('#codeimg').popUpWin({
-											content : function() {
-												return '<img width="230" src="'+res.code_img_url+'" />';
-											},
-											closeCallback : function() {
-												self.popWin = undefined;
-												self.opts.qrCodeClose = true;
-											}
-										});
-									}
-								}
-							});
-				});
-			</script>
-
+			<?php endif;?>
 			<p class="lh20">&nbsp;</p>
 			<p class="s_h3 yahei">付款/收货人信息</p>
 			<div class="lh25 f14">
 				<p>联系人：<?php echo $order->user_name;?></p>
 				<p>收货地址：<?php echo json_decode($order->delivery_address);?></p>
-				<p>
-					手机号码：<?php echo substr_replace($user_info->phone, '****', 3,4)?><em class="c9 pl5 f12">(已加密)</em>
-				</p>
+				<p>手机号码：<?php echo substr_replace($user_info->phone, '****', 3,4)?><em class="c9 pl5 f12">(已加密)</em></p>
+				<?php if($order->pay_method == '支付宝') :?>
+				<div class="mt15" id="zhifubao">
+                    <form id="pay" target="_blank" method="post" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" name="pay">
+                        <input type="hidden" value="utf-8" name="_input_charset">
+                        <input type="hidden" value="http://www.qu.cn/notify/alipay.php" name="notify_url">
+                        <input type="hidden" value="2016071914342779181-2308998" name="out_trade_no">
+                        <input type="hidden" value="2088211707337241" name="partner">
+                        <input type="hidden" value="1" name="payment_type">
+                        <input type="hidden" value="http://www.qu.cn/respond.php?code=alipay" name="return_url">
+                        <input type="hidden" value="vip@hongju.cc" name="seller_email">
+                        <input type="hidden" value="create_direct_pay_by_user" name="service">
+                        <input type="hidden" value="2016071914342779181" name="subject">
+                        <input type="hidden" value="479.02" name="total_fee">
+                        <input type="hidden" value="8d99d31b36904c80ce602d3e373c0cf6" name="sign">
+                        <input type="hidden" value="MD5" name="sign_type">
+                        <input class="bigsee" type="submit" value="立即使用支付宝支付">
+                    </form>
+                </div>
+                <?php endif;?>
 			</div>
 
 			<p class="lh20">&nbsp;</p>

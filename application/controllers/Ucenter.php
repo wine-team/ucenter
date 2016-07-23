@@ -149,4 +149,58 @@ class Ucenter extends CS_Controller {
         $this->load->view('order/pay_points', $data);
     }
     
+    /**
+     * @微信支付二维码
+     * */
+    public function get_wxpay_code()
+    {
+        $postData = $this->input->post();
+        
+        //测试数据
+        $postData['total_fee']=1;
+        $postData['out_trade_no'] = 1;
+        
+        /**时间加订单号*/
+        $time_orderid = date('YmdHis').'_'.$postData['out_trade_no'];
+        /**扫码支付*/
+        include_once("./WxpayAPI/wxpay/WxPay.NativePay.php");
+        $nativePay = new NativePay();
+        $input = new WxPayUnifiedOrder();
+        //商品描述---需要参数传递/统一信息
+        $input->SetBody($postData['body']);
+        //商户订单号
+        $input->SetOut_trade_no($time_orderid);
+        //总金额
+        $input->SetTotal_fee((int)$postData['total_fee']);
+        //交易类型
+        $input->SetTrade_type("NATIVE");
+        $input->GetTrade_type("NATIVE");
+        //商品id
+        $input->SetProduct_id($time_orderid);
+        
+        $res = $nativePay->GetPayUrl($input);
+        if ($res['return_code']=='SUCCESS' && $res['result_code']=='SUCCESS') {
+            /**支付链接*/
+            $code_url = $res['code_url'];
+            
+            /**生成二维码*/
+            $this->load->library('Productewm');
+            $code_img_url = '/wx_ewm/'.$time_orderid.'.png';
+            $getData = array(
+                'value'=>$code_url,
+                'errorCorrectionLevel'=>'H',
+                'matrixPointSize'=>4,
+                'QR'=>dirname(FCPATH).'/images'.$code_img_url,
+                'logo'=>false,
+                'output'=>false
+            );
+            $this->productewm->product($getData);
+            echo json_encode(array('status'=>true, 'code_img_url'=>$this->config->images_url.$code_img_url));
+        } else{
+            echo json_encode(array('status'=>false, 'msg'=>'微信支付二维码生成失败，请刷新页面'));
+        }
+    }
+    
+    
+    
 }

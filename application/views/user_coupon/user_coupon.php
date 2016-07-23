@@ -65,10 +65,9 @@
 				<p>4.优惠券在购物车结算时，用作现金抵扣。不同类型的优惠券的使用范围也不同，结算金额必须达到“最小订单金额”才可以使用。</p>
 			</div>
 
-			<form onsubmit="return addBonus()" method="post" action="user.php" name="addBouns" class="hid">
+			<form method="post" action="user.php" name="addBouns" class="hid">
 				<span class="pr10 left mt5">优惠券序列号:</span> 
-				<input type="text" class="inputTx left mr10" size="30" name="bonus_sn" /> 
-				<input type="hidden" class="inputTx" value="act_add_bonus" name="act" /> 
+				<input type="text" class="inputTx left mr10" size="30" name="bonus_sn" required="required" maxlength=30 /> 
 				<input type="submit" value="添加优惠券" class="redb left" style="margin-top: 2px;" />
 		
 		  </form>
