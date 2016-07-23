@@ -155,7 +155,10 @@ class Ucenter extends CS_Controller {
     public function get_wxpay_code()
     {
         $postData = $this->input->post();
-        
+        $order = $this->mall_order_base->findById($postData['out_trade_no'])->row();
+//         if ($order->status != 2) {
+//             echo json_encode(array('status'=>false, 'msg'=>'订单状态已改变', 'data'=>base_url('Ucenter/index')));exit;
+//         }
         //测试数据
         $postData['total_fee']=1;
         $postData['out_trade_no'] = 1;
@@ -195,9 +198,34 @@ class Ucenter extends CS_Controller {
                 'output'=>false
             );
             $this->productewm->product($getData);
-            echo json_encode(array('status'=>true, 'code_img_url'=>$this->config->images_url.$code_img_url));
+            echo json_encode(array('status'=>true, 'code_img_url'=>$this->config->images_url.$code_img_url, 'data'=>$time_orderid));
         } else{
             echo json_encode(array('status'=>false, 'msg'=>'微信支付二维码生成失败，请刷新页面'));
+        }
+    }
+    
+    /**
+     * @获取扫码支付结果
+     * */
+    public function get_trade_state()
+    {
+        $out_trade_no = $this->input->post('out_trade_no');
+        include_once("./WxpayAPI/lib/WxPay.Api.php");
+        $wxPay = new WxPayApi();
+        $input = new WxPayUnifiedOrder();
+        $input->SetOut_trade_no($out_trade_no);
+        $res = $wxPay->orderQuery($input);
+        if ($res['return_code']=='SUCCESS' && $res['result_code']=='SUCCESS') {
+            if ($res['trade_state']=='SUCCESS') {
+                /**支付成功，更新订单状态*/
+                $order_no = explode('_',$out_trade_no);
+                $this->mall_order_base->updateOrderStatus($order_no[1], 2, 3);
+                echo json_encode(array('status'=>true, 'msg'=>'支付成功', 'data'=>base_url('Ucenter/index')));
+            } else {
+                echo json_encode(array('status'=>false));
+            }
+        } else {
+            echo json_encode(array('status'=>false));
         }
     }
     

@@ -23,6 +23,12 @@ class Mall_order_base_model extends CI_Model
         return $this->db->count_all_results($this->table);
     }
     
+    public function updateOrderStatus($order_id, $state=0, $status=0)
+    {
+        if ($state) $data['state'] = $state;
+        if ($status) $data['status'] = $status;
+        return $this->db->update($this->table, $data, array('order_id'=>$order_id));
+    }
     
     
     
