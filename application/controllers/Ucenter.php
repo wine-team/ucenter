@@ -66,7 +66,7 @@ class Ucenter extends CS_Controller {
     }
     
     public function get_maybe_like()
-    {set_cookie('history', base64_encode(serialize(array())), 60);
+    {
         $goods_ids = array();
         $history = unserialize(base64_decode(get_cookie('history')));
         if ($history) {

@@ -95,7 +95,7 @@
 <div id="header" class="miao-header">
     <div class="w">
         <div class="rel left" >
-            <a href="<?php echo site_url();?>" title="妙处网,乐享生活" class="logo" rel="nofollow">
+            <a href="<?php echo $this->config->main_base_url;?>" title="妙处网,乐享生活" class="logo" rel="nofollow">
             	<img src="miaow/images/mcw1.png"/>
             </a>
         </div>

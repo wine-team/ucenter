@@ -77,33 +77,7 @@
 		<div class="ubgw">
 			<h2 class="lr_bl">根据浏览，猜您喜欢</h2>
 			<p class="bline"></p>
-			<div class="over dn_aw">
-				<a href="goods-9181.html" target="_blank" title="MOVO 冰爽型夫妻情趣男女用润滑液100ml" class="dn_au">
-				    <img width="200" height="200" src="http://s.qw.cc/images/201605/thumb_img/9181_thumb_P220_1462353389936.jpg" />
-				    <p>MOVO 冰爽型夫妻情趣男女用润滑液100ml</p>
-					<p class="xj"> ¥145.04</span></p>
-				</a> 
-				<a href="goods-9131.html" target="_blank" title="MOVO 女用欲望型情趣润滑液100ml" class="dn_au">
-					<img width="200" height="200" src="http://s.qw.cc/images/201604/thumb_img/9131_thumb_P220_1459842728266.jpg" />
-				    <p>MOVO 女用欲望型情趣润滑液100ml</p>
-					<p class="xj"> ¥125.44</span></p>
-				</a> 
-				<a href="goods-9118.html" target="_blank" title="韩国ZINI 御雪红而天然嫩美乳霜 35ml" class="dn_au">
-					<img width="200" height="200" src="http://s.qw.cc/images/201603/thumb_img/9118_thumb_P220_1456997332734.jpg" />
-				    <p>韩国ZINI 御雪红而天然嫩美乳霜 35ml</p>
-					<p class="xj"> ¥292.04</span></p>
-				</a> 
-				<a href="goods-9108.html" target="_blank" title="雅迪克 华夏古方秘制延时喷剂 15ml" class="dn_au">
-					<img width="200" height="200" src="http://s.qw.cc/images/201602/thumb_img/9108_thumb_P220_1456304222764.jpg" />
-				    <p>雅迪克 华夏古方秘制延时喷剂 15ml</p>
-					<p class="xj">¥194.04</span></p>
-				</a> 
-				<a href="goods-9038.html" target="_blank" title="恰然国际SECWELL 二代可儿7种语音互动式智能触感飞机杯" class="dn_au">
-					<img width="200" height="200" src="http://s.qw.cc/images/201601/thumb_img/9038_thumb_P220_1453109333349.jpg" />
-				    <p>恰然国际SECWELL 二代可儿7种语音互动式智能触感飞机杯</p>
-					<p class="xj">¥293.02</span></p>
-				</a>
-			</div>
+			<div class="over dn_aw"> </div>
 		</div>
 
 	</div>
