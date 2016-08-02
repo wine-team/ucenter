@@ -111,5 +111,16 @@ function user_photo()
     );
 }
 
+/**
+ * 获取所有的分类
+ * 菜单栏需要
+ */
+function getAllCategory(){
+
+    $CI = & get_instance();
+    $CI->load->model('Mall_category_model','mall_category');
+    $allCategory = $CI->mall_category->getAllCategory();
+    return $allCategory;
+}
 
 
