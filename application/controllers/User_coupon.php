@@ -14,6 +14,7 @@ class User_coupon extends CS_Controller {
     
     public function index()
     {
+        $data['head_menu'] = 'on';
         $data['user_coupon'] = $this->user_coupon_get->findByStatus($this->uid, $this->input->get('status'))->result();
         $data['coupon_status'] = array('1'=>'未使用', '2'=>'已使用', '3'=>'过期');
         $data['user_info'] = $this->get_user_info();

@@ -20,6 +20,7 @@ class Ucenter extends CS_Controller {
     
     public function index($num = 0)
     {
+        $data['head_menu'] = 'on';
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));
@@ -43,6 +44,7 @@ class Ucenter extends CS_Controller {
     
     public function user_reviews()
     {
+        $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['user_reviews'] = $this->mall_order_reviews->getByUid($this->uid)->result();
         $data['reviews_status'] = array('1'=>'待审核', '2'=>'通过', '3'=>'未通过审核');
@@ -53,6 +55,7 @@ class Ucenter extends CS_Controller {
     
     public function order_detail($order_id)
     {
+        $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['order'] = $this->mall_order_base->findById((int)$order_id)->row();
@@ -84,6 +87,7 @@ class Ucenter extends CS_Controller {
     
     public function user_info()
     {
+        $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
@@ -117,7 +121,9 @@ class Ucenter extends CS_Controller {
     
     public function edit_ok()
     {
-        $this->load->view('order/edit_ok');
+        $data['head_menu'] = 'on';
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $this->load->view('order/edit_ok', $data);
     }
     
     public function reset_password()
@@ -141,6 +147,7 @@ class Ucenter extends CS_Controller {
     
     public function pay_points()
     {
+        $data['head_menu'] = 'on';
         $data['points_num'] = $this->account_log->total(array('uid'=>$this->uid, 'account_type'=>2));
         $data['points_list'] = $this->account_log->getByAccountType($this->uid, 2)->result();
         $data['user_info'] = $this->get_user_info();

@@ -16,6 +16,7 @@ class Address extends CS_Controller {
     
     public function index()
     {
+        $data['head_menu'] = 'on';
         $address = $this->mall_address->findById((int)$this->input->get('address_id'));
         $data['res'] = (object)null;
         if ($address->num_rows() > 0) {

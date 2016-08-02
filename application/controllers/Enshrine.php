@@ -16,6 +16,7 @@ class Enshrine extends CS_Controller {
     
     public function index($num = 0)
     {
+        $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         
         $perpage = 10;
