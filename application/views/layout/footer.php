@@ -2,7 +2,7 @@
 	<div class="r_panel">
 		<ul class="m_mid" id="m_mid">
 			<li class="m_li" id="minarg">
-				<a href="<?php echo site_url('cart/grid');?>">
+				<a href="<?php echo $this->config->main_base_url.'cart/grid';?>">
 					<i class="f iconfont">&#xe603;</i>
 					<i id="carr_num"><?php echo isset($cart_num) ? $cart_num : '0';?></i>
 				</a>
