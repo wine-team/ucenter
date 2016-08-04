@@ -16,7 +16,6 @@ class Address extends CS_Controller {
     
     public function index()
     {
-        $data['head_menu'] = 'on';
         $address = $this->mall_address->findById((int)$this->input->get('address_id'));
         $data['res'] = (object)null;
         if ($address->num_rows() > 0) {
@@ -29,6 +28,7 @@ class Address extends CS_Controller {
         $data['address'] = $this->mall_address->findByUid($this->uid)->result();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['head_menu'] = 'on';
         $this->load->view('address/address', $data);
     }
     
@@ -80,5 +80,4 @@ class Address extends CS_Controller {
             $this->error('Address/index', '', '删除失败！');
         }
     }
-    
 }

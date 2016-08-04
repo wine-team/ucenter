@@ -16,9 +16,6 @@ class Enshrine extends CS_Controller {
     
     public function index($num = 0)
     {
-        $data['head_menu'] = 'on';
-        $data['user_info'] = $this->get_user_info();
-        
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $data['user_info']->num_list['enshrine_num'];
@@ -30,6 +27,8 @@ class Enshrine extends CS_Controller {
         $data['goods'] = $this->mall_enshrine->enshrineList($page, $perpage, $this->uid)->result();
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['head_menu'] = 'on';
+        $data['user_info'] = $this->get_user_info();
         $this->load->view('enshrine/enshrine', $data);
     }
     
@@ -41,7 +40,5 @@ class Enshrine extends CS_Controller {
         } else {
             $this->error('Enshrine/index', '', '删除失败！');
         }
-    }
-    
-    
+    }    
 }
