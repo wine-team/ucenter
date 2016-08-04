@@ -20,7 +20,7 @@ class Ucenter extends CS_Controller {
     
     public function index($num = 0)
     {
-        $data['head_menu'] = 'on';
+        
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));
@@ -39,6 +39,7 @@ class Ucenter extends CS_Controller {
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 5; 
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['head_menu'] = 'on';
         $this->load->view('order/all_order', $data);
     }
     
@@ -235,7 +236,4 @@ class Ucenter extends CS_Controller {
             echo json_encode(array('status'=>false));
         }
     }
-    
-    
-    
 }
