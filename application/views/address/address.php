@@ -93,7 +93,7 @@
 				<?php foreach($address as $a) :?>
 				<tr>
 					<td><em class="f14"><?php echo $a->receiver_name;?></em></td>
-					<td>中国  <?php echo $a->province_name.' '.$a->city_name.' '.$a->district_name;?></td>
+					<td>中国  <?php echo $a->province_name.' '.$a->city_name.' '.$a->district_name.' '.$a->detailed;?></td>
 					<td><?php echo $a->tel;?></td>
 					<td>
 					    <a href="<?php echo site_url('Address/index?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
