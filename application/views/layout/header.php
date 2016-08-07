@@ -23,13 +23,6 @@
 <!--[if lt IE 10]>
 <?php //js('passport', 'placeholder');?>
 <![endif]-->
-<!--[if lt IE 9]>
-  var qwid=screen.width;
-  if(qwid <= 1220) {
-     document.write('<?php css('common', 'w9', '20160415');?>');
-  }
-<![endif]-->
-
 </head>
 <body>
 <div id="top">
