@@ -3,11 +3,6 @@ class Mall_address_model extends CI_Model
 {
     private $table = 'mall_address';
     
-    public function _init()
-    {
-        $this->load->model('region_model', 'region');
-    }
-    
     public function total($where)
     {
         $this->db->where($where);
@@ -16,12 +11,17 @@ class Mall_address_model extends CI_Model
     
     public function findById($address_id)
     {
-    	return $this->db->get_where($this->table, array('address_id'=>$address_id));
+    	$this->db->where('address_id',$address_id);
+    	$this->db->where('uid',$this->uid);
+    	return $this->db->get($this->table);
     }
     
     public function findByUid($uid)
     {
-        return $this->db->get_where($this->table, array('uid'=>$uid));
+    	$this->db->where('uid',$uid);
+    	$this->db->order_by('is_default','desc');
+    	$this->db->order_by('address_id','desc');
+        return $this->db->get($this->table);
     }
     
     public function insert($param)
@@ -41,8 +41,7 @@ class Mall_address_model extends CI_Model
             'district_id'   => $param['district_id'],
             'is_default'    => isset($param['is_default']) ? $param['is_default'] : 1,
         );
-        $this->db->insert($this->table, $data);
-        return $this->db->insert_id();
+        return $this->db->insert($this->table, $data);
     }
     
     public function update($address_id, $param) 
@@ -62,21 +61,36 @@ class Mall_address_model extends CI_Model
             'district_id'   => $param['district_id'],
             'is_default'    => isset($param['is_default']) ? $param['is_default'] : 1,
         );
-        return $this->db->update($this->table, $data, array('address_id'=>$address_id));
+        $this->db->where('address_id',$address_id);
+        return $this->db->update($this->table, $data);
     }
     
+     /**
+     * 让默认地址变为不默认
+     * @param unknown $uid
+     */
     public function setNotDefault($uid)
     {
-        return $this->db->update($this->table, array('is_default'=>1), array('uid'=>$uid, 'is_default'=>2));
+        $data = array(
+        	'is_default' => 1
+        );
+        $this->db->where('uid',$uid);
+        $this->db->where('is_default',2);
+    	return $this->db->update($this->table,$data);
     }
     
-    public function setDefault($address_id)
-    {
-        return $this->db->update($this->table, array('is_default'=>2), array('address_id'=>$address_id));
+    public function setDefault($address_id) {
+    	
+    	$data['is_default'] = 2;
+    	$this->db->where('address_id',$address_id);
+    	$this->db->where('uid',$this->uid);
+        return $this->db->update($this->table,$data);
     }
     
     public function delete($address_id) {
+    	
         $this->db->where('address_id', $address_id);
+        $this->db->where('uid',$this->uid);
         return $this->db->delete($this->table);
     }
 }

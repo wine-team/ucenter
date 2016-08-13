@@ -20,7 +20,6 @@ class Ucenter extends CS_Controller {
     
     public function index($num = 0)
     {
-        
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));
@@ -37,8 +36,8 @@ class Ucenter extends CS_Controller {
         $data['order_product'] = $this->mall_order_product->getWhereIn($orderid_arr);
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
-        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 5; 
-        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
+        $data['like'] = $this->get_maybe_like();
         $data['head_menu'] = 'on';
         $this->load->view('order/all_order', $data);
     }
@@ -49,8 +48,7 @@ class Ucenter extends CS_Controller {
         $data['user_info'] = $this->get_user_info();
         $data['user_reviews'] = $this->mall_order_reviews->getByUid($this->uid)->result();
         $data['reviews_status'] = array('1'=>'待审核', '2'=>'通过', '3'=>'未通过审核');
-        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
-        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/user_reviews', $data);
     }
     
@@ -61,11 +59,14 @@ class Ucenter extends CS_Controller {
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['order'] = $this->mall_order_base->findById((int)$order_id)->row();
         $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
-        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
-        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/order_detail', $data);
     }
     
+     /**
+     * 猜测你喜欢
+     * @return unknown|boolean
+     */
     public function get_maybe_like()
     {
         $goods_ids = array();
@@ -76,22 +77,20 @@ class Ucenter extends CS_Controller {
             }
             $related_goods_ids = array();
             $related = $this->mall_goods_related->getWhereIn($goods_ids);
-            foreach ($related as $r) {
+            foreach ($related->result() as $r) {
                 $related_goods_ids[] = $r->related_goods_id;
             }
-            $goods = $this->mall_goods_base->getWhereIn($goods_ids);
-            echo json_encode($goods);
-        } else {
-            echo json_encode(false);
-        }
+            $goods = $this->mall_goods_base->getWhereIn($related_goods_ids);
+            return $goods;
+        } 
+        return false;
     }
     
     public function user_info()
     {
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
-        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
-        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/user_info', $data);
     }
     
@@ -115,15 +114,14 @@ class Ucenter extends CS_Controller {
         $res = $this->user->update($this->uid, $postData);
         if ($res) {
             $this->jsonMessage('', base_url('Ucenter/edit_ok'));
-        } else {
-            $this->jsonMessage('修改失败');
-        }
+        } 
+        $this->jsonMessage('修改失败');
     }
     
     public function edit_ok()
     {
         $data['head_menu'] = 'on';
-        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/edit_ok', $data);
     }
     
@@ -150,10 +148,9 @@ class Ucenter extends CS_Controller {
     {
         $data['head_menu'] = 'on';
         $data['points_num'] = $this->account_log->total(array('uid'=>$this->uid, 'account_type'=>2));
-        $data['points_list'] = $this->account_log->getByAccountType($this->uid, 2)->result();
+        $data['points_list'] = $this->account_log->getByAccountType($this->uid, 2);
         $data['user_info'] = $this->get_user_info();
-        $data['cart_num'] = ($this->uid) ? $this->mall_cart_goods->getCartGoodsByUid($this->uid)->num_rows() : 0;
-        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword','head_right_advert','head_today_recommend','head_recommend_down','head_hot_keyword'));
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/pay_points', $data);
     }
     

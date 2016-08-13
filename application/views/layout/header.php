@@ -8,14 +8,15 @@
 <meta name="title"  content="<?php echo isset($headTittle) ? $headTittle : '妙处网,成人用品玩具-男根增大延迟性保健品-夫妻情趣用品-(全国货到付款 保密配送)';?>" />
 <meta name="keywords" content="<?php echo isset($headTittle) ? $headTittle : '妙处网.成人用品,情趣用品,成人用具,性用品,性保健品,性生活用品,性爱用品,成人保健,夫妻保健品';?>" />
 <meta name="description"  content="<?php echo isset($headTittle)?$headTittle : '妙处网,成人用品商城专业销售各类成人玩具、性保健品、情趣用品、情趣内衣、避孕套、成人玩具等高档情趣性用品,订购热线888-8888-888!';?>" />
-<title><?php echo isset($headTittle)?$headTittle:'妙处网,性用品,性保健品,正品成人用品网站';?></title> 
+<title><?php echo isset($headTittle)?$headTittle:'妙处网,性用品,性保健品,正品成人用品网站,妙处,妙,处';?></title> 
 <base href="<?php echo $this->config->skins_url;?>"/>
 <link type="image/x-icon" rel="shortcut icon" href="miaow/images/logo.png"/>
 <?php css('common', 'common', '20160415');?>
 <?php css('miaow', 'reset', '20160415');?>
 <?php css('ucenter', 'user', '20160415');?>
 
-<?php js('ucenter', 'jquery-1.8.3');?>
+<?php js('ucenter', 'jquery-1.10.2');?>
+<?php js('ucenter', 'layer/layer')?>
 <?php js('ucenter','index', '20160415');?>
 <?php js('ucenter','ucenter', '20160415');?>
 <?php js('ucenter','datepick', '20160415');?>
@@ -149,17 +150,16 @@
             </ul>
         </div>
         <ul class="navs left">
-            <li><a href="<?php echo site_url();?>" rel="nofollow">首页</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">女性用品</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">男性用品</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">延时助情</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">情趣内衣</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">飞机杯</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">G点棒</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">仿真阳具</a></li>
-            <li><a href="<?php echo site_url('goods/femal');?>">土豪天堂</a></li>
+            <li><a href="<?php echo $this->config->main_base_url;?>" rel="nofollow">首页</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">女性用品</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">男性用品</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">延时助情</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">情趣内衣</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">飞机杯</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">G点棒</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">仿真阳具</a></li>
+            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">土豪天堂</a></li>
         </ul>
         <div class="clear"></div>
     </div>
 </div>
-
