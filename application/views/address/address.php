@@ -61,7 +61,7 @@
 			<em class="left">全部收货地址</em>
 		</div>
 		<p class="bb_line"></p>
-		<table width="100%" border="0" class="u_otb mt15">
+		<table width="100%" border="0" class="u_otb mt15 address-list">
 			<tr>
 				<th>收货人</th>
 				<th>详细地址</th>
@@ -76,9 +76,9 @@
 				<td>
 				    <a href="<?php echo site_url('Address/index?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
 					<span class="vline">|</span>
-					<a href="<?php echo site_url('Address/delete?address_id='.$a->address_id);?>" class="blue" onclick="return confirm('你确认要删除该收货地址吗？');">删除</a>
+					<a href="<?php echo site_url('Address/delete?address_id='.$a->address_id);?>" class="blue dele">删除</a>
 					<?php if($a->is_default==1) :?>
-					<a class="rw_btn ml5" onclick="return confirm('你确认要设置为默认收货地址吗？');" href="<?php echo site_url('Address/setDefault?address_id='.$a->address_id);?>">设为默认</a>
+					<a class="rw_btn ml5 modify" href="<?php echo site_url('Address/setDefault?address_id='.$a->address_id);?>">设为默认</a>
 					<?php else:?>
 					<b class="red pl5">当前默认地址</b>
 					<?php endif;?>

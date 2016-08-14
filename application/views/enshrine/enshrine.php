@@ -3,7 +3,7 @@
 	<div class="u_top">
 	   <?php $this->load->view('layout/menu');?>
 	</div>
-	<div class="ubgw">
+	<div class="ubgw enshrine">
 		<h2 class="lr_bl">我的收藏(<?php echo $user_info->num_list['enshrine_num'];?>)</h2>
 		<ul class="fav_a">
             <?php foreach($goods as $g) :?>
@@ -17,7 +17,7 @@
 							<del class="ml10"><?php echo $g->market_price;?></del>
 						</p>
 	    			</a>
-	    			<a href="<?php echo site_url('Enshrine/delete?goods_id='.$g->goods_id);?>" class="del_fava" onClick="return confirm('您确定要从收藏夹中删除选定的商品吗？')">删除</a>
+	    			<a href="<?php echo site_url('Enshrine/delete?goods_id='.$g->goods_id);?>" class="del_fava">删除</a>
 				</li>
             <?php endforeach;?>
 		</ul>
