@@ -4,7 +4,7 @@ class Address extends CS_Controller {
 
     public function _init()
     {
-    	$this->load->helper('validation');
+        $this->load->helper('validation');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('user_model', 'user');
         $this->load->model('mall_order_base_model', 'mall_order_base');
@@ -14,8 +14,8 @@ class Address extends CS_Controller {
         $this->load->model('region_model', 'region');
     }
     
-    public function index()
-    {
+    public function index(){
+    	
         $address = $this->mall_address->findById($this->input->get('address_id'));
         $data['res'] = null;
         if ($address->num_rows() > 0) {

@@ -19,8 +19,8 @@ class Ucenter extends CS_Controller {
         $this->load->model('account_log_model', 'account_log');
     }
     
-    public function index($num = 0)
-    {
+    public function index($num = 0) {
+    	
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));

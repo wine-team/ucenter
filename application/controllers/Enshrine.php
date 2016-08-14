@@ -14,8 +14,8 @@ class Enshrine extends CS_Controller {
         $this->load->model('mall_goods_base_model', 'mall_goods_base');
     }
     
-    public function index($num = 0)
-    {   
+    public function index($num = 0){   
+    	
         $perpage = 10;
         $page = $num/$perpage;
         $data['user_info'] = $this->get_user_info();
