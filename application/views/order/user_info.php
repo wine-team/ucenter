@@ -8,7 +8,7 @@
 		<p class="bb_line"></p>
 		<p class="lh30">&nbsp;</p>
 		<div id="avatar" class="yu_bg hid mb20">
-			<form name="photo" enctype="multipart/form-data" action="<?php echo site_url('Ucenter/edit_photo');?>" method="post" class="lh35">
+			<form  enctype="multipart/form-data" action="<?php echo site_url('Ucenter/edit_photo');?>" method="post" class="lh35">
 				<table width="500" border="0">
 					<tr>
 						<td width="50"><b class="c3">选择照片：</b></td>
@@ -19,17 +19,17 @@
 				<ul class="imgUl" id="mgul">
 				    <?php foreach (user_photo() as $photo) :?>
 						<li>
-							<img src="<?php echo $this->config->images_url.$photo?>" path='<?php echo $photo;?>' width="50" height="50">
+							<img src="<?php echo $this->config->show_image_url('common/touxiang',$photo);?>" path='<?php echo $photo;?>' width="50" height="50" />
 						</li>
 					<?php endforeach;?>
 				</ul>
-				<input type="hidden" name="user_photo" value="" id="avatarImg">
-				<input type="button" class="mt10 redb togava" value="取消" style="background-color: #999; padding: 0 30px;" /> 
-				<input type="submit" name="upload" class="mt10 redb" value="保存" style="padding: 0 30px;" />
+				<input type="hidden" name="user_photo" value="<?php echo $user_info->photo;?>"/>
+				<input type="button" class="mt10 redb togava" value="取消" /> 
+				<input type="submit" name="upload" class="mt10 redb" value="保存" />
 			</form>
 		</div>
 
-		<form method="post" action="<?php echo site_url('Ucenter/edit_user_info');?>" name="formEdit" id="user_info">
+		<form  class="user-info">
 			<table width="100%" class="td_p" border="0">
 				<tbody>
 					<tr>
@@ -44,8 +44,8 @@
 						<td><input type="text" name="alias_name" required="required" maxlength=20 id="user_name" value="<?php echo $user_info->alias_name;?>" class="ipt" size="25" /></td>
 					</tr>
 					<tr>
-						<td>生日：</td>
-						<td><input type="text" name="birthday" id="birthday" value="<?php echo $user_info->birthday;?>" class="ipt" size="25" /></td>
+						<td><b class="red pr5">*</b>生日：</td>
+						<td><input type="text" name="birthday" value="<?php echo $user_info->birthday;?>" class="ipt birthday" size="25" /></td>
 					</tr>
 					<tr>
 						<td><b class="red pr5">*</b>性别：</td>
@@ -77,7 +77,7 @@
 		<div class="lr_bl">修改密码</div>
 		<p class="bb_line"></p>
 		<p class="lh30">&nbsp;</p>
-		<form method="post" action="<?php echo site_url('Ucenter/reset_password');?>" id="formPassword">
+		<form  class="formPassword">
 			<table width="100%" class="td_p" border="0">
 				<tbody>
 					<tr>

@@ -28,9 +28,12 @@ class User_model extends CI_Model
     }
     
     public function updatePwd($uid, $pwd)
-    {
+    {   
+    	$data = array(
+    	   'password' => sha1(base64_encode(trim($pwd)))
+    	);
         $this->db->where(array('uid'=>$uid));
-        return $this->db->update($this->table, array('password'=>sha1(base64_encode(trim($pwd)))));
+        return $this->db->update($this->table,$data);
     }
     
     

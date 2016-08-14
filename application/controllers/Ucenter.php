@@ -4,6 +4,7 @@ class Ucenter extends CS_Controller {
 
     public function _init()
     {
+    	$this->load->helper('validation');
         $this->load->library('pagination');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
@@ -86,6 +87,9 @@ class Ucenter extends CS_Controller {
         return false;
     }
     
+     /**
+     *商户的用户信息
+     */
     public function user_info()
     {
         $data['head_menu'] = 'on';
@@ -94,28 +98,42 @@ class Ucenter extends CS_Controller {
         $this->load->view('order/user_info', $data);
     }
     
+     /**
+     *更改图片
+     */
     public function edit_photo()
     {
-        $postData = $this->input->post();
-        $frontUserInfo = $this->get_user_info();
-        $old_photo = '';
-        if (!in_array($frontUserInfo->photo, user_photo())) {
-            $old_photo = $frontUserInfo->photo;
+    	$postData = $this->input->post();
+    	$frontUserInfo = $this->get_user_info();
+    	$old_photo = in_array($frontUserInfo->photo, user_photo()) ? '' : $frontUserInfo->photo;
+        if (!empty($_FILES['photo']['name'])) {
+        	$imageData = $this->dealWithImages('photo', $old_photo,'common/touxiang');
         }
-        $upload = $this->dealWithImages('photo', $old_photo);
-        $photo = isset($upload['file_name']) ? $upload['file_name'] : $postData['user_photo'];
+        $photo = isset($imageData['file_name']) ? $imageData['file_name'] : $postData['user_photo'];
         $res = $this->user->updatePhoto($this->uid, $photo);
-        redirectAction('Ucenter/user_info');
+        $this->redirect('Ucenter/user_info');
     }
     
     public function edit_user_info()
     {
         $postData = $this->input->post();
+        if (mb_strlen($postData['alias_name']) < 2){
+        	$this->jsonMessage('用户名不得少于2个字！');
+        }
+        if (empty($postData['birthday'])){
+        	$this->jsonMessage('生日不能为空！');
+        }
+        if (!validEmail($postData['email'])){
+        	$this->jsonMessage('请填写正确的邮箱！');
+        }
+        if (!validateMobilePhone($postData['phone'])){
+        	$this->jsonMessage('请填写正确的手机号码！');
+        }
         $res = $this->user->update($this->uid, $postData);
         if ($res) {
-            $this->jsonMessage('', base_url('Ucenter/edit_ok'));
+            $this->jsonMessage('', site_url('Ucenter/user_info'));
         } 
-        $this->jsonMessage('修改失败');
+        $this->jsonMessage('修改失败！');
     }
     
     public function edit_ok()
@@ -129,19 +147,16 @@ class Ucenter extends CS_Controller {
     {
         if ($this->input->post('old_password') == $this->input->post('new_password')) {
             $this->jsonMessage('新密码与原密码相同');
-        } else {
-            $pass = $this->user->findById($this->uid)->row()->password;
-            if ($pass == sha1(base64_encode($this->input->post('old_password')))) {
-                $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
-                if ($res) {
-                    $this->jsonMessage('', $this->config->passport_url.'Login/logout');
-                } else {
-                    $this->jsonMessage('修改失败');
-                }
-            } else { 
-                $this->jsonMessage('原密码错误');
-            }
-        }
+        } 
+        $pass = $this->user->findById($this->uid)->row()->password;
+        if ($pass == sha1(base64_encode($this->input->post('old_password')))) {
+           $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
+           if ($res) {
+              $this->jsonMessage('', $this->config->passport_url.'Login/logout');
+           } 
+           $this->jsonMessage('修改失败');
+        } 
+        $this->jsonMessage('原密码错误');
     }
     
     public function pay_points()

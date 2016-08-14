@@ -15,11 +15,11 @@
 <?php css('miaow', 'reset', '20160415');?>
 <?php css('ucenter', 'user', '20160415');?>
 
-<?php js('ucenter', 'jquery-1.10.2');?>
+<?php js('ucenter', 'jquery-1.8.3');?>
 <?php js('ucenter', 'layer/layer')?>
 <?php js('ucenter','index', '20160415');?>
 <?php js('ucenter','ucenter', '20160415');?>
-<?php js('ucenter','datepick', '20160415');?>
+<?php js('ucenter','datepick');?>
 
 <!--[if lt IE 10]>
 <?php //js('passport', 'placeholder');?>

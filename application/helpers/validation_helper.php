@@ -79,6 +79,17 @@ function validateFloatNumber($number)
 }
 
 /**
+ * Validate email address
+ *
+ * @access	public
+ * @return	bool
+ */
+function validEmail($address)
+{
+	return ( ! preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $address)) ? FALSE : TRUE;
+}
+
+/**
  * 验证身份证是否有效
  * @param unknown $sfz
  * @return boolean
