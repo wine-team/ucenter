@@ -1,7 +1,7 @@
 ﻿<?php $this->load->view('layout/header');?>
 <div class="w" id="content">
 	<div class="u_top">
-		<?php $this->load->view('layout/menu');?>
+	   <?php $this->load->view('layout/menu');?>
 	</div>
 	<div class="ubgw">
 		<div class="lr_bl">基本资料</div>
