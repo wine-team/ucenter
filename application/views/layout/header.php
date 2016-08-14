@@ -21,9 +21,6 @@
 <?php js('ucenter','ucenter', '20160415');?>
 <?php js('ucenter','datepick');?>
 
-<!--[if lt IE 10]>
-<?php //js('passport', 'placeholder');?>
-<![endif]-->
 </head>
 <body>
 <div id="top">

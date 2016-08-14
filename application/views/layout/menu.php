@@ -1,3 +1,4 @@
+
 <div class="u_zone over url" base-href="<?php echo $this->config->main_base_url;?>">
 	<a href="<?php echo site_url('Ucenter/user_info');?>" class="u_ava">
 	    <img src="<?php echo $this->config->show_image_url('common/touxiang',$user_info->photo);?>" width="70" height="70" class="left" />

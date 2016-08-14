@@ -1,7 +1,7 @@
 ﻿<?php $this->load->view('layout/header');?>
 <div class="w" id="content">
 	<div class="u_top">
-		<?php $this->load->view('layout/menu');?>
+	   <?php $this->load->view('layout/menu');?>
 	</div>
 	<div class="ubgw">
 		<h2 class="lr_bl">新增收货地址</h2>
