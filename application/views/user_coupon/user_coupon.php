@@ -6,16 +6,16 @@
 	<div class="ubgwn">
 		<ul class="u_q clearfix">
 			<li class="first <?php if(!$this->input->get('status')):?>on<?php endif;?>">
-				<a href="<?php echo site_url('User_coupon/index');?>">全部</a>
+				<a href="<?php echo site_url('user_coupon/index');?>">全部</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==1):?>on<?php endif;?>">
-				<a href="<?php echo site_url('User_coupon/index?status=1');?>">可使用</a>
+				<a href="<?php echo site_url('user_coupon/index?status=1');?>">可使用</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==2):?>on<?php endif;?>">
-				<a href="<?php echo site_url('User_coupon/index?status=2');?>">已使用</a>
+				<a href="<?php echo site_url('user_coupon/index?status=2');?>">已使用</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==3):?>on<?php endif;?>">
-				<a href="<?php echo site_url('User_coupon/index?status=3');?>">过期</a>
+				<a href="<?php echo site_url('user_coupon/index?status=3');?>">过期</a>
 			</li>
 		</ul>
 	</div>

@@ -8,7 +8,7 @@
 		<p class="bb_line"></p>
 		<p class="lh30">&nbsp;</p>
 		<div id="avatar" class="yu_bg hid mb20">
-			<form  enctype="multipart/form-data" action="<?php echo site_url('Ucenter/edit_photo');?>" method="post" class="lh35">
+			<form  enctype="multipart/form-data" action="<?php echo site_url('ucenter/edit_photo');?>" method="post" class="lh35">
 				<table width="500" border="0">
 					<tr>
 						<td width="50"><b class="c3">选择照片：</b></td>

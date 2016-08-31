@@ -17,7 +17,7 @@
 							<del class="ml10"><?php echo $g->market_price;?></del>
 						</p>
 	    			</a>
-	    			<a href="<?php echo site_url('Enshrine/delete?goods_id='.$g->goods_id);?>" class="del_fava">删除</a>
+	    			<a href="<?php echo site_url('enshrine/delete?goods_id='.$g->goods_id);?>" class="del_fava">删除</a>
 				</li>
             <?php endforeach;?>
 		</ul>

@@ -6,7 +6,7 @@
 	<div class="ubgw">
 		<div class="over">
 			<h2 class="lr_bl left">订单详情</h2>
-			<a href="<?php echo site_url('Ucenter/index');?>" class="blue right">《返回订单列表</a>
+			<a href="<?php echo site_url('ucenter/index');?>" class="blue right">《返回订单列表</a>
 		</div>
 
 		<div class="yu_bg f14">

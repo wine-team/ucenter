@@ -24,7 +24,7 @@ class Ucenter extends CS_Controller {
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));
-        $config['base_url'] = base_url('Ucenter/index');
+        $config['base_url'] = base_url('ucenter/index');
         $config['total_rows'] = $data['sum'];
         $config['per_page'] = $perpage;
         $this->pagination->initialize($config);
@@ -111,7 +111,7 @@ class Ucenter extends CS_Controller {
         }
         $photo = isset($imageData['file_name']) ? $imageData['file_name'] : $postData['user_photo'];
         $res = $this->user->updatePhoto($this->uid, $photo);
-        $this->redirect('Ucenter/user_info');
+        $this->redirect('ucenter/user_info');
     }
     
     public function edit_user_info()
@@ -131,7 +131,7 @@ class Ucenter extends CS_Controller {
         }
         $res = $this->user->update($this->uid, $postData);
         if ($res) {
-            $this->jsonMessage('', site_url('Ucenter/user_info'));
+            $this->jsonMessage('', site_url('ucenter/user_info'));
         } 
         $this->jsonMessage('修改失败！');
     }
@@ -152,7 +152,7 @@ class Ucenter extends CS_Controller {
         if ($pass == sha1(base64_encode($this->input->post('old_password')))) {
            $res = $this->user->updatePwd($this->uid, $this->input->post('new_password'));
            if ($res) {
-              $this->jsonMessage('', $this->config->passport_url.'Login/logout');
+              $this->jsonMessage('', $this->config->passport_url.'login/logout');
            } 
            $this->jsonMessage('修改失败');
         } 
@@ -177,7 +177,7 @@ class Ucenter extends CS_Controller {
         $postData = $this->input->post();
         $order = $this->mall_order_base->findById($postData['out_trade_no'])->row();
 //         if ($order->status != 2) {
-//             echo json_encode(array('status'=>false, 'msg'=>'订单状态已改变', 'data'=>base_url('Ucenter/index')));exit;
+//             echo json_encode(array('status'=>false, 'msg'=>'订单状态已改变', 'data'=>base_url('ucenter/index')));exit;
 //         }
         //测试数据
         $postData['total_fee']=1;
@@ -240,7 +240,7 @@ class Ucenter extends CS_Controller {
                 /**支付成功，更新订单状态*/
                 $order_no = explode('_',$out_trade_no);
                 $this->mall_order_base->updateOrderStatus($order_no[1], 2, 3);
-                echo json_encode(array('status'=>true, 'msg'=>'支付成功', 'data'=>base_url('Ucenter/index')));
+                echo json_encode(array('status'=>true, 'msg'=>'支付成功', 'data'=>base_url('ucenter/index')));
             } else {
                 echo json_encode(array('status'=>false));
             }

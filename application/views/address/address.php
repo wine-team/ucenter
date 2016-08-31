@@ -74,11 +74,11 @@
 				<td><?php echo $a->province_name.' '.$a->city_name.' '.$a->district_name.' '.$a->detailed;?></td>
 				<td><?php echo $a->tel;?></td>
 				<td>
-				    <a href="<?php echo site_url('Address/index?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
+				    <a href="<?php echo site_url('address/index?address_id='.$a->address_id);?>" title="修改当前记录" class="blue">修改</a> 
 					<span class="vline">|</span>
-					<a href="<?php echo site_url('Address/delete?address_id='.$a->address_id);?>" class="blue dele">删除</a>
+					<a href="<?php echo site_url('address/delete?address_id='.$a->address_id);?>" class="blue dele">删除</a>
 					<?php if($a->is_default==1) :?>
-					<a class="rw_btn ml5 modify" href="<?php echo site_url('Address/setDefault?address_id='.$a->address_id);?>">设为默认</a>
+					<a class="rw_btn ml5 modify" href="<?php echo site_url('address/setDefault?address_id='.$a->address_id);?>">设为默认</a>
 					<?php else:?>
 					<b class="red pl5">当前默认地址</b>
 					<?php endif;?>

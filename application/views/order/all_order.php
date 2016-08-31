@@ -6,19 +6,19 @@
 	<div class="ubgwn">
 		<ul class="u_q clearfix">
 			<li class="first <?php if(!$this->input->get('status')):?>on<?php endif;?>">
-				<a href="<?php echo site_url('Ucenter/index');?>">全部订单</a>
+				<a href="<?php echo site_url('ucenter/index');?>">全部订单</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==2):?>on<?php endif;?>">
-				<a href="<?php echo site_url('Ucenter/index?status=2');?>">待付款</a>
+				<a href="<?php echo site_url('ucenter/index?status=2');?>">待付款</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==4):?>on<?php endif;?>">
-				<a href="<?php echo site_url('Ucenter/index?status=4');?>">查物流</a>
+				<a href="<?php echo site_url('ucenter/index?status=4');?>">查物流</a>
 		    </li>
 			<li class="<?php if($this->input->get('status')==5):?>on<?php endif;?>">
-				<a href="<?php echo site_url('Ucenter/index?status=5');?>">待评价</a>
+				<a href="<?php echo site_url('ucenter/index?status=5');?>">待评价</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==6):?>on<?php endif;?>">
-				<a href="<?php echo site_url('Ucenter/user_reviews?status=6');?>">已评价</a>
+				<a href="<?php echo site_url('ucenter/user_reviews?status=6');?>">已评价</a>
 			</li>
 			<li class="last">
 				<em class="f12 c9">共<?php echo $user_info->num_list['order_num']?>个订单</em>
@@ -55,7 +55,7 @@
 					<p class="c9">￥<?php echo $o->actual_price;?>（邮费：￥<?php echo $o->deliver_price;?>）</br>共<?php echo count($order_product);?>件</p>
 				</td>
 				<td><b class="green"><?php echo $status_arr[$o->status];?></b></td>
-				<td><a class="rw_btn" href="<?php echo site_url('Ucenter/order_detail/'.$o->order_id);?>">查看订单</a></td>
+				<td><a class="rw_btn" href="<?php echo site_url('ucenter/order_detail/'.$o->order_id);?>">查看订单</a></td>
 			</tr>
 			<?php endforeach;?>
 		</table>

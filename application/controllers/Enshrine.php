@@ -20,7 +20,7 @@ class Enshrine extends CS_Controller {
         $page = $num/$perpage;
         $data['user_info'] = $this->get_user_info();
         $data['sum'] = $data['user_info']->num_list['enshrine_num'];
-        $config['base_url'] = base_url('Enshrine/index');
+        $config['base_url'] = base_url('enshrine/index');
         $config['total_rows'] = $data['sum'];
         $config['per_page'] = $perpage;
         $this->pagination->initialize($config);
@@ -35,8 +35,8 @@ class Enshrine extends CS_Controller {
     {
         $res = $this->mall_enshrine->delete(array('uid'=>$this->uid, 'goods_id'=>$this->input->get('goods_id')));
         if ($res) {
-            $this->success('Enshrine/index', '', '删除成功！');
+            $this->success('enshrine/index', '', '删除成功！');
         } 
-        $this->error('Enshrine/index', '', '删除失败！');
+        $this->error('enshrine/index', '', '删除失败！');
     }    
 }

@@ -49,7 +49,7 @@ class Address extends CS_Controller {
         }
         $this->db->trans_complete();
         if ($res && $this->db->trans_status()===TRUE) {
-            $this->jsonMessage('', base_url('Address/index'));
+            $this->jsonMessage('', base_url('address/index'));
         } 
         $this->jsonMessage('操作失败');
     }
@@ -89,9 +89,9 @@ class Address extends CS_Controller {
         $this->mall_address->setDefault($this->input->get('address_id'));
         $this->db->trans_complete();
         if ($this->db->trans_status()===TRUE) {
-            $this->success('Address/index', '', '设置成功！');
+            $this->success('address/index', '', '设置成功！');
 	    }
-	    $this->error('Address/index', '', '设置失败！');
+	    $this->error('address/index', '', '设置失败！');
 	    
     }
     
@@ -102,8 +102,8 @@ class Address extends CS_Controller {
     {
         $res = $this->mall_address->delete($this->input->get('address_id'));
         if ($res) {
-            $this->success('Address/index', '', '删除成功！');
+            $this->success('address/index', '', '删除成功！');
         } 
-        $this->error('Address/index', '', '删除失败！');
+        $this->error('address/index', '', '删除失败！');
     }
 }
