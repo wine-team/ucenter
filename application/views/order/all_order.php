@@ -49,7 +49,7 @@
                        <?php if($i > 1) break;?>
                    <?php endforeach;?>
 				</td>
-				<td><?php echo $o->order_id;?></td>
+				<td><?php echo $o->order_sn;?></td>
 				<td><em class="c9"><?php echo $o->created_at?></em></td>
 				<td>
 					<p class="c9">￥<?php echo $o->actual_price;?>（邮费：￥<?php echo $o->deliver_price;?>）</br>共<?php echo count($order_product);?>件</p>

@@ -6,6 +6,9 @@ class Ucenter extends CS_Controller {
     {
     	$this->load->helper('validation');
         $this->load->library('pagination');
+        $this->load->library('qrcode',null,'QRcode');
+//         $this->load->library('chinapay/chinapay', null, 'chinapay');
+//         $this->load->library('alipay/alipaypc', null, 'alipaypc');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
@@ -188,6 +191,53 @@ class Ucenter extends CS_Controller {
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/pay_points', $data);
     }
+    
+    /**
+     * 微信二维码的生产
+     * @param unknown $order_id
+     */
+    public function productEwm(){
+        $order_id = $this->input->post('order_id');
+        $url = $this->config->m_url.'pay/wxPay?order_id='.base64_encode($order_id).'.html';
+        $name = 'pay-order_id-'.$order_id.'.png';
+        $path = $this->config->upload_image_path('common/ewm').$name;
+        $this->QRcode->png($url,$path,4,10);
+        echo json_encode($this->config->show_image_url('common/ewm', $name));
+    }
+ 
+    /**
+     * 获取订单是否支付
+     */
+    public function get_order_status() {
+    
+        $order_id = $this->input->post('order_id');
+        if (empty($order_id)) {
+            $this->jsonMessage('非法参数');
+        }
+        $order_base = $this->mall_order_base->findById((int)$order_id);
+        if ($order_base->num_rows()<=0) {
+            $this->jsonMessage('订单不存在');
+        }
+        $mainOrder = $order_base->row(0);
+        if ($mainOrder->status==2) {
+            $this->jsonMessage('', base_url('ucenter/order_detail/'.$order_id));
+        }
+        $this->jsonMessage('该订单没有支付');
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * @微信支付二维码

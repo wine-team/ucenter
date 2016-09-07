@@ -15,6 +15,7 @@ class Mall_order_base_model extends CI_Model
         }
         $this->db->where('payer_uid', $payer_uid);
         $this->db->limit($perpage, $perpage*$page);
+        $this->db->order_by('order_id DESC');
         return $this->db->get($this->table);
     }
     
