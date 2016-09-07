@@ -17,6 +17,7 @@ class Ucenter extends CS_Controller {
         $this->load->model('mall_enshrine_model', 'mall_enshrine');
         $this->load->model('user_coupon_get_model', 'user_coupon_get');
         $this->load->model('account_log_model', 'account_log');
+        $this->load->model('deliver_order_model', 'deliver_order');
     }
     
     public function index($num = 0) {
@@ -53,6 +54,9 @@ class Ucenter extends CS_Controller {
         $this->load->view('order/user_reviews', $data);
     }
     
+    /**
+     * 订单详情
+     * */
     public function order_detail($order_id)
     {
         $data['head_menu'] = 'on';
@@ -62,6 +66,22 @@ class Ucenter extends CS_Controller {
         $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/order_detail', $data);
+    }
+    
+    /**
+     * 查看物流
+     * */
+    public function check_deliver($order_id=0)
+    {
+        $data['head_menu'] = 'on';
+        $data['user_info'] = $this->get_user_info();
+        $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
+        $data['order_main_sn'] = $this->input->get('order_main_sn');
+        $data['order_id'] = $order_id;
+        $deliver_order = $this->deliver_order->findByOrderId($order_id);
+        $data['deliver_order'] = $deliver_order->num_rows()>0 ? $deliver_order->row() : '';
+        $this->load->view('order/check_deliver', $data);
     }
     
      /**

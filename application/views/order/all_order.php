@@ -54,7 +54,10 @@
 				<td>
 					<p class="c9">￥<?php echo $o->actual_price;?>（邮费：￥<?php echo $o->deliver_price;?>）</br>共<?php echo count($order_product);?>件</p>
 				</td>
-				<td><b class="green"><?php echo $status_arr[$o->status];?></b></td>
+				<td><b <?php if($o->status>2):?>class="green"<?php else :?>class="c9"<?php endif;?>>
+				    <?php echo $status_arr[$o->status];?></b>
+				    <?php if($o->status>2):?><p><a class="red" href="<?php echo site_url('ucenter/check_deliver/'.$o->order_id.'?order_main_sn='.$o->order_main_sn);?>">查询物流</a></p><?php endif;?>
+				</td>
 				<td><a class="rw_btn" href="<?php echo site_url('ucenter/order_detail/'.$o->order_id);?>">查看订单</a></td>
 			</tr>
 			<?php endforeach;?>

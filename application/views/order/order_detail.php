@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="yu_bg f14">
-			<p>订单号：<?php echo $order->order_id;?>( <?php echo $order->pay_method;?>)</p>
+			<p>订单号：<?php echo $order->order_main_sn;?>( <?php echo $order->pay_method;?>)</p>
 			<p>
 				状态： <b class="red"><?php echo $status_arr[$order->status];?></b>
 			</p>
@@ -26,7 +26,7 @@
 		<p class="s_h3 yahei">付款/收货人信息</p>
 		<div class="lh25 f14">
 			<p>联系人：<?php echo $order->user_name;?></p>
-			<p>收货地址：<?php echo json_decode($order->delivery_address);?></p>
+			<p>收货地址：<?php echo json_decode($order->delivery_address)->detailed;?></p>
 			<p>手机号码：<?php echo substr_replace($user_info->phone, '****', 3,4)?><em class="c9 pl5 f12">(已加密)</em></p>
 			<?php if($order->pay_method == '支付宝') :?>
 				<div class="mt15" id="zhifubao">
