@@ -33,49 +33,16 @@
 			<p>收货地址：<?php echo json_decode($order->delivery_address)->detailed;?></p>
 			<p>手机号码：<?php echo substr_replace($user_info->phone, '****', 3,4)?><em class="c9 pl5 f12">(已加密)</em></p>
 			<?php if($order->status>2) :?><a class="green_btn mt15" href="<?php echo site_url('ucenter/check_deliver/'.$order->order_id.'?order_main_sn='.$order->order_main_sn);?>">查看物流</a><?php endif;?>
-			<?php if($order->status==2 && $order->pay_bank == 3) :?>
+			<?php if($order->status==2 && $order->pay_bank != 2) :?>
 				<div class="mt15" id="zhifubao">
-                    <form id="pay" target="_blank" method="post" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8" name="pay">
-                        <input type="hidden" value="utf-8" name="_input_charset">
-                        <input type="hidden" value="http://www.qu.cn/notify/alipay.php" name="notify_url">
-                        <input type="hidden" value="2016071914342779181-2308998" name="out_trade_no">
-                        <input type="hidden" value="2088211707337241" name="partner">
-                        <input type="hidden" value="1" name="payment_type">
-                        <input type="hidden" value="http://www.qu.cn/respond.php?code=alipay" name="return_url">
-                        <input type="hidden" value="vip@hongju.cc" name="seller_email">
-                        <input type="hidden" value="create_direct_pay_by_user" name="service">
-                        <input type="hidden" value="2016071914342779181" name="subject">
-                        <input type="hidden" value="479.02" name="total_fee">
-                        <input type="hidden" value="8d99d31b36904c80ce602d3e373c0cf6" name="sign">
-                        <input type="hidden" value="MD5" name="sign_type">
-                        <input class="bigsee" type="submit" value="立即使用支付宝支付">
-                    </form>
+                    <form action="<?php echo site_url('pay/grid');?>" method="post" class="pay">
+            		    <input type="hidden" name="order_id" value="<?php echo $mainOrder->order_main_sn;?>"/>
+            		    <input type="hidden" name="pay_bank" value="<?php echo $mainOrder->pay_bank;?>" />
+            			<input type="submit" class="bigsee" value="立即使用<?php echo $pay_method[$mainOrder->pay_bank]?>支付" />
+            	    </form> 
                 </div>
             <?php endif;?>
-            <?php if($order->status==2 && $order->pay_bank!=2 && $order->pay_bank!=3) :?>
-                <div class="mt15">
-                    <form id="pay" target="_blank" method="post" action="https://gateway.95516.com/gateway/api/frontTransReq.do" name="pay">
-                        <input type="hidden" value="5.0.0" name="version">
-                        <input type="hidden" value="utf-8" name="encoding">
-                        <input type="hidden" value="01" name="txnType">
-                        <input type="hidden" value="01" name="txnSubType">
-                        <input type="hidden" value="000201" name="bizType">
-                        <input type="hidden" value="01" name="signMethod">
-                        <input type="hidden" value="07" name="channelType">
-                        <input type="hidden" value="0" name="accessType">
-                        <input type="hidden" value="156" name="currencyCode">
-                        <input type="hidden" value="http://www.qu.cn/respond.php?code=unionpay" name="frontUrl">
-                        <input type="hidden" value="http://www.qu.cn/notify/unionpay.php" name="backUrl">
-                        <input type="hidden" value="802500048160537" name="merId">
-                        <input type="hidden" value="2399778I3374743" name="orderId">
-                        <input type="hidden" value="20160907221047" name="txnTime">
-                        <input type="hidden" value="4342" name="txnAmt">
-                        <input type="hidden" value="69645719176" name="certId">
-                        <input type="hidden" value="r2Tny99+YQuOkHvDeBOH9lvopfTrkI4stjJAbQoBXiD1qfWY6kAjx/OqIf63uKf/5znFqVfVZs95m7CxPAP/nMkvo1UzZD0/La/Dw1FQ81Tae8EjcIGya9oAwJO94sjyH87IWqz0DowFNfT9DgYmDdK4wUZJNS0r7Y2TtyMVRl377teJxdxSN6Od0fJvTs25xxi+XAS5O/V9xspY2mFHZEpQRD0rRZwuRA/D3Wl0PQFrk1yMyMZunhxfFWUy2Qj32BKDl+Lo7cnDl4diHx0AwkKKO+tlnQmGrR3acGFSpztZU92NXTSS50fHOvRutCkJnR4TBcxfj6L4DT7+4jqjHA==" name="signature">
-                        <input class="bigsee" type="submit" value="立即使用银联支付">
-                    </form>
-                </div>
-            <?php endif;?>
+            
 		</div>
 
 		<p class="lh20">&nbsp;</p>
