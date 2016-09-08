@@ -35,10 +35,10 @@
 			<?php if($order->status>2) :?><a class="green_btn mt15" href="<?php echo site_url('ucenter/check_deliver/'.$order->order_id.'?order_main_sn='.$order->order_main_sn);?>">查看物流</a><?php endif;?>
 			<?php if($order->status==2 && $order->pay_bank != 2) :?>
 				<div class="mt15" id="zhifubao">
-                    <form action="<?php echo site_url('pay/grid');?>" method="post" class="pay">
-            		    <input type="hidden" name="order_id" value="<?php echo $mainOrder->order_main_sn;?>"/>
-            		    <input type="hidden" name="pay_bank" value="<?php echo $mainOrder->pay_bank;?>" />
-            			<input type="submit" class="bigsee" value="立即使用<?php echo $pay_method[$mainOrder->pay_bank]?>支付" />
+                    <form action="<?php echo site_url('ucenter/pay_by_orderid');?>" method="post" class="pay">
+            		    <input type="hidden" name="order_id" value="<?php echo $order->order_id;?>"/>
+            		    <input type="hidden" name="pay_bank" value="<?php echo $order->pay_bank;?>" />
+            			<input type="submit" class="bigsee" value="立即使用<?php echo $pay_method[$order->pay_bank]?>支付" />
             	    </form> 
                 </div>
             <?php endif;?>
@@ -73,10 +73,10 @@
 		</table>
 		<p class="lh20">&nbsp;</p>
 		<div class="alR lh25 f14 c3">
-			<p>总商品金额：¥<?php echo $order->order_supply_price;?></p>
+			<p>总商品金额：¥<?php echo $order->order_shop_price;?></p>
 			<p>- 优惠：¥<?php echo $order->coupon_price;?></p>
 			<p>+ 运费：¥<?php echo $order->deliver_price;?></p>
-			<p>- 已支付金额：¥0.00</p>
+			<!--  <p>- 已支付金额：¥0.00</p>-->
 			<p>
 				应付总额：<b class="red">¥<?php echo $order->actual_price;?></b>
 			</p>

@@ -6,9 +6,9 @@ class Ucenter extends CS_Controller {
     {
     	$this->load->helper('validation');
         $this->load->library('pagination');
+        $this->load->library('chinapay/chinapay', null, 'chinapay');
+        $this->load->library('alipay/alipaypc', null, 'alipaypc');
         $this->load->library('qrcode',null,'QRcode');
-//         $this->load->library('chinapay/chinapay', null, 'chinapay');
-//         $this->load->library('alipay/alipaypc', null, 'alipaypc');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('mall_cart_goods_model', 'mall_cart_goods');
         $this->load->model('user_model', 'user');
@@ -62,10 +62,15 @@ class Ucenter extends CS_Controller {
      * */
     public function order_detail($order_id)
     {
+        $order = $this->mall_order_base->findById((int)$order_id);
+        if ($order->num_rows() == 0) {
+            $this->alertJumpPre('订单信息出错');
+        }
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
-        $data['order'] = $this->mall_order_base->findById((int)$order_id)->row();
+        $data['pay_method'] = array('1'=>'支付宝','2'=>'微信','3'=>'银联');      
+        $data['order'] = $order->row();
         $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/order_detail', $data);
@@ -225,7 +230,53 @@ class Ucenter extends CS_Controller {
         $this->jsonMessage('该订单没有支付');
     }
     
+    /**
+     * 网银去支付方法。
+     */
+    public function pay_by_orderid()
+    {
+        $order_id = $this->input->post('order_id');
+        $pay_bank = $this->input->post('pay_bank');
+        $order = $this->mall_order_base->findById((int)$order_id);
+        if ($order->num_rows() == 0) {
+            $this->alertJumpPre('订单信息出错');
+        }
+        $orderInfo = $order->row();
+        if ($pay_bank == 1) {
+            //支付宝支付
+            $alipayParameter = $this->alipayParameter($pay_bank, $orderInfo, $orderInfo->actual_price);
+            $this->alipaypc->callAlipayApi($alipayParameter);
+        } else {
+            //银联支付
+            $BgRetUrl = site_url('paycallback/chinapayReturn');
+            $PageRetUrl = site_url('paycallback/chinapayReturn');
+            $objPay = $this->chinapay->callChinapayApi($order_id, $orderInfo->actual_price, 'notcart', $BgRetUrl, $PageRetUrl);
+        }
+    }
     
+    
+    /**
+     * 获取支付宝需要参数。
+     * @param paybank $bank_id
+     * @param object $orderInfo
+     * @param object $orderProductInfo    ---主订单号的
+     * @return array
+     */
+    private function alipayParameter($pay_bank, $order_id,$actual_price)
+    {
+        $parameter = array(
+            'out_trade_no' => $order_id,
+            'subject'      => $order_id,
+            'total_fee'    => $actual_price,
+            'body'         => $order_id,
+            'show_url'     => base_url(),
+            'notify_url'   => base_url('paycallback/alipayNotify'),
+            'return_url'   => base_url('payt/alipayReturn'),
+            'pay_method'   => $pay_bank,
+            'defaultbank'  => 'alipay'
+        );
+        return $parameter;
+    }
     
     
     
