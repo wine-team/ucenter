@@ -9,7 +9,7 @@
 		<div class="ubgw">
 			<div class="over">
 				<h2 class="lr_bl left">订单<?php echo $order_main_sn;?>的物流信息</h2>
-				<a href="<?php echo site_url('ucenter/order_detail/'.$order_id);?>" class="blue right">《返回订单</a>
+				<a href="<?php echo site_url('order/order_detail/'.$order_id);?>" class="blue right">《返回订单</a>
 			</div>
 			<div class="wuliu_bg lh25" id="wuliu">
 			<?php if(!empty($deliver_order)) :?>

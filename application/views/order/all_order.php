@@ -6,16 +6,16 @@
 	<div class="ubgwn">
 		<ul class="u_q clearfix">
 			<li class="first <?php if(!$this->input->get('status')):?>on<?php endif;?>">
-				<a href="<?php echo site_url('ucenter/index');?>">全部订单</a>
+				<a href="<?php echo site_url('order/index');?>">全部订单</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==2):?>on<?php endif;?>">
-				<a href="<?php echo site_url('ucenter/index?status=2');?>">待付款</a>
+				<a href="<?php echo site_url('order/index?status=2');?>">待付款</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==4):?>on<?php endif;?>">
-				<a href="<?php echo site_url('ucenter/index?status=4');?>">查物流</a>
+				<a href="<?php echo site_url('order/index?status=4');?>">查物流</a>
 		    </li>
 			<li class="<?php if($this->input->get('status')==5):?>on<?php endif;?>">
-				<a href="<?php echo site_url('ucenter/index?status=5');?>">待评价</a>
+				<a href="<?php echo site_url('order/index?status=5');?>">待评价</a>
 			</li>
 			<li class="<?php if($this->input->get('status')==6):?>on<?php endif;?>">
 				<a href="<?php echo site_url('ucenter/user_reviews?status=6');?>">已评价</a>
@@ -56,9 +56,9 @@
 				</td>
 				<td><b <?php if($o->status>2):?>class="green"<?php else :?>class="c9"<?php endif;?>>
 				    <?php echo $status_arr[$o->status];?></b>
-				    <?php if($o->status>2):?><p><a class="red" href="<?php echo site_url('ucenter/check_deliver/'.$o->order_id.'?order_main_sn='.$o->order_main_sn);?>">查询物流</a></p><?php endif;?>
+				    <?php if($o->status>2):?><p><a class="red" href="<?php echo site_url('order/check_deliver/'.$o->order_id.'?order_main_sn='.$o->order_main_sn);?>">查询物流</a></p><?php endif;?>
 				</td>
-				<td><a class="rw_btn" href="<?php echo site_url('ucenter/order_detail/'.$o->order_id);?>">查看订单</a></td>
+				<td><a class="rw_btn" href="<?php echo site_url('order/order_detail/'.$o->order_id);?>">查看订单</a></td>
 			</tr>
 			<?php endforeach;?>
 		</table>

@@ -13,8 +13,8 @@
     <?php $action = $this->router->fetch_class();?>
     <?php $method = $this->router->fetch_method();?>
     <?php $url = ($action.'/'.$method);?>
-    <li <?php if($url=="ucenter/index"):?>class="on"<?php endif;?>>
-    	<a href="<?php echo site_url('ucenter/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a>
+    <li <?php if($url=="order/index"):?>class="on"<?php endif;?>>
+    	<a href="<?php echo site_url('order/index');?>">全部订单<em class="c9">(<?php echo $user_info->num_list['order_num']?>)</em></a>
     </li>
 	<li <?php if($url=="enshrine/index"):?>class="on"<?php endif;?>>
 		<a href="<?php echo site_url('enshrine/index');?>">收藏夹<em class="c9">(<?php echo $user_info->num_list['enshrine_num']?>)</em></a>

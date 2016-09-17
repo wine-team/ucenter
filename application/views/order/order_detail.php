@@ -6,7 +6,7 @@
 	<div class="ubgw">
 		<div class="over">
 			<h2 class="lr_bl left">订单详情</h2>
-			<a href="<?php echo site_url('ucenter/index');?>" class="blue right">《返回订单列表</a>
+			<a href="<?php echo site_url('order/index');?>" class="blue right">《返回订单列表</a>
 		</div>
 
 		<div class="yu_bg f14">
@@ -32,10 +32,10 @@
 			<p>联系人：<?php echo $order->user_name;?></p>
 			<p>收货地址：<?php echo json_decode($order->delivery_address)->detailed;?></p>
 			<p>手机号码：<?php echo substr_replace($user_info->phone, '****', 3,4)?><em class="c9 pl5 f12">(已加密)</em></p>
-			<?php if($order->status>2) :?><a class="green_btn mt15" href="<?php echo site_url('ucenter/check_deliver/'.$order->order_id.'?order_main_sn='.$order->order_main_sn);?>">查看物流</a><?php endif;?>
+			<?php if($order->status>2) :?><a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?order_main_sn='.$order->order_main_sn);?>">查看物流</a><?php endif;?>
 			<?php if($order->status==2 && $order->pay_bank != 2) :?>
 				<div class="mt15" id="zhifubao">
-                    <form action="<?php echo site_url('ucenter/pay_by_orderid');?>" method="post" class="pay">
+                    <form action="<?php echo site_url('order/pay_by_orderid');?>" method="post" class="pay">
             		    <input type="hidden" name="order_id" value="<?php echo $order->order_id;?>"/>
             		    <input type="hidden" name="pay_bank" value="<?php echo $order->pay_bank;?>" />
             			<input type="submit" class="bigsee" value="立即使用<?php echo $pay_method[$order->pay_bank]?>支付" />
