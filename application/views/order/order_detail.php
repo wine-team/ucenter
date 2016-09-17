@@ -10,17 +10,17 @@
 		</div>
 
 		<div class="yu_bg f14">
-			<p>订单号：<?php echo $order->order_main_sn;?>
+			<p>订单号：<?php echo $order->pay_id;?>
 			
 			( <?php if($order->pay_bank==2){echo '微信支付';}elseif($order->pay_bank==3){echo '支付宝支付';}else{echo '银联支付';}?>)
 			
 			</p>
 			<p>
-				状态： <b class="red"><?php echo $status_arr[$order->status];?></b>
+				状态： <b class="red"><?php echo $status_arr[$order->order_status];?></b>
 			</p>
 			<p>下单时间: <?php echo $order->created_at;?></p>
 		</div>
-        <?php if($order->status==2 && $order->pay_bank == 2) :?>
+        <?php if($order->order_status==2 && $order->pay_bank == 2) :?>
 		<div id="weixinzhifu" data-order_id="<?php echo $order->order_id;?>" data-total="<?php echo $order->actual_price;?>" style="background: #fff url(http://s.qw.cc/themes/v4/css/ft/weipay.png) 320px 52px no-repeat; padding: 80px 0; height: 300px;">
 			<h3 class="c3 lh30 f16">请使用微信扫一扫，扫描二维码支付</h3>
 			<div id="codeimg">二维码生成中请稍等</div>
@@ -32,8 +32,8 @@
 			<p>联系人：<?php echo $order->user_name;?></p>
 			<p>收货地址：<?php echo json_decode($order->delivery_address)->detailed;?></p>
 			<p>手机号码：<?php echo substr_replace($user_info->phone, '****', 3,4)?><em class="c9 pl5 f12">(已加密)</em></p>
-			<?php if($order->status>2) :?><a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?order_main_sn='.$order->order_main_sn);?>">查看物流</a><?php endif;?>
-			<?php if($order->status==2 && $order->pay_bank != 2) :?>
+			<?php if($order->order_status>2) :?><a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?pay_id='.$order->pay_id);?>">查看物流</a><?php endif;?>
+			<?php if($order->order_status==2 && $order->pay_bank != 2) :?>
 				<div class="mt15" id="zhifubao">
                     <form action="<?php echo site_url('order/pay_by_orderid');?>" method="post" class="pay">
             		    <input type="hidden" name="order_id" value="<?php echo $order->order_id;?>"/>

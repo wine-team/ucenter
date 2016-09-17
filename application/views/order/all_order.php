@@ -5,20 +5,20 @@
 	</div>
 	<div class="ubgwn">
 		<ul class="u_q clearfix">
-			<li class="first <?php if(!$this->input->get('status')):?>on<?php endif;?>">
+			<li class="first <?php if(!$this->input->get('order_status')):?>on<?php endif;?>">
 				<a href="<?php echo site_url('order/index');?>">全部订单</a>
 			</li>
-			<li class="<?php if($this->input->get('status')==2):?>on<?php endif;?>">
-				<a href="<?php echo site_url('order/index?status=2');?>">待付款</a>
+			<li class="<?php if($this->input->get('order_status')==2):?>on<?php endif;?>">
+				<a href="<?php echo site_url('order/index?order_status=2');?>">待付款</a>
 			</li>
-			<li class="<?php if($this->input->get('status')==4):?>on<?php endif;?>">
-				<a href="<?php echo site_url('order/index?status=4');?>">查物流</a>
+			<li class="<?php if($this->input->get('order_status')==4):?>on<?php endif;?>">
+				<a href="<?php echo site_url('order/index?order_status=4');?>">查物流</a>
 		    </li>
-			<li class="<?php if($this->input->get('status')==5):?>on<?php endif;?>">
-				<a href="<?php echo site_url('order/index?status=5');?>">待评价</a>
+			<li class="<?php if($this->input->get('order_status')==5):?>on<?php endif;?>">
+				<a href="<?php echo site_url('order/index?order_status=5');?>">待评价</a>
 			</li>
-			<li class="<?php if($this->input->get('status')==6):?>on<?php endif;?>">
-				<a href="<?php echo site_url('ucenter/user_reviews?status=6');?>">已评价</a>
+			<li class="<?php if($this->input->get('order_status')==6):?>on<?php endif;?>">
+				<a href="<?php echo site_url('order/user_reviews?order_status=6');?>">已评价</a>
 			</li>
 			<li class="last">
 				<em class="f12 c9">共<?php echo $user_info->num_list['order_num']?>个订单</em>
@@ -42,21 +42,22 @@
 				   <?php foreach ($order_product as $product) :?>
 					   <?php if ($product->order_id == $o->order_id):?>
 						   <a title="<?php echo $product->goods_name;?>" target="_blank" href="<?php echo $this->config->main_base_url.'goods/detail.html?goods_id='.$product->goods_id;?>"> 
-						       <img class="mr5" width="60" height="60" src="<?php echo $this->config->show_image_thumb_url('mall',$product->goods_img,60);?>">
+						       <?php $img_arr = array_filter(explode('|',$product->goods_img));?>
+						       <img class="lazy" src="miaow/images/load.jpg" width="60" height="60" data-original="<?php echo $this->config->show_image_thumb_url('mall',$img_arr[0],60);?>">
 		                   </a>
 	                       <?php $i ++;?>
                        <?php endif;?>
                        <?php if($i > 1) break;?>
                    <?php endforeach;?>
 				</td>
-				<td><?php echo $o->order_sn;?></td>
+				<td><?php echo $o->pay_id;?></td>
 				<td><em class="c9"><?php echo $o->created_at?></em></td>
 				<td>
-					<p class="c9">￥<?php echo $o->actual_price;?>（邮费：￥<?php echo $o->deliver_price;?>）</br>共<?php echo count($order_product);?>件</p>
+					<p class="c9">￥<?php echo $o->actual_price;?>（邮费：￥<?php echo $o->deliver_price;?>）</br>共<?php echo $i;?>件</p>
 				</td>
-				<td><b <?php if($o->status>2):?>class="green"<?php else :?>class="c9"<?php endif;?>>
-				    <?php echo $status_arr[$o->status];?></b>
-				    <?php if($o->status>2):?><p><a class="red" href="<?php echo site_url('order/check_deliver/'.$o->order_id.'?order_main_sn='.$o->order_main_sn);?>">查询物流</a></p><?php endif;?>
+				<td><b <?php if($o->order_status>2):?>class="green"<?php else :?>class="c9"<?php endif;?>>
+				    <?php echo $status_arr[$o->order_status];?></b>
+				    <?php if($o->order_status>2):?><p><a class="red" href="<?php echo site_url('order/check_deliver/'.$o->order_id.'?order_main_sn='.$o->order_main_sn);?>">查询物流</a></p><?php endif;?>
 				</td>
 				<td><a class="rw_btn" href="<?php echo site_url('order/order_detail/'.$o->order_id);?>">查看订单</a></td>
 			</tr>

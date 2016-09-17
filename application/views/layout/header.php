@@ -17,6 +17,7 @@
 
 <?php js('ucenter', 'jquery-1.8.3');?>
 <?php js('ucenter', 'layer/layer')?>
+<?php js('miaow', 'jquery.lazyload.min');?>
 <?php js('ucenter','index', '20160415');?>
 <?php js('ucenter','ucenter', '20160415');?>
 <?php js('ucenter','datepick');?>

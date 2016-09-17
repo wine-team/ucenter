@@ -4,23 +4,13 @@ class Ucenter extends CS_Controller {
 
     public function _init()
     {
+        $this->load->helper('validation');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('user_model', 'user');
-        $this->load->model('mall_order_reviews_model', 'mall_order_reviews');
         $this->load->model('account_log_model', 'account_log');
         $this->load->model('mall_order_base_model', 'mall_order_base');
         $this->load->model('mall_enshrine_model', 'mall_enshrine');
         $this->load->model('user_coupon_get_model', 'user_coupon_get');
-    }
-    
-    public function user_reviews()
-    {
-        $data['head_menu'] = 'on';
-        $data['user_info'] = $this->get_user_info();
-        $data['user_reviews'] = $this->mall_order_reviews->getByUid($this->uid)->result();
-        $data['reviews_status'] = array('1'=>'待审核', '2'=>'通过', '3'=>'未通过审核');
-        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
-        $this->load->view('order/user_reviews', $data);
     }
     
      /**
@@ -31,7 +21,7 @@ class Ucenter extends CS_Controller {
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
-        $this->load->view('order/user_info', $data);
+        $this->load->view('ucenter/user_info', $data);
     }
     
      /**
@@ -76,7 +66,7 @@ class Ucenter extends CS_Controller {
     {
         $data['head_menu'] = 'on';
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
-        $this->load->view('order/edit_ok', $data);
+        $this->load->view('ucenter/edit_ok', $data);
     }
     
     public function reset_password()
@@ -102,7 +92,7 @@ class Ucenter extends CS_Controller {
         $data['points_list'] = $this->account_log->getByAccountType($this->uid, 2);
         $data['user_info'] = $this->get_user_info();
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
-        $this->load->view('order/pay_points', $data);
+        $this->load->view('ucenter/pay_points', $data);
     }
     
     

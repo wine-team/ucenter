@@ -8,10 +8,10 @@ class Mall_order_base_model extends CI_Model
         return $this->db->get_where($this->table, array('order_id'=>$order_id));
     }
     
-    public function mallOrderList($page, $perpage, $payer_uid, $status='')
+    public function mallOrderList($page, $perpage, $payer_uid, $order_status='')
     {
-        if ($status) {
-        	$this->db->where('status', $status);
+        if ($order_status) {
+        	$this->db->where('order_status', $order_status);
         }
         $this->db->where('payer_uid', $payer_uid);
         $this->db->limit($perpage, $perpage*$page);
@@ -19,10 +19,10 @@ class Mall_order_base_model extends CI_Model
         return $this->db->get($this->table);
     }
     
-    public function total($payer_uid, $status='')
+    public function total($payer_uid, $order_status='')
     {
-        if ($status) {
-        	$this->db->where('status', $status);
+        if ($order_status) {
+        	$this->db->where('order_status', $order_status);
         }
         $this->db->where('payer_uid', $payer_uid);
         return $this->db->count_all_results($this->table);

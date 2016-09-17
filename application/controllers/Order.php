@@ -17,19 +17,20 @@ class Order extends CS_Controller {
         $this->load->model('mall_order_base_model', 'mall_order_base');
         $this->load->model('mall_enshrine_model', 'mall_enshrine');
         $this->load->model('user_coupon_get_model', 'user_coupon_get');
+        $this->load->model('mall_order_reviews_model', 'mall_order_reviews');
     }
     
     public function index($num = 0) {
     	
         $perpage = 10;
         $page = $num/$perpage;
-        $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('status'));
+        $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('order_status'));
         $config['base_url'] = base_url('order/index');
         $config['total_rows'] = $data['sum'];
         $config['per_page'] = $perpage;
         $this->pagination->initialize($config);
         $data['link'] = $this->pagination->create_links();
-        $data['order'] = $this->mall_order_base->mallOrderList($page, $perpage, $this->uid, $this->input->get('status'))->result();
+        $data['order'] = $this->mall_order_base->mallOrderList($page, $perpage, $this->uid, $this->input->get('order_status'))->result();
         $orderid_arr = array();
         foreach ($data['order'] as $order) {
             $orderid_arr[] = $order->order_id;
@@ -41,6 +42,16 @@ class Order extends CS_Controller {
         $data['like'] = $this->get_maybe_like();
         $data['head_menu'] = 'on';
         $this->load->view('order/all_order', $data);
+    }
+    
+    public function user_reviews()
+    {
+        $data['head_menu'] = 'on';
+        $data['user_info'] = $this->get_user_info();
+        $data['user_reviews'] = $this->mall_order_reviews->getByUid($this->uid)->result();
+        $data['reviews_status'] = array('1'=>'待审核', '2'=>'通过', '3'=>'未通过审核');
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
+        $this->load->view('order/user_reviews', $data);
     }
     
     /**
@@ -71,7 +82,7 @@ class Order extends CS_Controller {
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
-        $data['order_main_sn'] = $this->input->get('order_main_sn');
+        $data['pay_id'] = $this->input->get('pay_id');
         $data['order_id'] = $order_id;
         $deliver_order = $this->deliver_order->findByOrderId($order_id);
         $data['deliver_order'] = $deliver_order->num_rows()>0 ? $deliver_order->row() : '';
@@ -128,7 +139,7 @@ class Order extends CS_Controller {
             $this->jsonMessage('订单不存在');
         }
         $mainOrder = $order_base->row(0);
-        if ($mainOrder->status==2) {
+        if ($mainOrder->order_status==2) {
             $this->jsonMessage('', base_url('order/order_detail/'.$order_id));
         }
         $this->jsonMessage('该订单没有支付');
