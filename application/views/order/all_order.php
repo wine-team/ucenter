@@ -57,9 +57,13 @@
 				</td>
 				<td><b <?php if($o->order_status>2):?>class="green"<?php else :?>class="c9"<?php endif;?>>
 				    <?php echo $status_arr[$o->order_status];?></b>
-				    <?php if($o->order_status>2):?><p><a class="red" href="<?php echo site_url('order/check_deliver/'.$o->order_id.'?order_main_sn='.$o->order_main_sn);?>">查询物流</a></p><?php endif;?>
+				    <?php if($o->order_status>2):?><p><a class="red" href="<?php echo site_url('order/check_deliver/'.$o->order_id.'?pay_id='.$o->pay_id);?>">查询物流</a></p><?php endif;?>
 				</td>
-				<td><a class="rw_btn" href="<?php echo site_url('order/order_detail/'.$o->order_id);?>">查看订单</a></td>
+				<td>
+				    <a class="rw_btn" href="<?php echo site_url('order/order_detail/'.$o->order_id);?>">查看订单</a>
+    				<?php if($o->order_status==5) :?><p class="mt5"><a class="gw_btn" href="<?php echo site_url('order/order_reviews/'.$o->order_id);?>">去评价</a></p><?php endif;?>
+    				<?php if($o->order_status==6) :?><p class="mt5"><a class="hw_btn" href="javascript:void(0);">已评价</a></p><?php endif;?>
+				</td>
 			</tr>
 			<?php endforeach;?>
 		</table>

@@ -89,6 +89,17 @@ class Order extends CS_Controller {
         $this->load->view('order/check_deliver', $data);
     }
     
+    /**
+     * 评价
+     * */
+    public function order_reviews($order_id)
+    {
+        $data['head_menu'] = 'on';
+        $data['user_info'] = $this->get_user_info();
+        $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
+        $this->load->view('order/order_reviews', $data);
+    }
+    
      /**
      * 猜测你喜欢
      * @return unknown|boolean
