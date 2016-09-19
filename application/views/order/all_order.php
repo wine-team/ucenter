@@ -55,9 +55,11 @@
 				<td>
 					<p class="c9">￥<?php echo $o->actual_price;?>（邮费：￥<?php echo $o->deliver_price;?>）</br>共<?php echo $i;?>件</p>
 				</td>
-				<td><b <?php if($o->order_status>2):?>class="green"<?php else :?>class="c9"<?php endif;?>>
+				<td><b <?php if($o->order_status==4):?>class="green"<?php else :?>class="c9"<?php endif;?>>
 				    <?php echo $status_arr[$o->order_status];?></b>
-				    <?php if($o->order_status>2):?><p><a class="red" href="<?php echo site_url('order/check_deliver/'.$o->order_id.'?pay_id='.$o->pay_id);?>">查询物流</a></p><?php endif;?>
+				    <?php if($o->order_status>=4):?>
+				    <p><a class="red" href="<?php echo site_url('order/check_deliver/'.$o->order_id.'?pay_id='.$o->pay_id);?>">查询物流</a></p>
+				    <?php endif;?>
 				</td>
 				<td>
 				    <a class="rw_btn" href="<?php echo site_url('order/order_detail/'.$o->order_id);?>">查看订单</a>

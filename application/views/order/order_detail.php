@@ -59,15 +59,21 @@
 			<?php foreach($order_product as $product) :?>
 			<tr>
 				<td>
-				   <a href="<?php echo $product->goods_id;?>" target="_blank">
-				       <img src="<?php echo $this->config->images_url.$product->goods_img;?>" width="60" height="60" class="mr5"><?php echo $product->goods_name;?>
+				   <a href="<?php echo $this->config->main_base_url.'goods/detail.html?goods_id='.$product->goods_id;?>" target="_blank">
+				       <?php $img_arr = array_filter(explode('|',$product->goods_img));?>
+				       <img class="lazy mr5" src="miaow/images/load.jpg" data-original="<?php echo $this->config->show_image_thumb_url('mall',$img_arr[0],60);?>" width="60" height="60" ><?php echo $product->goods_name;?>
 				       <b class="c3 pl5">(<?php echo $product->goods_id;?>)</b>
 				   </a>
 				</td>
 				<td><?php echo $product->number;?></td>
 				<td>¥<?php echo $product->pay_amount;?></td>
 				<td>¥<?php echo $product->pay_amount*$product->number;?></td>
-				<td>--</td>
+				<td> 
+				<?php if ($order->order_status==6) :?><a class="gray" href="javascript:void(0);">已评价</a>
+				<?php elseif ($order->order_status==5) :?><a class="gw_btn" href="<?php echo site_url('order/order_reviews/'.$order->order_id);?>">去评价</a>
+				<?php else :?>--
+				<?php endif;?>
+				</td>
 			</tr>
 			<?php endforeach;?>
 		</table>

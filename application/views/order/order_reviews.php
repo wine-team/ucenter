@@ -16,7 +16,7 @@
 				<a href="javascript:;" onclick="window.history.go(-1)"
 					class="blue right">《返回</a>
 			</div>
-			<form action="" id="myform" onsubmit="return ck();" method="post" enctype="multipart/form-data">
+			<form action="<?php echo site_url('order/reviews_add')?>" id="myform" onsubmit="return ck();" method="post" enctype="multipart/form-data">
 				<div class="lh35">
 					<table class="td_p" border="0" cellpadding="0" cellspacing="0" width="100%">
 						<tbody>
@@ -27,31 +27,31 @@
 								<td valign="top" width="80">商品评分：</td>
 								<td class="lh20 c9">
     								<label class="left mr10">
-    								    <input name="comment_rank" value="1" id="comment_rank1" class="left" type="radio">
+    								    <input name="score" value="1" id="comment_rank1" class="left" type="radio">
     									<div class="left px px1">
     										<p></p>
     									</div> <br>1星失误
     								</label> 
 									<label class="left mr10">
-    									<input name="comment_rank" value="2" id="comment_rank2" class="left" type="radio">
+    									<input name="score" value="2" id="comment_rank2" class="left" type="radio">
     									<div class="left px px2">
     										<p></p>
     									</div> <br>2星不满
 									</label> 
 									<label class="left mr10">
-    									<input name="comment_rank" value="3" id="comment_rank3" class="left" type="radio">
+    									<input name="score" value="3" id="comment_rank3" class="left" type="radio">
     									<div class="left px px3">
     										<p></p>
     									</div> <br>3星一般
 									</label> 
 									<label class="left mr10">
-    									<input name="comment_rank" value="4" id="comment_rank4" class="left" type="radio">
+    									<input name="score" value="4" id="comment_rank4" class="left" type="radio">
     									<div class="left px px4">
     										<p></p>
     									</div> <br>4星满意
 									</label> 
 									<label class="left mr10">
-    									<input name="comment_rank" value="5" checked="checked" id="comment_rank5" class="left" type="radio">
+    									<input name="score" value="5" checked="checked" id="comment_rank5" class="left" type="radio">
     									<div class="left px px5">
     										<p></p>
     									</div> <br>5星惊喜
@@ -64,35 +64,35 @@
 									<p>&nbsp;</p>
 									<div class="uu_p">
 										<p class="img_uv" id="p1">+</p>
-										<input name="files[]" value="" class="mup" data-id="1" id="f1" autocomplete="off" type="file">
+										<input name="slide_show[]" value="" class="mup" data-id="1" id="f1" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(1);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p2">+</p>
-										<input name="files[]" value="" class="mup" data-id="2" id="f2" autocomplete="off" type="file">
+										<input name="slide_show[]" value="" class="mup" data-id="2" id="f2" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(2);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p3">+</p>
-										<input name="files[]" value="" class="mup" data-id="3" id="f3" autocomplete="off" type="file">
+										<input name="slide_show[]" value="" class="mup" data-id="3" id="f3" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(3);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p4">+</p>
-										<input name="files[]" value="" class="mup" data-id="4" id="f4" autocomplete="off" type="file">
+										<input name="slide_show[]" value="" class="mup" data-id="4" id="f4" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(4);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p5">+</p>
-										<input name="files[]" value="" class="mup" data-id="5" id="f5" autocomplete="off" type="file">
+										<input name="slide_show[]" value="" class="mup" data-id="5" id="f5" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(5);" class="red hid">删除X</a>
 										</p>
@@ -109,7 +109,6 @@
 								<td>&nbsp;</td>
 								<td><input name="goods_id" value="9896" type="hidden">
 									<input name="order_id" value="3359773" type="hidden"> 
-									<input name="act" value="act_comment" type="hidden"> 
 									<input class="green_btn" value="确认提交" type="submit">
 								</td>
 							</tr>
@@ -160,4 +159,4 @@
 	</div>
 
 
-<?php $this->load->view('layout/footer');?>	
+<?php $this->load->view('layout/footer');?><?php echo alert_message();?>	

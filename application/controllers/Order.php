@@ -100,6 +100,18 @@ class Order extends CS_Controller {
         $this->load->view('order/order_reviews', $data);
     }
     
+    public function reviews_add()
+    {$this->error('order/order_reviews', 1, '请选择图片上传！');
+        $postData = $this->input->post();var_dump($_FILES);die;
+        if (empty($_FILES['slide_show']['name'])) {
+            $this->error('order/order_reviews', 1, '请选择图片上传！');
+        }
+        $imageData = $this->dealWithImages('goods_img', '', 'mall');
+        if ($imageData == false) {
+            $this->error('mall_goods_base/images', $goods_id, '图片上传失败！');
+        }
+    }
+    
      /**
      * 猜测你喜欢
      * @return unknown|boolean

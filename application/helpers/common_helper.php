@@ -34,6 +34,19 @@ function redirectAction($uri = '', $method = 'location', $http_response_code = 3
 }
 
 /**
+ * 
+ * */
+function alert_message()
+{
+    $CI = & get_instance();
+    $CI->load->library('session');
+    $alert_msg = empty($CI->session->flashdata('error')) ? $CI->session->flashdata('success') : $CI->session->flashdata('error');
+    if (!empty($alert_msg)) {
+        return '<script>alert("'.$alert_msg.'");</script>';
+    }
+}
+
+/**
  * 发送邮件
  * @param string $mail_to
  * @param string $mail_subject
