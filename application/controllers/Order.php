@@ -63,6 +63,9 @@ class Order extends CS_Controller {
         if ($order->num_rows() == 0) {
             $this->alertJumpPre('订单信息出错');
         }
+        if ($order->row()->payer_uid != $this->uid) {
+            $this->alertJumpPre('订单信息出错');
+        }
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
@@ -78,6 +81,13 @@ class Order extends CS_Controller {
      * */
     public function check_deliver($order_id=0)
     {
+        $order = $this->mall_order_base->findById((int)$order_id);
+        if ($order->num_rows() == 0) {
+            $this->alertJumpPre('订单信息出错');
+        }
+        if ($order->row()->payer_uid != $this->uid) {
+            $this->alertJumpPre('订单信息出错');
+        }
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
@@ -94,6 +104,25 @@ class Order extends CS_Controller {
      * */
     public function order_reviews($order_id)
     {
+        $order = $this->mall_order_base->findById((int)$order_id);
+        if ($order->num_rows() == 0) {
+            $this->alertJumpPre('订单信息出错');
+        }
+        if ($order->row()->payer_uid != $this->uid) {
+            $this->alertJumpPre('订单信息出错');
+        }
+        $product = $this->mall_order_product->findByOrderId($order_id);
+        if ($product->num_rows() == 0) {
+            $this->alertJumpPre('订单信息出错');
+        }
+        $data['product'] = $product->row()->goods_name.'['.$product->row()->attr_value.'] '.'（共'.$product->num_rows().'件）';
+        foreach ($product->result() as $p) {
+            if ($p->goods_id == $this->input->get('goods_id')) {
+                $data['product'] = $p->goods_name.'['.$p->attr_value.']';
+            }
+        }
+        $data['order_id'] = $order_id;
+        $data['goods_id'] = $this->input->get('goods_id');
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
@@ -101,14 +130,14 @@ class Order extends CS_Controller {
     }
     
     public function reviews_add()
-    {$this->error('order/order_reviews', 1, '请选择图片上传！');
+    { 
         $postData = $this->input->post();var_dump($_FILES);die;
         if (empty($_FILES['slide_show']['name'])) {
-            $this->error('order/order_reviews', 1, '请选择图片上传！');
+            $this->alertJumpPre('请选择图片上传');
         }
         $imageData = $this->dealWithImages('goods_img', '', 'mall');
         if ($imageData == false) {
-            $this->error('mall_goods_base/images', $goods_id, '图片上传失败！');
+            $this->alertJumpPre('图片上传失败');
         }
     }
     

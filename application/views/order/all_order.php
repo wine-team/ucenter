@@ -85,7 +85,12 @@
 					<?php $img = array_filter(explode('|',$val->goods_img));?>
 					<img width="200" height="200" src="<?php echo $this->config->show_image_thumb_url('mall',$img[0],360);?>" />
 					<p><?php echo $val->goods_name;?></p>
-					<p class="xj">¥<?php echo $val->promote_price;?></p>
+					<?php if( !empty($val->promote_price) && !empty($val->promote_start_date) && !empty($val->promote_end_date) && ($val->promote_start_date<=time()) && ($val->promote_end_date>=time())):?>
+    					<?php $shop_price = $val->promote_price;?>
+    				<?php else:?>
+    					<?php $shop_price = $val->shop_price;?>
+    				<?php endif;?>
+					<p class="xj">¥<?php echo $shop_price;?></p>
 				</a>
 			<?php endforeach;?>
 		</div>

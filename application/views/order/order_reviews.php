@@ -10,11 +10,9 @@
 		<div class="ubgw">
 			<div class="over">
 				<h2 class="lr_bl left">
-					评论 <a href="http://www.qu.cn/goods-9896.html" target="_blank">威尔乐
-						柔珠G点避孕套 </a>
+					评论 <a href="<?php echo empty($goods_id) ? site_url('order/order_detail/'.$order_id) : $this->config->main_base_url.'goods/detail?goods_id='.$goods_id;?>" target="_blank"><?php echo $product;?></a>
 				</h2>
-				<a href="javascript:;" onclick="window.history.go(-1)"
-					class="blue right">《返回</a>
+				<a href="javascript:;" onclick="window.history.go(-1)" class="blue right">《返回</a>
 			</div>
 			<form action="<?php echo site_url('order/reviews_add')?>" id="myform" onsubmit="return ck();" method="post" enctype="multipart/form-data">
 				<div class="lh35">
@@ -107,8 +105,8 @@
 
 							<tr>
 								<td>&nbsp;</td>
-								<td><input name="goods_id" value="9896" type="hidden">
-									<input name="order_id" value="3359773" type="hidden"> 
+								<td><input name="goods_id" value="<?php echo $goods_id;?>" type="hidden">
+									<input name="order_id" value="<?php echo $order_id;?>" type="hidden"> 
 									<input class="green_btn" value="确认提交" type="submit">
 								</td>
 							</tr>

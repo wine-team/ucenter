@@ -70,7 +70,7 @@
 				<td>¥<?php echo $product->pay_amount*$product->number;?></td>
 				<td> 
 				<?php if ($order->order_status==6) :?><a class="gray" href="javascript:void(0);">已评价</a>
-				<?php elseif ($order->order_status==5) :?><a class="gw_btn" href="<?php echo site_url('order/order_reviews/'.$order->order_id);?>">去评价</a>
+				<?php elseif ($order->order_status==5) :?><a class="gw_btn" href="<?php echo site_url('order/order_reviews/'.$order->order_id.'?goods_id='.$product->goods_id);?>">去评价</a>
 				<?php else :?>--
 				<?php endif;?>
 				</td>
