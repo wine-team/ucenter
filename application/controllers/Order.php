@@ -131,14 +131,41 @@ class Order extends CS_Controller {
     
     public function reviews_add()
     { 
-        $postData = $this->input->post();var_dump($_FILES);die;
-        if (empty($_FILES['slide_show']['name'])) {
-            $this->alertJumpPre('请选择图片上传');
+        $postData = $this->input->post();
+        $img = array();
+        for ($i=1;$i<=5;$i++) {
+            $input = 'slide_show'.$i;
+            if (!empty($_FILES[$input]['name'])) {
+                $file = $this->dealWithImages($input, '', 'reviews');
+                $img[] = $file['file_name'];
+            }
         }
-        $imageData = $this->dealWithImages('goods_img', '', 'mall');
-        if ($imageData == false) {
-            $this->alertJumpPre('图片上传失败');
+        $where['order_id'] = $postData['order_id'];
+        if (!empty($postData['goods_id'])) {
+            $where['goods_id'] = $postData['goods_id'];
         }
+        $product = $this->mall_order_product->getWhere($where)->result();
+        $i = 0;
+        foreach ($product as $p) {
+            $data[$i]['order_product_id'] = $p->order_product_id;
+            $data[$i]['order_id']   = $p->order_id;
+            $data[$i]['goods_id']   = $p->goods_id;
+            $data[$i]['goods_name'] = $p->goods_name;
+            $data[$i]['goods_attr'] = $p->attr_value;
+            $data[$i]['score']      = $postData['score'];
+            $data[$i]['content']    = $postData['content'];
+            $data[$i]['slide_show'] = implode('|',$img);
+            $data[$i]['created_at'] = date('Y-m-d H:i:s');
+            $data[$i]['user_name']  = $this->userName;
+            $data[$i]['uid']        = $this->uid;
+            $i ++;
+        }
+        $this->mall_order_reviews->insertArray($data);
+//         $this->db->trans_start();
+//         $this->mall_order_base->updateOrderStatus($postData['order_id'], 2, 3);
+//         $this->db->trans_complete();
+//         $this->db->trans_status();
+        $this->redirect('order/order_detail/'.$postData['order_id']);
     }
     
      /**

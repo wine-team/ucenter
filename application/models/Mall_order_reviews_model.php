@@ -13,4 +13,10 @@ class Mall_order_reviews_model extends CI_Model
     {
     	return $this->db->get_where($this->table, array('uid'=>$uid));
     }
+    
+    public function insertArray($data)
+    {
+        return $this->db->insert_batch($this->table, $data);
+    }
+    
 }

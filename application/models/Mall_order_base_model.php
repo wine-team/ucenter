@@ -31,10 +31,10 @@ class Mall_order_base_model extends CI_Model
     public function updateOrderStatus($order_id, $state=0, $status=0)
     {
         if ($state) {
-        	$data['state'] = $state;
+        	$data['order_state'] = $state;
         } 
         if ($status) {
-        	$data['status'] = $status;
+        	$data['order_status'] = $status;
         } 
         return $this->db->update($this->table, $data, array('order_id'=>$order_id));
     }

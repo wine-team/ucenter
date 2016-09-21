@@ -62,35 +62,35 @@
 									<p>&nbsp;</p>
 									<div class="uu_p">
 										<p class="img_uv" id="p1">+</p>
-										<input name="slide_show[]" value="" class="mup" data-id="1" id="f1" autocomplete="off" type="file">
+										<input name="slide_show1" value="" class="mup" data-id="1" id="f1" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(1);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p2">+</p>
-										<input name="slide_show[]" value="" class="mup" data-id="2" id="f2" autocomplete="off" type="file">
+										<input name="slide_show2" value="" class="mup" data-id="2" id="f2" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(2);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p3">+</p>
-										<input name="slide_show[]" value="" class="mup" data-id="3" id="f3" autocomplete="off" type="file">
+										<input name="slide_show3" value="" class="mup" data-id="3" id="f3" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(3);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p4">+</p>
-										<input name="slide_show[]" value="" class="mup" data-id="4" id="f4" autocomplete="off" type="file">
+										<input name="slide_show4" value="" class="mup" data-id="4" id="f4" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(4);" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p5">+</p>
-										<input name="slide_show[]" value="" class="mup" data-id="5" id="f5" autocomplete="off" type="file">
+										<input name="slide_show5" value="" class="mup" data-id="5" id="f5" autocomplete="off" type="file">
 										<p class="alC">
 											<a href="javascript:delm(5);" class="red hid">删除X</a>
 										</p>

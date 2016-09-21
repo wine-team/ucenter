@@ -8,6 +8,11 @@ class Mall_order_product_model extends CI_Model
     	return $this->db->get_where($this->table, array('order_id'=>$order_id));
     }
     
+    public function getWhere($where)
+    {
+        return $this->db->get_where($this->table, $where);
+    }
+    
     public function getWhereIn($arr=array())
     {
         if (empty($arr)) return array();
