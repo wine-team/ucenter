@@ -14,7 +14,7 @@
 				</h2>
 				<a href="javascript:;" onclick="window.history.go(-1)" class="blue right">《返回</a>
 			</div>
-			<form action="<?php echo site_url('order/reviews_add')?>" id="myform" onsubmit="return ck();" method="post" enctype="multipart/form-data">
+			<form action="<?php echo site_url('order/reviews_add')?>" id="myform" method="post" enctype="multipart/form-data">
 				<div class="lh35">
 					<table class="td_p" border="0" cellpadding="0" cellspacing="0" width="100%">
 						<tbody>
@@ -64,35 +64,35 @@
 										<p class="img_uv" id="p1">+</p>
 										<input name="slide_show1" value="" class="mup" data-id="1" id="f1" autocomplete="off" type="file">
 										<p class="alC">
-											<a href="javascript:delm(1);" class="red hid">删除X</a>
+											<a href="javascript:;" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p2">+</p>
 										<input name="slide_show2" value="" class="mup" data-id="2" id="f2" autocomplete="off" type="file">
 										<p class="alC">
-											<a href="javascript:delm(2);" class="red hid">删除X</a>
+											<a href="javascript:;" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p3">+</p>
 										<input name="slide_show3" value="" class="mup" data-id="3" id="f3" autocomplete="off" type="file">
 										<p class="alC">
-											<a href="javascript:delm(3);" class="red hid">删除X</a>
+											<a href="javascript:;" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p4">+</p>
 										<input name="slide_show4" value="" class="mup" data-id="4" id="f4" autocomplete="off" type="file">
 										<p class="alC">
-											<a href="javascript:delm(4);" class="red hid">删除X</a>
+											<a href="javascript:;" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="uu_p">
 										<p class="img_uv" id="p5">+</p>
 										<input name="slide_show5" value="" class="mup" data-id="5" id="f5" autocomplete="off" type="file">
 										<p class="alC">
-											<a href="javascript:delm(5);" class="red hid">删除X</a>
+											<a href="javascript:;" class="red hid">删除X</a>
 										</p>
 									</div>
 									<div class="clear"></div>
@@ -116,44 +116,6 @@
 			</form>
 		</div>
 
-		<script>
-			function ck() {
-				var n2 = $("#sd_des").val();
-
-				if (n2.length < 6) {
-					alert("您的评论太简单了吧！至少6个字哦~");
-					$("#sd_des").focus();
-					return false;
-				}
-			}
-			function previewImage(input, id) {
-				if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
-					var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
-					var src = input.value;
-					$("#p" + id).html("<div id=divhead style='width:"+100+"px;height:"+100+"px;"+sFilter+src+"\"'></div>")
-					$("#p" + id).parent().find("a").show();
-				} else {
-					if (input.files && input.files[0]) {
-						var reader = new FileReader();
-						reader.onload = function(e) {
-							$("#p" + id).html('<img src="'+e.target.result+'" />');
-							$("#p" + id).parent().find("a").show();
-						}
-						reader.readAsDataURL(input.files[0]);
-					}
-				}
-			}
-
-			$(".mup").change(function() {
-				var id = $(this).attr("data-id");
-				previewImage(this, id);
-			});
-			function delm(i) {
-				$(".uu_p").eq(i - 1).find("a").hide();
-				$("#p" + i).html("+");
-				$("#f" + i).val('');
-			}
-		</script>
 	</div>
 
 

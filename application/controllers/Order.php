@@ -160,12 +160,15 @@ class Order extends CS_Controller {
             $data[$i]['uid']        = $this->uid;
             $i ++;
         }
+        
+        $this->db->trans_start();
         $this->mall_order_reviews->insertArray($data);
-//         $this->db->trans_start();
-//         $this->mall_order_base->updateOrderStatus($postData['order_id'], 2, 3);
-//         $this->db->trans_complete();
-//         $this->db->trans_status();
-        $this->redirect('order/order_detail/'.$postData['order_id']);
+        $this->mall_order_base->updateOrderStatus($postData['order_id'], 0, 6);
+        $this->db->trans_complete();
+        if ($this->db->trans_status()) {
+            $this->redirect('order/order_detail/'.$postData['order_id']);
+        }
+        $this->alertJumpPre('操作失败，请再试一次');
     }
     
      /**
