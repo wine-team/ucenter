@@ -12,7 +12,7 @@
 		<div class="yu_bg f14">
 			<p>订单号：<?php echo $order->pay_id;?>
 			
-			( <?php if($order->pay_bank==2){echo '微信支付';}elseif($order->pay_bank==3){echo '支付宝支付';}else{echo '银联支付';}?>)
+			( <?php echo $pay_method[$order->pay_bank]?>支付)
 			
 			</p>
 			<p>
@@ -69,7 +69,12 @@
 				<td>¥<?php echo $product->pay_amount;?></td>
 				<td>¥<?php echo $product->pay_amount*$product->number;?></td>
 				<td> 
-				<?php if ($order->order_status==6) :?><a class="gray" href="javascript:void(0);">已评价</a>
+				<?php if ($order->order_status==6) :?>
+				    <?php if(in_array($product->goods_id, $order_product_review)):?>
+				    <a class="gray" href="javascript:void(0);">已评价</a>
+				    <?php else :?>
+				    <a class="gw_btn" href="<?php echo site_url('order/order_reviews/'.$order->order_id.'?goods_id='.$product->goods_id);?>">去评价</a>
+				    <?php endif;?>
 				<?php elseif ($order->order_status==5) :?><a class="gw_btn" href="<?php echo site_url('order/order_reviews/'.$order->order_id.'?goods_id='.$product->goods_id);?>">去评价</a>
 				<?php else :?>--
 				<?php endif;?>

@@ -72,6 +72,12 @@ class Order extends CS_Controller {
         $data['pay_method'] = array('1'=>'支付宝','2'=>'微信','3'=>'银联');      
         $data['order'] = $order->row();
         $data['order_product'] = $this->mall_order_product->findByOrderId($order_id)->result();
+        $order_review = $this->mall_order_reviews->getByOrderid($order_id)->result();
+        $order_product_review = array();
+        foreach ($order_review as $review) {
+            $order_product_review[] = $review->goods_id;
+        }
+        $data['order_product_review'] = $order_product_review; 
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
         $this->load->view('order/order_detail', $data);
     }
