@@ -332,7 +332,7 @@ class Order extends CS_Controller {
             
             /**生成二维码*/
             $this->load->library('Productewm');
-            $code_img_url = '/wx_ewm/'.$time_orderid.'.png';
+            $code_img_url = '/wx_ewm/'.$time_orderid.'.png'; // wx_ewm 文件夹一删除
             $getData = array(
                 'value'=>$code_url,
                 'errorCorrectionLevel'=>'H',
