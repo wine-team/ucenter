@@ -50,8 +50,8 @@
 			</dd>
 		</dl>
 		<dl class="f_dl mr0">
-			<dt>妙处网客户端</dt>
-			<dd><img src="" width="100" height="100"></dd>
+			<dt>妙处网微信号</dt>
+			<dd><img src="help/images/weixin.png" width="100" height="100"></dd>
 		</dl>
 		<div class="clear"></div>
 	</div>
@@ -70,7 +70,7 @@
 				<span class="vline">|</span>
 				订购热线 <span>888-8888-8888</span>
 			</p>
-			<p>Copyright © 2015 ICP经营性许可证:浙ICP备8888888号-2</p>
+			<p>Copyright © 2016 ICP经营性许可证:浙ICP备16035696号</p>
 			<p>公司：杭州小医仙网络科技有限公司</p>
 			<!--  
 			<p class="mt10">

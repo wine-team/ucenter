@@ -9,7 +9,7 @@ class MW_Controller extends CI_Controller
     public function __construct()
     {
     	parent::__construct();
-    	$frontUser = get_cookie('frontUser') ? get_cookie('frontUser') : $this->cache->memcached->get('frontUser'); 
+    	$frontUser = get_cookie('frontUser'); 
     	if($frontUser){
     		$this->frontUser = unserialize( base64_decode($frontUser) ); 
     		$this->uid = $this->frontUser['uid'];
