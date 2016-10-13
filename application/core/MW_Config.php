@@ -7,7 +7,7 @@ class MW_Config extends CI_Config
     public $passport_url   =  'http://passport.miaocw.com/';
     public $help_url       =  'http://help.miaocw.com/';
     public $ucenter_url    =  'http://ucenter.miaocw.com/';
-    
+    public $m_url          =  'http://m.miaocw.com/';
     
      /**
      * 图片上传路径
@@ -17,9 +17,9 @@ class MW_Config extends CI_Config
     public function upload_image_path($dirname, $imageName = '')
     {
         if (!empty($imageName)) {
-            return dirname(FCPATH).'/images/'.$dirname.'/'.$imageName;
+            return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/'.$imageName;
         }
-        return dirname(FCPATH).'/images/'.$dirname.'/';
+        return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/';
     }
     
     /**
@@ -44,9 +44,9 @@ class MW_Config extends CI_Config
     {
         if (!empty($imageName)) {
             $imageName = $this->get_thumb_image_name($imageName);
-            return dirname(FCPATH).'/images/'.$dirname.'/'.$imageName;
+            return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/'.$imageName;
         }
-        return dirname(FCPATH).'/images/'.$dirname.'/';
+        return dirname(FCPATH).'/images.miaocw.com/'.$dirname.'/';
     }
     
     /**
