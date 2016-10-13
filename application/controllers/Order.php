@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Order extends CS_Controller {
 
     public function _init()
-    {
+    { 
         $this->load->library('pagination');
 //         $this->load->library('chinapay/chinapay', null, 'chinapay');
         $this->load->library('alipay/alipaypc', null, 'alipaypc');
@@ -162,7 +162,7 @@ class Order extends CS_Controller {
             $data[$i]['content']    = $postData['content'];
             $data[$i]['slide_show'] = implode('|',$img);
             $data[$i]['created_at'] = date('Y-m-d H:i:s');
-            $data[$i]['user_name']  = $this->userName;
+            $data[$i]['user_name']  = $this->aliasName;
             $data[$i]['uid']        = $this->uid;
             $i ++;
         }
