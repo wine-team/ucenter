@@ -124,18 +124,18 @@
                 <?php foreach ($allCategory as $key=>$item):?>
                 <li>
                    <em class="f">&nbsp;</em>
-                   <a class="lma" href="<?php echo site_url('goods/search?cid='.$item['cat_id']);?>">
+                   <a class="lma" href="<?php echo site_url('goods/search?category_id='.$item['cat_id']);?>">
                    	    <?php echo $item['cat_name'];?>
                    </a>
                    <?php if (!empty($item['childCat'])):?>
                    <div class="lra" >
                         <div class="lh3">
                             <b class="left"><?php echo $item['cat_name'];?></b>
-                            <a href="<?php echo site_url('goods/search?cid='.$item['cat_id']);?>" class="right" rel="nofollow">更多>></a>
+                            <a href="<?php echo site_url('goods/search?category_id='.$item['cat_id']);?>" class="right" rel="nofollow">更多>></a>
                         </div>
                         <p class="boa">
                             <?php foreach ($item['childCat'] as $i=>$val):?>
-                            <a href="<?php echo site_url('goods/search?cid='.$val['cat_id']);?>"><?php echo $val['cat_name'];?></a>
+                            <a href="<?php echo site_url('goods/search?category_id='.$val['cat_id']);?>"><?php echo $val['cat_name'];?></a>
                             <?php endforeach;?>
                         </p>
                         <?php if(!empty($item['keyword'])):?>
@@ -151,15 +151,15 @@
             </ul>
         </div>
         <ul class="navs left">
-            <li><a href="<?php echo $this->config->main_base_url;?>" rel="nofollow">首页</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">避孕套</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">情趣内衣</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">男性玩具</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">女性玩具</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">延时助情</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">双人情趣</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">润滑液</a></li>
-            <li><a href="<?php echo $this->config->main_base_url.'goods/femal';?>">丰胸缩阴</a></li>
+            <li><a href="<?php echo site_url();?>" rel="nofollow">首页</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=25');?>">避孕套</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=22');?>">情趣内衣</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=1');?>">男性玩具</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=2');?>">女性玩具</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=21');?>">延时助情</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=23');?>">双人情趣</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=24');?>">润滑液</a></li>
+            <li><a href="<?php echo site_url('goods/search?category_id=26');?>">丰胸缩阴</a></li>
         </ul>
         <div class="clear"></div>
     </div>
