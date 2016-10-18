@@ -207,7 +207,7 @@ class Order extends CS_Controller {
     public function productEwm(){
         $order_id = $this->input->post('order_id');
         $url = $this->config->m_url.'pay/wxPay?order_id='.base64_encode($order_id).'.html';
-        $name = 'pay-order_id-'.$order_id.'.png';
+        $name = 'pay-'.$order_id.'.png';
         $path = $this->config->upload_image_path('common/ewm').$name;
         $this->QRcode->png($url,$path,4,10);
         echo json_encode($this->config->show_image_url('common/ewm', $name));
