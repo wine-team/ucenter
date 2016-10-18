@@ -250,10 +250,11 @@ class Order extends CS_Controller {
             $alipayParameter = $this->alipayParameter($pay_bank, $orderInfo, $orderInfo->actual_price);
             $this->alipaypc->callAlipayApi($alipayParameter);
         } else {
+            $this->alertJumpPre('银联支付暂未开通，请选择其他方式。');
             //银联支付
-            $BgRetUrl = site_url('paycallback/chinapayReturn');
-            $PageRetUrl = site_url('paycallback/chinapayReturn');
-            $objPay = $this->chinapay->callChinapayApi($order_id, $orderInfo->actual_price, 'notcart', $BgRetUrl, $PageRetUrl);
+//             $BgRetUrl = site_url('paycallback/chinapayReturn');
+//             $PageRetUrl = site_url('paycallback/chinapayReturn');
+//             $objPay = $this->chinapay->callChinapayApi($order_id, $orderInfo->actual_price, 'notcart', $BgRetUrl, $PageRetUrl);
         }
     }
     
