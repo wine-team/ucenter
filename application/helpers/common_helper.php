@@ -101,4 +101,11 @@ function getAllCategory(){
     return $allCategory;
 }
 
-
+/**
+ * 404页面
+ * */
+function show404()
+{
+    $CI = & get_instance();
+    $CI->load->view('layout/show404', array('head_menu'=>'on'));
+}

@@ -21,7 +21,7 @@ class Order extends CS_Controller {
     }
     
     public function index($num = 0) {
-    	
+        
         $perpage = 10;
         $page = $num/$perpage;
         $data['sum'] = $this->mall_order_base->total($this->uid, $this->input->get('order_status'));
