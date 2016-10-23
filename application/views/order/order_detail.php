@@ -59,7 +59,7 @@
 			<?php foreach($order_product as $product) :?>
 			<tr>
 				<td>
-				   <a href="<?php echo $this->config->main_base_url.'goods/detail.html?goods_id='.$product->goods_id;?>" target="_blank">
+				   <a href="<?php echo $this->config->main_base_url.'goods/detail/'.$product->goods_id.'.html';?>" target="_blank">
 				       <?php $img_arr = array_filter(explode('|',$product->goods_img));?>
 				       <img class="lazy mr5" src="miaow/images/load.jpg" data-original="<?php echo $this->config->show_image_thumb_url('mall',$img_arr[0],60);?>" width="60" height="60" ><?php echo $product->goods_name;?>
 				       <b class="c3 pl5">(<?php echo $product->goods_id;?>)</b>

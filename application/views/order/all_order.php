@@ -41,7 +41,7 @@
 				   <?php $i=0;?>
 				   <?php foreach ($order_product as $product) :?>
 					   <?php if ($product->order_id == $o->order_id):?>
-						   <a title="<?php echo $product->goods_name;?>" target="_blank" href="<?php echo $this->config->main_base_url.'goods/detail.html?goods_id='.$product->goods_id;?>"> 
+						   <a title="<?php echo $product->goods_name;?>" target="_blank" href="<?php echo $this->config->main_base_url.'goods/detail/'.$product->goods_id.'.html';?>"> 
 						       <?php $img_arr = array_filter(explode('|',$product->goods_img));?>
 						       <img class="lazy" src="miaow/images/load.jpg" width="60" height="60" data-original="<?php echo $this->config->show_image_thumb_url('mall',$img_arr[0],60);?>">
 		                   </a>
@@ -81,7 +81,7 @@
 		<p class="bline"></p>
 		<div class="over dn_aw">
 		    <?php foreach ($like->result() as $val):?>
-			    <a href="<?php echo $this->config->main_base_url.'goods/detail.html?goods_id='.$val->goods_id;?>" target="_blank" title="<?php echo $val->goods_name;?>" class="dn_au">
+			    <a href="<?php echo $this->config->main_base_url.'goods/detail/'.$val->goods_id.'.html';?>" target="_blank" title="<?php echo $val->goods_name;?>" class="dn_au">
 					<?php $img = array_filter(explode('|',$val->goods_img));?>
 					<img width="200" height="200" src="<?php echo $this->config->show_image_thumb_url('mall',$img[0],360);?>" />
 					<p><?php echo $val->goods_name;?></p>

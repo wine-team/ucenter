@@ -8,7 +8,7 @@
 		<ul class="fav_a">
             <?php foreach($goods as $g) :?>
 				<li>
-			   		<a href="<?php echo $this->config->main_base_url.'goods/detail.html?goods_id='.$g->goods_id;?>" class="dn_au" target="_blank">
+			   		<a href="<?php echo $this->config->main_base_url.'goods/detail/'.$g->goods_id.'.html';?>" class="dn_au" target="_blank">
 				        <?php $img = array_filter(explode('|', $g->goods_img));?>
 						<img class="lazy" src="miaow/images/load.jpg" data-original="<?php echo $this->config->show_image_thumb_url('mall',$img[0],360);?>" width="200" height="200">
 						<p><?php echo $g->goods_name;?></p>

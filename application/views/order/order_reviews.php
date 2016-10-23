@@ -5,12 +5,10 @@
 			<?php $this->load->view('layout/menu');?>
 		</div>
 
-
-
 		<div class="ubgw">
 			<div class="over">
 				<h2 class="lr_bl left">
-					评论 <a href="<?php echo empty($goods_id) ? site_url('order/order_detail/'.$order_id) : $this->config->main_base_url.'goods/detail?goods_id='.$goods_id;?>" target="_blank"><?php echo $product;?></a>
+					评论 <a href="<?php echo empty($goods_id) ? site_url('order/order_detail/'.$order_id) : $this->config->main_base_url.'goods/detail/'.$goods_id.'.html';?>" target="_blank"><?php echo $product;?></a>
 				</h2>
 				<a href="javascript:;" onclick="window.history.go(-1)" class="blue right">《返回</a>
 			</div>
