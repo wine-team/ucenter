@@ -29,7 +29,7 @@ class MW_Controller extends CI_Controller
     	
     	// 开发模式下开启性能分析
     	if (ENVIRONMENT === 'development') {
-    		//$this->output->enable_profiler(TRUE);
+    		$this->output->enable_profiler(TRUE);
     	}
     }
     
@@ -403,62 +403,4 @@ class MW_Controller extends CI_Controller
         $this->session->set_userdata($name, $captcha['word']);
         return $captcha;
     }
-    
-    public function callApi($url, $postParams)
-    {
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);//https请求，不验证证书
-		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);//https请求，不验证hosts
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postParams);
-		$receive = curl_exec($ch);
-		if ($receive === FALSE) {
-			return '{"code":"1","msg":"'.curl_error($ch).'"}';
-		}
-		curl_close($ch);
-		
-		return $receive;
-    }
-    
-    /**
-     * 酒店图片等比例压缩
-     * @param array $imageData {full_path:图片完整路径；file_path：图片所在完整目录}
-     * @param string $dirName 图片保存在uploads下的目录。
-     * @return boolean|array
-     */
-    protected function dealWithMoreImagesResize($imageData, $imageSize)
-    {
-        $this->load->library('image_lib');
-        $imagesName = array();
-        $config['image_library']  = 'GD2'; //设置图像库GD, GD2, ImageMagick, NetPBM
-        $config['source_image']   = $imageData['full_path']; //设置原始图像的名字/路径。 这个路径必须是相对或绝对的服务器路径，不能是URL
-        $config['new_image']      = $imageData['file_path']; //设置图像的目标名/路径。这个路径必须是相对或绝对的服务器路径，不能是URL
-        if (!is_dir($config['new_image'])) {
-            mkdir($config['new_image'], DIR_WRITE_MODE, true);
-        }
-        $config['create_thumb']   = TRUE; //让图像处理函数产生一个预览图像
-        $config['maintain_ratio'] = TRUE; //指定是否在缩放或使用硬值的时候使图像保持原始的纵横比例。
-        $config['quality']        = 90; //设置图像的品质。1 - 100
-        
-        $file_name = explode('.', $imageData['file_name']);
-        foreach ($imageSize as $key=>$value){
-            $config['thumb_marker']   = '_'.$value['width'].'_'.$value['height']; //例如，mypic.jpg 将会变成 mypic_thumb.jpg
-            $config['width']          = $value['width'];
-            $config['height']         = $value['height'];
-            
-            $this->image_lib->initialize($config);
-            $ifResize = $this->image_lib->resize();
-            if (!$ifResize) {
-                $this->session->set_flashdata('error', $this->image_lib->display_errors());
-                return false;
-            }
-            $imagesName[$key] = $file_name[0].$config['thumb_marker'].'.'.$file_name[1];
-            $this->image_lib->clear();
-        }
-        return $imagesName;
-    }
-    
 }
