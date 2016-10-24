@@ -51,10 +51,10 @@ class Address extends CS_Controller {
             if ($u_address <= 0) {
                 $postData['is_default'] = 2;
             }
-            $res = $this->mall_address->insert($postData);
+            $res = $this->mall_address->insert($postData); 
         }
         $this->db->trans_complete();
-        if ($res && $this->db->trans_status()===TRUE) {
+        if ($res ) {
             $this->jsonMessage('', base_url('address/index'));
         } 
         $this->jsonMessage('操作失败');

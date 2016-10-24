@@ -35,10 +35,10 @@ class Mall_address_model extends CI_Model
             'receiver_name' => $param['receiver_name'],
             'detailed'      => $param['detailed'],
             'tel'           => $param['tel'],
-            'code'          => $param['code'],
-            'province_id'   => $param['province_id'],
-            'city_id'       => $param['city_id'],
-            'district_id'   => $param['district_id'],
+            'code'          => (int)$param['code'],
+            'province_id'   => (int)$param['province_id'],
+            'city_id'       => (int)$param['city_id'],
+            'district_id'   => (int)$param['district_id'],
             'is_default'    => isset($param['is_default']) ? $param['is_default'] : 1,
         );
         return $this->db->insert($this->table, $data);
@@ -55,10 +55,10 @@ class Mall_address_model extends CI_Model
             'receiver_name' => $param['receiver_name'],
             'detailed'      => $param['detailed'],
             'tel'           => $param['tel'],
-            'code'          => $param['code'],
-            'province_id'   => $param['province_id'],
-            'city_id'       => $param['city_id'],
-            'district_id'   => $param['district_id'],
+            'code'          => (int)$param['code'],
+            'province_id'   => (int)$param['province_id'],
+            'city_id'       => (int)$param['city_id'],
+            'district_id'   => (int)$param['district_id'],
             'is_default'    => isset($param['is_default']) ? $param['is_default'] : 1,
         );
         $this->db->where('address_id',$address_id);
