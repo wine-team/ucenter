@@ -16,7 +16,7 @@ class CS_Controller extends MW_Controller
         $order_num = $this->mall_order_base->total($this->uid);
         $enshrine_num = $this->mall_enshrine->total(array('uid'=>$this->uid));
         $coupon_num = $this->user_coupon_get->total(array('uid'=>$this->uid));
-        $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num, 'pay_points_num'=>$frontUserInfo->pay_points);
+        $frontUserInfo->num_list = array('order_num'=>$order_num, 'enshrine_num'=>$enshrine_num, 'coupon_num'=>$coupon_num);
         return $frontUserInfo;
     }
 
