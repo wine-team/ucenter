@@ -15,15 +15,17 @@ class Address extends CS_Controller {
     }
     
     public function index(){
-    	
-        $address = $this->mall_address->findById($this->input->get('address_id'));
+        
         $data['res'] = null;
-        if ($address->num_rows() > 0) {
-            $data['res'] = $address->row();
-            $data['province_id'] = $address->row()->province_id;
-            $data['city_id'] = $address->row()->city_id;
-            $data['district_id'] = $address->row()->district_id;
-        } 
+    	if (!empty($this->input->get('address_id'))) {
+    	    $address = $this->mall_address->findById($this->input->get('address_id'));
+    	    if ($address->num_rows() > 0) {
+    	        $data['res'] = $address->row();
+    	        $data['province_id'] = $address->row()->province_id;
+    	        $data['city_id'] = $address->row()->city_id;
+    	        $data['district_id'] = $address->row()->district_id;
+    	    }
+    	}
         $data['user_info'] = $this->get_user_info();
         $data['address'] = $this->mall_address->findByUid($this->uid);
         $data['cms_block'] = $this->cms_block->findByBlockIds(array('home_keyword'));
