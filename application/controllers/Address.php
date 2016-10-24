@@ -47,6 +47,10 @@ class Address extends CS_Controller {
         if ($postData['address_id']) {
             $res = $this->mall_address->update($postData['address_id'], $postData);
         } else {
+            $u_address = $this->mall_address->total(array('uid'=>$this->uid));
+            if ($u_address <= 0) {
+                $postData['is_default'] = 2;
+            }
             $res = $this->mall_address->insert($postData);
         }
         $this->db->trans_complete();
