@@ -125,18 +125,18 @@
                 <?php foreach ($allCategory as $key=>$item):?>
                 <li>
                    <em class="f">&nbsp;</em>
-                   <a class="lma" href="<?php echo site_url('goods/search?category_id='.$item['cat_id']);?>">
+                   <a class="lma" href="<?php echo $this->config->main_base_url.'goods/search?category_id='.$item['cat_id'].'.html';?>">
                    	    <?php echo $item['cat_name'];?>
                    </a>
                    <?php if (!empty($item['childCat'])):?>
                    <div class="lra" >
                         <div class="lh3">
                             <b class="left"><?php echo $item['cat_name'];?></b>
-                            <a href="<?php echo site_url('goods/search?category_id='.$item['cat_id']);?>" class="right" rel="nofollow">更多>></a>
+                            <a href="<?php echo $this->config->main_base_url.'goods/search?category_id='.$item['cat_id'].'.html';?>" class="right" rel="nofollow">更多>></a>
                         </div>
                         <p class="boa">
                             <?php foreach ($item['childCat'] as $i=>$val):?>
-                            <a href="<?php echo site_url('goods/search?category_id='.$val['cat_id']);?>"><?php echo $val['cat_name'];?></a>
+                            <a href="<?php echo $this->config->main_base_url.'goods/search?category_id='.$item['cat_id'].'.html';?>"><?php echo $val['cat_name'];?></a>
                             <?php endforeach;?>
                         </p>
                         <?php if(!empty($item['keyword'])):?>
