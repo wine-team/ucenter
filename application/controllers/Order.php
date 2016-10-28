@@ -205,9 +205,9 @@ class Order extends CS_Controller {
      * @param unknown $order_id
      */
     public function productEwm(){
-        $order_id = $this->input->post('order_id');
-        $url = $this->config->m_url.'pay/wxPay?order_id='.base64_encode($order_id).'.html';
-        $name = 'pay-'.$order_id.'.png';
+        $payid = $this->input->post('pay_id');
+        $url = $this->config->m_url.'pay/wxPay?order_id='.$payid.'.html';
+        $name = 'pay-'.$payid.'.png';
         $path = $this->config->upload_image_path('common/ewm').$name;
         $this->QRcode->png($url,$path,4,10);
         echo json_encode($this->config->show_image_url('common/ewm', $name));
@@ -236,18 +236,18 @@ class Order extends CS_Controller {
     /**
      * 网银去支付方法。
      */
-    public function pay_by_orderid()
+    public function pay_by_payid()
     {
-        $order_id = $this->input->post('order_id');
+        $payid = base64_decode($this->input->post('pay_id'));
         $pay_bank = $this->input->post('pay_bank');
-        $order = $this->mall_order_base->findById((int)$order_id);
+        $order = $this->mall_order_base->findByPayid((int)$payid);
         if ($order->num_rows() == 0) {
             $this->alertJumpPre('订单信息出错');
         }
         $orderInfo = $order->row();
         if ($pay_bank == 1) {
             //支付宝支付
-            $alipayParameter = $this->alipayParameter($pay_bank, $orderInfo, $orderInfo->actual_price);
+            $alipayParameter = $this->alipayParameter($pay_bank, $orderInfo);
             $this->alipaypc->callAlipayApi($alipayParameter);
         } else {
             $this->alertJumpPre('银联支付暂未开通，请选择其他方式。');
@@ -266,13 +266,13 @@ class Order extends CS_Controller {
      * @param object $orderProductInfo    ---主订单号的
      * @return array
      */
-    private function alipayParameter($pay_bank, $order_id,$actual_price)
+    private function alipayParameter($pay_bank, $orderInfo)
     {
         $parameter = array(
-            'out_trade_no' => $order_id,
-            'subject'      => $order_id,
-            'total_fee'    => $actual_price,
-            'body'         => $order_id,
+            'out_trade_no' => $orderInfo->order_id,
+            'subject'      => $orderInfo->order_id,
+            'total_fee'    => $orderInfo->actual_price,
+            'body'         => $orderInfo->order_id,
             'show_url'     => base_url(),
             'notify_url'   => base_url('paycallback/alipayNotify'),
             'return_url'   => base_url('payt/alipayReturn'),
@@ -283,94 +283,4 @@ class Order extends CS_Controller {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-     * @微信支付二维码
-     * */
-    public function get_wxpay_code()
-    {
-        $postData = $this->input->post();
-        $order = $this->mall_order_base->findById($postData['out_trade_no'])->row();
-//         if ($order->status != 2) {
-//             echo json_encode(array('status'=>false, 'msg'=>'订单状态已改变', 'data'=>base_url('order/index')));exit;
-//         }
-        //测试数据
-        $postData['total_fee']=1;
-        $postData['out_trade_no'] = 1;
-        
-        /**时间加订单号*/
-        $time_orderid = date('YmdHis').'_'.$postData['out_trade_no'];
-        /**扫码支付*/
-        include_once("./WxpayAPI/wxpay/WxPay.NativePay.php");
-        $nativePay = new NativePay();
-        $input = new WxPayUnifiedOrder();
-        //商品描述---需要参数传递/统一信息
-        $input->SetBody($postData['body']);
-        //商户订单号
-        $input->SetOut_trade_no($time_orderid);
-        //总金额
-        $input->SetTotal_fee((int)$postData['total_fee']);
-        //交易类型
-        $input->SetTrade_type("NATIVE");
-        $input->GetTrade_type("NATIVE");
-        //商品id
-        $input->SetProduct_id($time_orderid);
-        
-        $res = $nativePay->GetPayUrl($input);
-        if ($res['return_code']=='SUCCESS' && $res['result_code']=='SUCCESS') {
-            /**支付链接*/
-            $code_url = $res['code_url'];
-            
-            /**生成二维码*/
-            $this->load->library('Productewm');
-            $code_img_url = '/wx_ewm/'.$time_orderid.'.png'; // wx_ewm 文件夹一删除
-            $getData = array(
-                'value'=>$code_url,
-                'errorCorrectionLevel'=>'H',
-                'matrixPointSize'=>4,
-                'QR'=>dirname(FCPATH).'/images'.$code_img_url,
-                'logo'=>false,
-                'output'=>false
-            );
-            $this->productewm->product($getData);
-            echo json_encode(array('status'=>true, 'code_img_url'=>$this->config->images_url.$code_img_url, 'data'=>$time_orderid));
-        } else{
-            echo json_encode(array('status'=>false, 'msg'=>'微信支付二维码生成失败，请刷新页面'));
-        }
-    }
-    
-    /**
-     * @获取扫码支付结果
-     * */
-    public function get_trade_state()
-    {
-        $out_trade_no = $this->input->post('out_trade_no');
-        include_once("./WxpayAPI/lib/WxPay.Api.php");
-        $wxPay = new WxPayApi();
-        $input = new WxPayUnifiedOrder();
-        $input->SetOut_trade_no($out_trade_no);
-        $res = $wxPay->orderQuery($input);
-        if ($res['return_code']=='SUCCESS' && $res['result_code']=='SUCCESS') {
-            if ($res['trade_state']=='SUCCESS') {
-                /**支付成功，更新订单状态*/
-                $order_no = explode('_',$out_trade_no);
-                $this->mall_order_base->updateOrderStatus($order_no[1], 2, 3);
-                echo json_encode(array('status'=>true, 'msg'=>'支付成功', 'data'=>base_url('order/index')));
-            } else {
-                echo json_encode(array('status'=>false));
-            }
-        } else {
-            echo json_encode(array('status'=>false));
-        }
-    }
 }

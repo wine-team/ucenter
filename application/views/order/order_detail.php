@@ -21,7 +21,7 @@
 			<p>下单时间: <?php echo $order->created_at;?></p>
 		</div>
         <?php if($order->order_status==2 && $order->pay_bank == 2) :?>
-		<div id="weixinzhifu" data-order_id="<?php echo $order->order_id;?>" data-total="<?php echo $order->actual_price;?>" style="background: #fff url(http://s.qw.cc/themes/v4/css/ft/weipay.png) 320px 52px no-repeat; padding: 80px 0; height: 300px;">
+		<div id="weixinzhifu" data-pay_id="<?php echo base64_encode($order->pay_id);?>" data-total="<?php echo $order->actual_price;?>" style="background: #fff url(http://s.qw.cc/themes/v4/css/ft/weipay.png) 320px 52px no-repeat; padding: 80px 0; height: 300px;">
 			<h3 class="c3 lh30 f16">请使用微信扫一扫，扫描二维码支付</h3>
 			<div id="codeimg">二维码生成中请稍等</div>
 		</div>
@@ -35,8 +35,8 @@
 			<?php if($order->order_status>2) :?><a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?pay_id='.$order->pay_id);?>">查看物流</a><?php endif;?>
 			<?php if($order->order_status==2 && $order->pay_bank != 2) :?>
 				<div class="mt15" id="zhifubao">
-                    <form action="<?php echo site_url('order/pay_by_orderid');?>" method="post" class="pay">
-            		    <input type="hidden" name="order_id" value="<?php echo $order->order_id;?>"/>
+                    <form action="<?php echo site_url('order/pay_by_payid');?>" method="post" class="pay">
+            		    <input type="hidden" name="pay_id" value="<?php echo base64_encode($order->pay_id);?>"/>
             		    <input type="hidden" name="pay_bank" value="<?php echo $order->pay_bank;?>" />
             			<input type="submit" class="bigsee" value="立即使用<?php echo $pay_method[$order->pay_bank]?>支付" />
             	    </form> 
