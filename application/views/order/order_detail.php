@@ -35,8 +35,8 @@
 			<?php if($order->order_status>2) :?><a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?pay_id='.$order->pay_id);?>">查看物流</a><?php endif;?>
 			<?php if($order->order_status==2 && $order->pay_bank != 2) :?>
 				<div class="mt15" id="zhifubao">
-                    <form action="<?php echo site_url('order/pay_by_payid');?>" method="post" class="pay">
-            		    <input type="hidden" name="pay_id" value="<?php echo base64_encode($order->pay_id);?>"/>
+                    <form action="<?php echo $this->config->main_base_url.'pay/grid.html';?>" method="post" class="pay">
+            		    <input type="hidden" name="pay_id" value="<?php echo $order->pay_id;?>"/>
             		    <input type="hidden" name="pay_bank" value="<?php echo $order->pay_bank;?>" />
             			<input type="submit" class="bigsee" value="立即使用<?php echo $pay_method[$order->pay_bank]?>支付" />
             	    </form> 

@@ -233,54 +233,5 @@ class Order extends CS_Controller {
         $this->jsonMessage('该订单没有支付');
     }
     
-    /**
-     * 网银去支付方法。
-     */
-    public function pay_by_payid()
-    {
-        $payid = base64_decode($this->input->post('pay_id'));
-        $pay_bank = $this->input->post('pay_bank');
-        $order = $this->mall_order_base->findByPayid((int)$payid);
-        if ($order->num_rows() == 0) {
-            $this->alertJumpPre('订单信息出错');
-        }
-        $orderInfo = $order->row();
-        if ($pay_bank == 1) {
-            //支付宝支付
-            $alipayParameter = $this->alipayParameter($pay_bank, $orderInfo);
-            $this->alipaypc->callAlipayApi($alipayParameter);
-        } else {
-            $this->alertJumpPre('银联支付暂未开通，请选择其他方式。');
-            //银联支付
-//             $BgRetUrl = site_url('paycallback/chinapayReturn');
-//             $PageRetUrl = site_url('paycallback/chinapayReturn');
-//             $objPay = $this->chinapay->callChinapayApi($order_id, $orderInfo->actual_price, 'notcart', $BgRetUrl, $PageRetUrl);
-        }
-    }
-    
-    
-    /**
-     * 获取支付宝需要参数。
-     * @param paybank $bank_id
-     * @param object $orderInfo
-     * @param object $orderProductInfo    ---主订单号的
-     * @return array
-     */
-    private function alipayParameter($pay_bank, $orderInfo)
-    {
-        $parameter = array(
-            'out_trade_no' => $orderInfo->order_id,
-            'subject'      => $orderInfo->order_id,
-            'total_fee'    => $orderInfo->actual_price,
-            'body'         => $orderInfo->order_id,
-            'show_url'     => base_url(),
-            'notify_url'   => base_url('paycallback/alipayNotify'),
-            'return_url'   => base_url('payt/alipayReturn'),
-            'pay_method'   => $pay_bank,
-            'defaultbank'  => 'alipay'
-        );
-        return $parameter;
-    }
-    
     
 }

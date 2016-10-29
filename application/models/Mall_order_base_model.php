@@ -8,11 +8,6 @@ class Mall_order_base_model extends CI_Model
         return $this->db->get_where($this->table, array('order_id'=>$order_id));
     }
     
-    public function findByPayid($payid)
-    {
-        return $this->db->get_where($this->table, array('pay_id'=>$payid));
-    }
-    
     public function mallOrderList($page, $perpage, $payer_uid, $order_status='')
     {
         if ($order_status) {
