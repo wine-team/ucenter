@@ -6,7 +6,6 @@ class Order extends CS_Controller {
     { 
         $this->load->library('pagination');
 //         $this->load->library('chinapay/chinapay', null, 'chinapay');
-        $this->load->library('alipay/alipaypc', null, 'alipaypc');
         $this->load->library('qrcode',null,'QRcode');
         $this->load->model('cms_block_model', 'cms_block');
         $this->load->model('mall_order_product_model', 'mall_order_product');
