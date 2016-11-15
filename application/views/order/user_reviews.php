@@ -7,8 +7,9 @@
 	<div class="ubgwn">
 		<ul class="u_q clearfix">
 			<li class="first <?php if(empty($this->input->get('order_status'))) echo 'on';?>"><a href="<?php echo site_url('order/index');?>">全部订单</a></li>
-			<li class="<?php if($this->input->get('order_status')==2) echo 'on';?>"><a href="<?php echo site_url('order/index?order_status=2');?>">等付款</a></li>
-			<li class="<?php if($this->input->get('order_status')==4) echo 'on';?>"><a href="<?php echo site_url('order/index?order_status=4');?>">查物流</a></li>
+			<li class="<?php if($this->input->get('order_status')==2) echo 'on';?>"><a href="<?php echo site_url('order/index?order_status=2');?>">待付款</a></li>
+			<li class="<?php if($this->input->get('order_status')==3) echo 'on';?>"><a href="<?php echo site_url('order/index?order_status=3');?>">待发货</a></li>
+			<li class="<?php if($this->input->get('order_status')==4) echo 'on';?>"><a href="<?php echo site_url('order/index?order_status=4');?>">待收货</a></li>
 			<li class="<?php if($this->input->get('order_status')==5) echo 'on';?>"><a href="<?php echo site_url('order/index?order_status=5');?>">待评价</a></li>
 			<li class="<?php if($this->input->get('order_status')==6) echo 'on';?>"><a href="<?php echo site_url('order/user_reviews?order_status=6');?>">已评价</a></li>
 			<li class="last"><em class="f12 c9">共<?php echo $user_info->num_list['order_num']?>个订单</em></li>

@@ -32,7 +32,12 @@
 			<p>联系人：<?php echo $order->user_name;?></p>
 			<p>收货地址：<?php echo json_decode($order->delivery_address)->detailed;?></p>
 			<p>手机号码：<?php echo substr_replace($user_info->phone, '****', 3,4)?><em class="c9 pl5 f12">(已加密)</em></p>
-			<?php if($order->order_status>2) :?><a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?pay_id='.$order->pay_id);?>">查看物流</a><?php endif;?>
+			<?php if($order->order_status>2) :?>
+			<a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?pay_id='.$order->pay_id);?>">查看物流</a>
+			<?php endif;?>
+			<?php if($order->order_status==3 || $order->order_status==4) :?>
+			<a class="green_btn mt15" href="<?php echo site_url('order/order_refund/'.$order->order_id.'?pay_id='.$order->pay_id);?>">申请退款</a>
+			<?php endif;?>
 			<?php if($order->order_status==2 && $order->pay_bank != 2) :?>
 				<div class="mt15" id="zhifubao">
                     <form action="<?php echo $this->config->main_base_url.'pay/grid.html';?>" method="post" class="pay">

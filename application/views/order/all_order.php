@@ -11,8 +11,11 @@
 			<li class="<?php if($this->input->get('order_status')==2):?>on<?php endif;?>">
 				<a href="<?php echo site_url('order/index?order_status=2');?>">待付款</a>
 			</li>
+			<li class="<?php if($this->input->get('order_status')==3):?>on<?php endif;?>">
+				<a href="<?php echo site_url('order/index?order_status=3');?>">待发货</a>
+		    </li>
 			<li class="<?php if($this->input->get('order_status')==4):?>on<?php endif;?>">
-				<a href="<?php echo site_url('order/index?order_status=4');?>">查物流</a>
+				<a href="<?php echo site_url('order/index?order_status=4');?>">待收货</a>
 		    </li>
 			<li class="<?php if($this->input->get('order_status')==5):?>on<?php endif;?>">
 				<a href="<?php echo site_url('order/index?order_status=5');?>">待评价</a>

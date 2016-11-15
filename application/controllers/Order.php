@@ -17,6 +17,7 @@ class Order extends CS_Controller {
         $this->load->model('mall_enshrine_model', 'mall_enshrine');
         $this->load->model('user_coupon_get_model', 'user_coupon_get');
         $this->load->model('mall_order_reviews_model', 'mall_order_reviews');
+        $this->load->model('mall_order_refund_model', 'mall_order_refund');
     }
     
     public function index($num = 0) {
@@ -102,6 +103,54 @@ class Order extends CS_Controller {
         $deliver_order = $this->deliver_order->findByOrderId($order_id);
         $data['deliver_order'] = $deliver_order->num_rows()>0 ? $deliver_order->row() : '';
         $this->load->view('order/check_deliver', $data);
+    }
+    
+    /**
+     * @退款
+     * */
+    public function order_refund($order_id = 0)
+    {
+        $refund = $this->mall_order_refund->findByOrderId($order_id);
+        if ($refund->num_rows() > 0) {
+            $this->alertJumpPre('您已经申请退款，正在加急处理中...');
+        } else {
+            $order = $this->mall_order_base->findById((int)$order_id);
+            if ($order->num_rows() == 0) {
+                $this->alertJumpPre('订单信息出错');
+            }
+            if ($order->row()->payer_uid != $this->uid) {
+                $this->alertJumpPre('订单信息出错');
+            }
+            $product = $this->mall_order_product->findByOrderId($order_id);
+            if ($product->num_rows() == 0) {
+                $this->alertJumpPre('订单信息出错');
+            }
+            $i = 0;
+            foreach ($product->result() as $p) {
+                $data[$i]['order_product_id']   = $p->order_product_id;
+                $data[$i]['order_id']           = $p->order_id;
+                $data[$i]['goods_id']           = $p->goods_id;
+                $data[$i]['existing']           = $p->number;
+                $data[$i]['number']             = $p->refund_num;
+                $data[$i]['seller_uid']         = $order->row()->seller_uid;
+                $data[$i]['uid']                = $this->uid;
+                $data[$i]['user_name']          = $this->aliasName;
+                $data[$i]['cellphone']          = $this->userPhone;
+                $data[$i]['counter_fee']        = 0;
+                $data[$i]['status']             = 1;
+                $data[$i]['deliver_order_id']   = 0;
+                $data[$i]['images']             = '';
+                $data[$i]['refund_content']     = '';
+                $data[$i]['reject_content']     = '';
+                $data[$i]['created_at']         = date('Y-m-d H:i:s');
+                $i ++;
+            }
+            if ($this->mall_order_refund->insertArray($data)) { 
+                $this->alertJumpPre('申请退款成功，稍后客服会联系您...');
+            } else {
+                $this->alertJumpPre('申请退款失败，请再次申请');
+            }
+        }
     }
     
     /**
