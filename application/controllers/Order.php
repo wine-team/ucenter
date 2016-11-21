@@ -175,7 +175,7 @@ class Order extends CS_Controller {
             $this->order_history($order_id, 7, '申请退货');
             $this->db->trans_complete();
             if ($res && $this->db->trans_status()) {
-                $this->alertJumpPre('申请退款成功，稍后客服会联系您...');
+                $this->redirect('order/order_detail/'.$order_id);
             } else {
                 $this->alertJumpPre('申请退款失败，请再次申请');
             }
