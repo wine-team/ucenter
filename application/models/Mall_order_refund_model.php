@@ -8,6 +8,12 @@ class Mall_order_refund_model extends CI_Model
     	return $this->db->get_where($this->table, array('order_id'=>$order_id));
     }
     
+    public function hadRefund($order_id)
+    {
+        $this->db->where('order_id', $order_id);
+        return $this->db->count_all_results($this->table);
+    }
+    
     public function getWhere($where)
     {
         return $this->db->get_where($this->table, $where);

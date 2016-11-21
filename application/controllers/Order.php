@@ -58,7 +58,7 @@ class Order extends CS_Controller {
     /**
      * 订单详情
      * */
-    public function order_detail($order_id)
+    public function order_detail($order_id = 0)
     {
         $order = $this->mall_order_base->findById((int)$order_id);
         if ($order->num_rows() == 0) {
@@ -67,6 +67,7 @@ class Order extends CS_Controller {
         if ($order->row()->payer_uid != $this->uid) {
             $this->alertJumpPre('订单信息出错');
         }
+        $data['had_refund'] = $this->mall_order_refund->hadRefund($order_id);
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');

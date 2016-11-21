@@ -66,7 +66,7 @@
 				</td>
 				<td>
 				    <a class="rw_btn" href="<?php echo site_url('order/order_detail/'.$o->order_id);?>">查看订单</a>
-				    <?php if($o->order_status==2) :?><p class="mt5"><a class="gw_btn" href="<?php echo site_url('order/order_cancel/'.$o->order_id);?>" onclick="return confirm('是否确认取消订单？');">取消订单</a></p><?php endif;?>
+				    <?php if($o->order_status==2) :?><p class="mt5"><a class="gw_btn" href="javascript:;" onclick="layer.confirm('是否确认取消订单？',function(){window.location.href='<?php echo site_url("order/order_cancel/".$o->order_id);?>';})">取消订单</a></p><?php endif;?>
     				<?php if($o->order_status==5) :?><p class="mt5"><a class="gw_btn" href="<?php echo site_url('order/order_reviews/'.$o->order_id);?>">去评价</a></p><?php endif;?>
     				<?php if($o->order_status==6) :?><p class="mt5"><a class="hw_btn" href="javascript:void(0);">已评价</a></p><?php endif;?>
 				</td>

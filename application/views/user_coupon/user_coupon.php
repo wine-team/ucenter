@@ -22,7 +22,7 @@
 	<div class="ubgw">
 		<div class="over">
             <?php foreach($user_coupon as $coupon) :?>
-				<div class="u_bone <?php if($coupon->status > 1):?>u_old<?php endif;?>">
+				<div class="u_bone <?php if($coupon->status==1 && $coupon->end_time<date('Y-m-d')){echo 'u_old';};if($coupon->status==2){echo 'u_use';}?>">
 					<div class="over u_btp">
 						<div class="left">
 							￥<b class="f30"><?php echo $coupon->amount;?></b>
