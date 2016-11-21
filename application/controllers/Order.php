@@ -18,6 +18,7 @@ class Order extends CS_Controller {
         $this->load->model('user_coupon_get_model', 'user_coupon_get');
         $this->load->model('mall_order_reviews_model', 'mall_order_reviews');
         $this->load->model('mall_order_refund_model', 'mall_order_refund');
+        $this->load->model('mall_order_history_model', 'mall_order_history');
     }
     
     public function index($num = 0) {
@@ -83,6 +84,29 @@ class Order extends CS_Controller {
     }
     
     /**
+     * 取消订单
+     * */
+    public function order_cancel($order_id = 0)
+    {
+        $order = $this->mall_order_base->findById((int)$order_id);
+        if ($order->num_rows() == 0) {
+            $this->alertJumpPre('订单信息出错');
+        }
+        if ($order->row()->payer_uid != $this->uid) {
+            $this->alertJumpPre('订单信息出错');
+        }
+        $this->db->trans_start();
+        $res = $this->mall_order_base->updateOrderStatus($order_id, 0, 1); //更新订单状态
+        $this->order_history($order_id, 6, '取消订单'); //订单状态记录
+        $this->order_product_back($order_id);
+        $this->db->trans_complete();
+        if ($res && $this->db->trans_status()) {
+            $this->redirect('order/index');
+        } 
+        $this->alertJumpPre('操作失败，请再试一次');
+    }
+    
+    /**
      * 查看物流
      * */
     public function check_deliver($order_id=0)
@@ -145,7 +169,11 @@ class Order extends CS_Controller {
                 $data[$i]['created_at']         = date('Y-m-d H:i:s');
                 $i ++;
             }
-            if ($this->mall_order_refund->insertArray($data)) { 
+            $this->db->trans_start();
+            $res = $this->mall_order_refund->insertArray($data);
+            $this->order_history($order_id, 7, '申请退货');
+            $this->db->trans_complete();
+            if ($res && $this->db->trans_status()) {
                 $this->alertJumpPre('申请退款成功，稍后客服会联系您...');
             } else {
                 $this->alertJumpPre('申请退款失败，请再次申请');
@@ -218,11 +246,40 @@ class Order extends CS_Controller {
         $this->db->trans_start();
         $this->mall_order_reviews->insertArray($data);
         $this->mall_order_base->updateOrderStatus($postData['order_id'], 0, 6);
+        $this->order_history($postData['order_id'], 5, '评价');
         $this->db->trans_complete();
         if ($this->db->trans_status()) {
             $this->redirect('order/order_detail/'.$postData['order_id']);
         }
         $this->alertJumpPre('操作失败，请再试一次');
+    }
+    
+    /**
+     * 订单状态记录
+     * */
+    public function order_history($order_id, $operate_type, $comment)
+    {
+        $history['order_id']      = $order_id;
+        $history['operate_time']  = date('Y-m-d H:i:s');
+        $history['uid']           = $this->uid;
+        $history['operate_type']  = $operate_type;
+        $history['comment']       = $comment;
+        $this->mall_order_history->insert($history);
+    }
+    
+    /**
+     * 取消订单后处理订单里产品
+     * */
+    public function order_product_back($order_id)
+    {
+        $product = $this->mall_order_product->findByOrderId($order_id)->result();
+        $integral = 0;
+        foreach ($product as $p) {
+            $integral += $p->$integral;
+            $goods[$p->goods_id] = $p->number;
+        }
+        //退还积分，退还数量
+        $this->mall_order_product->update_at($order_id);
     }
     
      /**

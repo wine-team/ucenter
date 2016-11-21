@@ -36,6 +36,7 @@ class Mall_order_base_model extends CI_Model
         if ($status) {
         	$data['order_status'] = $status;
         } 
+        $data['updated_at'] = date('Y-m-d H:i:s'); 
         return $this->db->update($this->table, $data, array('order_id'=>$order_id));
     }
     

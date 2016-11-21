@@ -20,6 +20,11 @@ class Mall_order_product_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
     
+    public function update_at($order_id)
+    {
+        $this->db->where('order_id', $order_id);
+        return $this->db->update($this->table, array('updated_at'=>date('Y-m-d H:i:s')));
+    }
     
     
     
