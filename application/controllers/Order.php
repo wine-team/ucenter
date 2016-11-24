@@ -58,7 +58,7 @@ class Order extends CS_Controller {
     /**
      * 订单详情
      * */
-    public function order_detail($order_id = 0)
+    public function order_detail($order_id)
     {
         $order = $this->mall_order_base->findById((int)$order_id);
         if ($order->num_rows() == 0) {
@@ -67,7 +67,6 @@ class Order extends CS_Controller {
         if ($order->row()->payer_uid != $this->uid) {
             $this->alertJumpPre('订单信息出错');
         }
-        $data['had_refund'] = $this->mall_order_refund->hadRefund($order_id);
         $data['head_menu'] = 'on';
         $data['user_info'] = $this->get_user_info();
         $data['status_arr'] = array('1'=>'取消订单', '2'=>'未付款', '3'=>'已付款', '4'=>'已发货', '5'=>'已收货', '6'=>'已评价');
@@ -99,7 +98,7 @@ class Order extends CS_Controller {
         $this->db->trans_start();
         $res = $this->mall_order_base->updateOrderStatus($order_id, 0, 1); //更新订单状态
         $this->order_history($order_id, 6, '取消订单'); //订单状态记录
-        $this->order_product_back($order_id);
+        $this->order_product_back($order_id, $order->row()->coupon_code);
         $this->db->trans_complete();
         if ($res && $this->db->trans_status()) {
             $this->redirect('order/index');
@@ -175,7 +174,7 @@ class Order extends CS_Controller {
             $this->order_history($order_id, 7, '申请退货');
             $this->db->trans_complete();
             if ($res && $this->db->trans_status()) {
-                $this->redirect('order/order_detail/'.$order_id);
+                $this->alertJumpPre('申请退款成功，稍后客服会联系您...');
             } else {
                 $this->alertJumpPre('申请退款失败，请再次申请');
             }
@@ -271,15 +270,21 @@ class Order extends CS_Controller {
     /**
      * 取消订单后处理订单里产品
      * */
-    public function order_product_back($order_id)
-    {
+    public function order_product_back($order_id, $coupon_code)
+    { 
         $product = $this->mall_order_product->findByOrderId($order_id)->result();
         $integral = 0;
         foreach ($product as $p) {
-            $integral += $p->$integral;
+            $integral += $p->integral;
             $goods[$p->goods_id] = $p->number;
         }
-        //退还积分，退还数量
+        //退还优惠券，退还积分，退还数量
+        $this->user_coupon_get->updateStatus($coupon_code);
+        $this->user->updatePoints($this->uid, $integral);
+        foreach ($goods as $goods_id=>$in_stock) {
+            $this->mall_goods_base->updateStock($goods_id, $in_stock);
+        }
+        //更新订单产品操作时间
         $this->mall_order_product->update_at($order_id);
     }
     

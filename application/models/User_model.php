@@ -36,5 +36,12 @@ class User_model extends CI_Model
         return $this->db->update($this->table,$data);
     }
     
+    public function updatePoints($uid, $pay_points) 
+    {
+        $this->db->set("pay_points", "pay_points + {$pay_points}", false);
+        $this->db->where(array('uid'=>$uid));
+        return $this->db->update($this->table);
+    }
+    
     
 }

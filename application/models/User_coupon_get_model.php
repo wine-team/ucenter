@@ -27,4 +27,12 @@ class User_coupon_get_model extends CI_Model
         $this->db->where('uid', $uid);
     	return $this->db->get($this->table);
     }
+    
+    public function updateStatus($coupon_id)
+    {
+        $this->db->where('coupon_get_id', $coupon_id);
+        return $this->db->update($this->table, array('status'=>1));
+    }
+    
+    
 }
