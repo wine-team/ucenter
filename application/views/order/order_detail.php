@@ -37,7 +37,7 @@
 			<?php endif;?>
 			<?php if($order->order_status>2 && $order->order_status<6) :?>
 			<?php if($had_refund>0):?>
-			<a class="green_btn mt15" style="background-color:#c40000;" href="javascript;;">已申请退款</a>
+			<a class="green_btn mt15" style="background-color:#c40000;" href="javascript:;">已申请退款</a>
 			<?php else :?>
 			<a class="green_btn mt15" onclick="layer.confirm('是否确认申请退款？',function(){window.location.href='<?php echo site_url('order/order_refund/'.$order->order_id.'?pay_id='.$order->pay_id);?>';})"   href="javascript:;">申请退款</a>
 			<?php endif;?>
