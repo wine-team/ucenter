@@ -36,8 +36,8 @@
 			<a class="green_btn mt15" href="<?php echo site_url('order/check_deliver/'.$order->order_id.'?pay_id='.$order->pay_id);?>">查看物流</a>
 			<?php endif;?>
 			<?php if($order->order_status>2 && $order->order_status<6) :?>
-			<?php if($had_refund>0):?>
-			<a class="green_btn mt15" style="background-color:#c40000;" href="javascript:;">已申请退款</a>
+			<?php if($had_refund->num_rows()>0):$refund_status=array('1'=>'退款处理中','2'=>'退款成功','3'=>'退款失败');?>
+			<a class="green_btn mt15" style="background-color:#c40000;" href="javascript:;"><?php echo $refund_status[$had_refund->row()->status];?></a>
 			<?php else :?>
 			<a class="green_btn mt15" onclick="layer.confirm('是否确认申请退款？',function(){window.location.href='<?php echo site_url('order/order_refund/'.$order->order_id.'?pay_id='.$order->pay_id);?>';})"   href="javascript:;">申请退款</a>
 			<?php endif;?>
