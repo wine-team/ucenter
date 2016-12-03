@@ -17,6 +17,7 @@ class Mall_enshrine_model extends CI_Model
         $this->db->join($this->table1, 'mall_enshrine.goods_id = mall_goods_base.goods_id','inner');
         $this->db->where('uid', $uid);
         $this->db->limit($perpage, $perpage*$page);
+        $this->db->order_by('id','desc');
         return $this->db->get();
     }
     
