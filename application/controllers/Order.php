@@ -150,6 +150,7 @@ class Order extends CS_Controller {
             if ($product->num_rows() == 0) {
                 $this->alertJumpPre('订单信息出错');
             }
+            $this->db->trans_start();
             $i = 0;
             foreach ($product->result() as $p) {
                 $data[$i]['order_product_id']   = $p->order_product_id;
@@ -169,8 +170,8 @@ class Order extends CS_Controller {
                 $data[$i]['reject_content']     = '';
                 $data[$i]['created_at']         = date('Y-m-d H:i:s');
                 $i ++;
+                $this->mall_order_product->update(array('refund_num'=>0),$p->order_product_id);
             }
-            $this->db->trans_start();
             $res = $this->mall_order_refund->insertArray($data);
             $this->order_history($order_id, 7, '申请退货');
             $this->db->trans_complete();
@@ -246,7 +247,7 @@ class Order extends CS_Controller {
         
         $this->db->trans_start();
         $this->mall_order_reviews->insertArray($data);
-        $this->mall_order_base->updateOrderStatus($postData['order_id'], 0, 6);
+        $this->mall_order_base->updateOrderStatus($postData['order_id'], 4, 6);
         $this->order_history($postData['order_id'], 5, '评价');
         $this->db->trans_complete();
         if ($this->db->trans_status()) {
